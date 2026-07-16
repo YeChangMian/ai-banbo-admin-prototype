@@ -104,6 +104,15 @@
     }
     .nav-item[data-nav-parent] { color:#514550 !important; background:transparent !important; }
     .nav-group { display: grid; gap: 3px; margin: 4px 0; }
+    .nav-item[data-nav-parent]::after {
+      content: "⌃";
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .nav-group.is-collapsed .nav-item[data-nav-parent]::after { content: "⌄"; }
+    .nav-group.is-collapsed > .nav-sub { display: none; }
     .nav-sub { margin-left: 18px; font-size: 13px; font-weight: 700; }
     .sidebar-foot {
       margin-top: auto;
@@ -1521,12 +1530,12 @@
       <nav class="nav">
         <button class="nav-item active" data-view-target="dashboard">工作台</button>
         <div class="nav-group">
-          <button class="nav-item" data-view-target="projects" data-nav-parent>AI伴播</button>
+          <button class="nav-item" data-view-target="projects" data-nav-parent aria-expanded="true">AI伴播</button>
           <button class="nav-sub" data-view-target="projects" data-companion-menu="videos">伴播视频</button>
           <button class="nav-sub" data-view-target="projects" data-companion-menu="tasks">生成任务</button>
         </div>
         <div class="nav-group">
-          <button class="nav-item" data-view-target="assets" data-nav-parent>伴播资产</button>
+          <button class="nav-item" data-view-target="assets" data-nav-parent aria-expanded="true">伴播资产</button>
           <button class="nav-sub" data-view-target="assets" data-asset-menu="model" data-asset-title="数字模特" data-asset-note="管理可复用的数字模特资产">数字模特</button>
           <button class="nav-sub" data-view-target="assets" data-asset-menu="action" data-asset-title="动作模版" data-asset-note="管理可复用的动作视频素材">动作模版</button>
         </div>
@@ -1536,7 +1545,7 @@
           <button class="nav-sub is-hidden" data-view-target="outfits">商品搭配</button>
         </div>
         <div class="nav-group">
-          <button class="nav-item" data-view-target="platform-live" data-nav-parent>平台账号接入</button>
+          <button class="nav-item" data-view-target="platform-live" data-nav-parent aria-expanded="true">平台账号接入</button>
           <button class="nav-sub" data-view-target="platform-live">直播账号接入</button>
           <button class="nav-sub" data-view-target="platform-store">店铺授权</button>
         </div>
@@ -2743,19 +2752,23 @@
       document.getElementById("pageNote").textContent = copy[1];
     }
 
+    document.querySelectorAll("[data-nav-parent]").forEach(parent => {
+      parent.addEventListener("click", () => {
+        const group = parent.closest(".nav-group");
+        const isCollapsed = group.classList.toggle("is-collapsed");
+        parent.setAttribute("aria-expanded", String(!isCollapsed));
+      });
+    });
+
     document.querySelectorAll("[data-view-target]").forEach(btn => {
       btn.addEventListener("click", () => {
-        showView(btn.dataset.viewTarget);
-        if (btn.dataset.navParent) {
-          const defaultChild = document.querySelector(`.nav-sub[data-view-target="${btn.dataset.viewTarget}"]`);
-          defaultChild?.classList.add("active");
-          if (defaultChild?.dataset.assetMenu) {
-            setAssetType(defaultChild.dataset.assetMenu);
-            document.getElementById("pageTitle").textContent = defaultChild.dataset.assetTitle;
-            document.getElementById("pageNote").textContent = defaultChild.dataset.assetNote;
-          }
-          if (defaultChild?.dataset.companionMenu) openCompanionSection(defaultChild.dataset.companionMenu);
+        if (btn.hasAttribute("data-nav-parent")) return;
+        const group = btn.closest(".nav-group");
+        if (group) {
+          group.classList.remove("is-collapsed");
+          group.querySelector("[data-nav-parent]")?.setAttribute("aria-expanded", "true");
         }
+        showView(btn.dataset.viewTarget);
         if (btn.dataset.assetMenu) {
           setAssetType(btn.dataset.assetMenu);
           document.querySelectorAll("[data-asset-menu]").forEach(item => item.classList.toggle("active", item === btn));

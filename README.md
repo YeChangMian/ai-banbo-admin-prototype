@@ -2,7 +2,12 @@
 
 AI伴播是一套面向内容电商直播团队的伴播内容生产与现场控制产品原型，包含管理后台、直播中控台浏览器插件和 PRD。
 
-## 本地预览
+## 在线预览
+
+- [AI伴播管理后台](https://yechangmian.github.io/ai-banbo-admin-prototype/)
+- [直播中控台插件](https://yechangmian.github.io/ai-banbo-admin-prototype/live-console/)
+
+## 本地运行
 
 在项目目录启动静态文件服务：
 

@@ -1,12 +1,13 @@
-# AI伴播产品原型 V2
+# AI伴播产品原型 V2.1
 
-AI伴播是一套面向内容电商直播团队的伴播内容生产与现场控制产品原型。V2 将后台主流程简化为“选择商品、选择数字模特、选择展示模版、生成并审核”。
+AI伴播是一套面向内容电商直播团队的伴播内容生产与现场控制产品原型。V2.1 将后台主流程简化为“选择商品、选择数字模特、选择展示模版、生成并审核”，同时保留各业务页面的完整判断字段。
 
 ## 在线预览
 
 - [AI伴播管理后台](https://yechangmian.github.io/ai-banbo-admin-prototype/)
 - [直播中控台插件](https://yechangmian.github.io/ai-banbo-admin-prototype/live-console/)
 - [V1 复杂版存档](https://yechangmian.github.io/ai-banbo-admin-prototype/archive/v1/)
+- [V2 字段精简试验版存档](https://yechangmian.github.io/ai-banbo-admin-prototype/archive/v2-minimal/)
 
 ## 本地运行
 
@@ -26,6 +27,7 @@ python3 -m http.server 8128
 - `index.html`：AI伴播管理后台原型
 - `index-v2.html`：V2 简化版原型源文件
 - `archive/v1/`：V1 复杂版后台和 PRD 存档
+- `archive/v2-minimal/`：字段精简试验版存档
 - `live-console/`：直播中控台浏览器插件原型
 - `assets/`：商品与数字模特案例素材
 - `PRD.md`：产品需求文档

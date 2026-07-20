@@ -53,7 +53,7 @@
               <div class="banbo-switch-control"><span id="companionStatusText">AI伴播已开启</span><button class="switch on" id="companionSwitch" aria-label="开启或关闭AI伴播"></button></div>
             </div>
             <div class="banbo-setting-divider"></div>
-            <div class="banbo-model-control"><div><label for="autoModelSelect">自动触发数字模特</label><span>仅限制自动触发，手动播放不受影响</span></div><select id="autoModelSelect"><option value="">全部数字模特</option><option value="qingyu">乔青予</option><option value="ruoxia">林若夏</option><option value="qiaohu">巧虎</option></select></div>
+            <div class="banbo-model-control"><div><label for="autoModelSelect">数字模特</label><span>仅自动触发所选模特的伴播视频，其他模特视频需手动选择播放</span></div><select id="autoModelSelect"><option value="">全部</option><option value="qingyu">乔青予</option><option value="ruoxia">林若夏</option><option value="qiaohu">巧虎</option></select></div>
           </section>
           <section class="banbo-card">
             <div class="banbo-card-head"><h3>当前播放</h3><span class="banbo-tag green" id="playingState">播放中</span></div>
@@ -277,7 +277,7 @@
   document.getElementById('autoModelSelect').addEventListener('change', event => {
     autoModelId = event.target.value;
     const modelName = event.target.options[event.target.selectedIndex].textContent;
-    showToast(autoModelId ? `自动触发仅播放：${modelName}` : '自动触发已使用全部数字模特');
+    showToast(autoModelId ? `数字模特：${modelName}` : '数字模特：全部');
   });
   document.getElementById('voiceBoardButton').addEventListener('click', () => setVoiceBoard(true));
   document.getElementById('stopVideo').addEventListener('click', () => {

@@ -205,7 +205,7 @@
       if (!actions || actions.querySelector('.banbo-product-video-entry') || !videos.length) return;
       const entry = document.createElement('span');
       entry.className = 'banbo-product-video-entry';
-      entry.innerHTML = `<span>${videos.length} 个伴播视频</span><div class="banbo-product-video-popover"><b>${videos.length ? '可用伴播视频' : '暂无可用伴播视频'}</b>${videos.length ? videos.map(video => `<div class="banbo-popover-video"><img src="${video.cover}" alt="${video.name}" /><span><strong>${video.name}</strong><small>${video.model} · ${video.trigger} · 已触发 ${video.triggerCount} 次</small></span><div class="banbo-popover-actions">${videoActionButton('play', video.id)}${videoActionButton('next', video.id)}</div></div>`).join('') : '<p>需要先在 AI 伴播后台生成并审核视频。</p>'}</div>`;
+      entry.innerHTML = `<span>1 个伴播视频</span><div class="banbo-product-video-popover"><b>可用伴播视频</b>${videos.map(video => `<div class="banbo-popover-video"><img src="${video.cover}" alt="${video.name}" /><span><strong>${video.name}</strong><small>${video.model} · ${video.trigger} · 已触发 ${video.triggerCount} 次</small></span><div class="banbo-popover-actions">${videoActionButton('play', video.id)}${videoActionButton('next', video.id)}</div></div>`).join('')}</div>`;
       actions.insertBefore(entry, actions.querySelector('button'));
       if (product) row.dataset.banboProductId = product.id;
     });

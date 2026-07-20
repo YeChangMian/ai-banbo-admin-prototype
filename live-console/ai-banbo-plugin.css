@@ -124,6 +124,12 @@
 .banbo-switch-control { display: flex; align-items: center; gap: 9px; flex: 0 0 auto; color: var(--banbo-text); font-size: 14px; font-weight: 760; }
 .banbo-setting-divider { height: 1px; margin: 14px 0; background: #f1e7ea; }
 .banbo-section-divider { height: 1px; margin: 16px 0; background: var(--banbo-line); }
+.banbo-model-control { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.banbo-model-control > div { min-width: 0; }
+.banbo-model-control label { display: block; font-size: 14px; font-weight: 800; }
+.banbo-model-control span { display: block; margin-top: 4px; color: var(--banbo-muted); font-size: 12px; }
+.banbo-model-control select { width: 150px; height: 36px; flex: 0 0 150px; border: 1px solid var(--banbo-line); border-radius: 6px; background: #fff; color: var(--banbo-text); padding: 0 9px; outline: 0; }
+.banbo-model-control select:focus { border-color: var(--banbo); }
 
 .assistant-board .switch.on { background: var(--banbo); }
 

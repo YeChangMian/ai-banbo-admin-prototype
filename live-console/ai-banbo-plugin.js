@@ -96,7 +96,9 @@
   let pendingAction = null;
 
   function productVideos(productIndex, includeGlobal = false) {
-    return videoData.filter(video => video.productIndex === productIndex || (includeGlobal && !video.productIndex));
+    return videoData
+      .filter(video => video.productIndex === productIndex || (includeGlobal && !video.productIndex))
+      .slice(0, 1);
   }
 
   function videoActionButton(action, videoId) {

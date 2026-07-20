@@ -68,7 +68,7 @@
         </div>
       </div>
       <div class="tab-content" data-banbo-panel="videos">
-        <div class="banbo-toolbar"><input class="banbo-search" id="videoSearch" placeholder="搜索视频名称/商品名称/商品ID" /></div>
+        <div class="banbo-toolbar"><label class="banbo-video-model-filter" for="videoModelFilter"><span>数字模特</span><select id="videoModelFilter" aria-label="筛选数字模特"><option value="">全部</option><option value="qingyu">乔青予</option><option value="ruoxia">林若夏</option><option value="qiaohu">巧虎</option></select></label><input class="banbo-search" id="videoSearch" placeholder="搜索视频名称/商品名称/商品ID" /></div>
         <div class="banbo-video-list" id="videoList"></div>
       </div>
       <div class="tab-content" data-banbo-panel="data">
@@ -190,8 +190,9 @@
 
   function renderVideos() {
     const keyword = document.getElementById('videoSearch').value.trim().toLowerCase();
+    const modelId = document.getElementById('videoModelFilter').value;
     const list = videoData
-      .filter(video => keyword ? `${video.name} ${video.product} ${video.productId} ${video.detail}`.toLowerCase().includes(keyword) : !video.productIndex)
+      .filter(video => (!modelId || video.modelId === modelId) && (keyword ? `${video.name} ${video.product} ${video.productId} ${video.detail}`.toLowerCase().includes(keyword) : !video.productIndex))
       .sort((a, b) => b.triggerCount - a.triggerCount);
     document.getElementById('videoList').innerHTML = list.length ? list.map(video => `
       <article class="banbo-video-row"><img class="banbo-mini-cover" src="${video.cover}" alt="${video.name}" /><div><div class="banbo-row-title">${video.name}</div><div class="banbo-row-meta">${video.model} · ${video.trigger} · 已触发 ${video.triggerCount} 次${video.productIndex ? `<br>${video.product}` : ''}</div></div><div class="banbo-row-actions">${videoActionButton('play', video.id)}${videoActionButton('next', video.id)}</div></article>`).join('') : '<div class="banbo-empty">没有匹配的视频</div>';
@@ -286,6 +287,7 @@
     showToast(isPlaying ? '当前视频已继续播放' : '当前视频已停止，AI伴播仍保持开启');
   });
   document.getElementById('nextVideo').addEventListener('click', playNextVideo);
+  document.getElementById('videoModelFilter').addEventListener('change', renderVideos);
   document.getElementById('videoSearch').addEventListener('input', renderVideos);
 
   document.getElementById('playQueue').addEventListener('dragstart', event => {

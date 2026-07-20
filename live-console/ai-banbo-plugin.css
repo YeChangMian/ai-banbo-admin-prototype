@@ -217,6 +217,10 @@
 .banbo-top-list span { color: var(--banbo-muted); font-size: 12px; }
 
 .banbo-toolbar { margin-bottom: 12px; }
+.banbo-video-model-filter { height: 38px; display: inline-flex; flex: 0 0 auto; align-items: center; overflow: hidden; border: 1px solid var(--banbo-line); border-radius: 6px; background: #fff; }
+.banbo-video-model-filter > span { padding-left: 10px; color: var(--banbo-muted); font-size: 12px; white-space: nowrap; }
+.banbo-video-model-filter select { width: 92px; height: 36px; border: 0; background: #fff; color: var(--banbo-text); padding: 0 8px; outline: 0; }
+.banbo-video-model-filter:focus-within { border-color: var(--banbo); }
 .banbo-search {
   min-width: 0;
   height: 38px;

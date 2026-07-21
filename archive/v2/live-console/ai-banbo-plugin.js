@@ -9,12 +9,12 @@
   document.getElementById('commentModalMask')?.remove();
 
   const videoData = [
-    { id: 'v1', name: '速干短袖正面展示', type: '生成视频', modelId: 'qingyu', model: '乔青予', trigger: '商品讲解', triggerCount: 36, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/host-xiaoqing-half.png', detail: '正面展示（多款色）' },
-    { id: 'v2', name: '面料细节展示', type: '生成视频', modelId: 'ruoxia', model: '林若夏', trigger: '主播口令', triggerCount: 18, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/lyocell-cardigan-half.png', detail: '抬手展示面料、袖口和领口细节' },
-    { id: 'v6', name: '短袖多款色轮播', type: '生成视频', modelId: 'qiaohu', model: '巧虎', trigger: '商品讲解', triggerCount: 24, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/qiaohu/front.png', detail: '白色、黑色款色轮流展示' },
-    { id: 'v7', name: '明星同款上身展示', type: '生成视频', modelId: 'qingyu', model: '乔青予', trigger: '商品讲解', triggerCount: 15, productIndex: '2', product: '王一博同款抗菌短袖', productId: '3829847837299048729', cover: '../assets/models/host-xiaoqing-half.png', detail: '正面站姿展示版型' },
-    { id: 'v3', name: '福袋互动视频', type: '上传视频', modelId: 'qiaohu', model: '巧虎', trigger: '主播口令', triggerCount: 42, productIndex: '', product: '不关联商品', productId: '', cover: '../assets/models/qiaohu/front.png', detail: '口令关键词：福袋来了、参与福袋' },
-    { id: 'v5', name: '关注直播间提醒', type: '上传视频', modelId: 'ruoxia', model: '林若夏', trigger: '评论触发', triggerCount: 29, productIndex: '', product: '不关联商品', productId: '', cover: '../assets/models/lyocell-cardigan-half.png', detail: '评论关键词：怎么关注、怎么领券' }
+    { id: 'v1', name: '速干短袖正面展示流', type: '动作流', modelId: 'qingyu', model: '乔青予', trigger: '商品讲解', triggerCount: 36, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../../../assets/models/host-xiaoqing-half.png', detail: '正面展示（多款色） > 转身展示 > 细节展示' },
+    { id: 'v2', name: '面料细节展示', type: '动作流', modelId: 'ruoxia', model: '林若夏', trigger: '主播口令', triggerCount: 18, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../../../assets/models/lyocell-cardigan-half.png', detail: '抬手展示 > 面料细节 > 回到正面' },
+    { id: 'v6', name: '短袖多款色轮播', type: '动作流', modelId: 'qiaohu', model: '巧虎', trigger: '商品讲解', triggerCount: 24, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../../../assets/models/qiaohu/front.png', detail: '白色展示 > 黑色展示 > 版型对比' },
+    { id: 'v7', name: '明星同款上身展示', type: '动作流', modelId: 'qingyu', model: '乔青予', trigger: '商品讲解', triggerCount: 15, productIndex: '2', product: '王一博同款抗菌短袖', productId: '3829847837299048729', cover: '../../../assets/models/host-xiaoqing-half.png', detail: '正面站姿 > 侧身展示 > 袖口细节' },
+    { id: 'v3', name: '福袋互动视频', type: '视频', modelId: 'qiaohu', model: '巧虎', trigger: '活动节点', triggerCount: 42, productIndex: '', product: '不关联商品', productId: '', cover: '../../../assets/models/qiaohu/front.png', detail: '活动节点：发福袋' },
+    { id: 'v5', name: '关注直播间提醒', type: '视频', modelId: 'ruoxia', model: '林若夏', trigger: '评论触发', triggerCount: 29, productIndex: '', product: '不关联商品', productId: '', cover: '../../../assets/models/lyocell-cardigan-half.png', detail: '评论关键词：怎么关注、怎么领券' }
   ];
 
   const products = [
@@ -28,7 +28,6 @@
   let companionEnabled = true;
   let isPlaying = true;
   let autoModelId = '';
-  let productPlaybackMode = 'loop';
   let voiceBoardEnabled = false;
   let queueIds = ['v3', 'v2', 'v6'];
   let draggedQueueId = '';
@@ -55,8 +54,6 @@
             </div>
             <div class="banbo-setting-divider"></div>
             <div class="banbo-model-control"><div><label for="autoModelSelect">数字模特</label><span>仅自动触发所选模特的伴播视频，其他模特视频需手动选择播放</span></div><select id="autoModelSelect"><option value="">全部</option><option value="qingyu">乔青予</option><option value="ruoxia">林若夏</option><option value="qiaohu">巧虎</option></select></div>
-            <div class="banbo-setting-divider"></div>
-            <div class="banbo-model-control"><div><label for="productPlaybackMode">商品讲解播放方式</label><span id="productPlaybackHint">同一商品的视频轮流循环播放，直至结束商品讲解</span></div><select id="productPlaybackMode"><option value="loop">循环播放</option><option value="once">单次播放</option></select></div>
           </section>
           <section class="banbo-card">
             <div class="banbo-card-head"><h3>当前播放</h3><span class="banbo-tag green" id="playingState">播放中</span></div>
@@ -77,8 +74,8 @@
       <div class="tab-content" data-banbo-panel="data">
         <div class="banbo-stack">
           <section class="banbo-card"><div class="banbo-card-head"><h3>本场伴播数据</h3><span>实时</span></div><div class="banbo-stat-grid"><div class="banbo-stat"><span>伴播时长</span><b>1.6小时</b></div><div class="banbo-stat"><span>触发次数</span><b>18</b></div><div class="banbo-stat"><span>播放视频</span><b>26</b></div></div></section>
-          <section class="banbo-card"><div class="banbo-card-head"><h3>触发方式统计</h3><span>共 18 次</span></div><div class="banbo-data-list"><div><span>商品讲解</span><b>11</b></div><div><span>主播口令</span><b>4</b></div><div><span>评论触发</span><b>3</b></div></div></section>
-          <section class="banbo-card"><div class="banbo-card-head"><h3>伴播视频 Top10</h3><span>按播放次数倒序</span></div><div class="banbo-top-list"><div><i>1</i><img src="../assets/models/stripe-tank-half.png" alt="福袋互动视频封面" /><b>福袋互动视频</b><span>42 次</span></div><div><i>2</i><img src="../assets/models/host-xiaoqing-half.png" alt="速干短袖正面展示流封面" /><b>速干短袖正面展示流</b><span>36 次</span></div><div><i>3</i><img src="../assets/models/host-xiaoqing-half.png" alt="关注直播间提醒封面" /><b>关注直播间提醒</b><span>29 次</span></div><div><i>4</i><img src="../assets/models/fairy-dress-half.png" alt="短袖多款色轮播封面" /><b>短袖多款色轮播</b><span>24 次</span></div><div><i>5</i><img src="../assets/models/lyocell-blouse-half.png" alt="面料细节展示封面" /><b>面料细节展示</b><span>18 次</span></div><div><i>6</i><img src="../assets/models/stripe-tank-half.png" alt="明星同款上身展示封面" /><b>明星同款上身展示</b><span>15 次</span></div><div><i>7</i><img src="../assets/models/host-xiaoqing-half.png" alt="评论感谢互动封面" /><b>评论感谢互动</b><span>12 次</span></div><div><i>8</i><img src="../assets/models/fairy-dress-half.png" alt="优惠券领取提醒封面" /><b>优惠券领取提醒</b><span>9 次</span></div><div><i>9</i><img src="../assets/models/lyocell-blouse-half.png" alt="新品上身展示封面" /><b>新品上身展示</b><span>7 次</span></div><div><i>10</i><img src="../assets/models/stripe-tank-half.png" alt="关注抽奖提醒封面" /><b>关注抽奖提醒</b><span>5 次</span></div></div></section>
+          <section class="banbo-card"><div class="banbo-card-head"><h3>触发方式统计</h3><span>共 18 次</span></div><div class="banbo-data-list"><div><span>商品讲解</span><b>9</b></div><div><span>主播口令</span><b>4</b></div><div><span>评论触发</span><b>3</b></div><div><span>活动节点</span><b>2</b></div></div></section>
+          <section class="banbo-card"><div class="banbo-card-head"><h3>伴播视频 Top10</h3><span>按播放次数倒序</span></div><div class="banbo-top-list"><div><i>1</i><img src="../../../assets/models/stripe-tank-half.png" alt="福袋互动视频封面" /><b>福袋互动视频</b><span>42 次</span></div><div><i>2</i><img src="../../../assets/models/host-xiaoqing-half.png" alt="速干短袖正面展示流封面" /><b>速干短袖正面展示流</b><span>36 次</span></div><div><i>3</i><img src="../../../assets/models/host-xiaoqing-half.png" alt="关注直播间提醒封面" /><b>关注直播间提醒</b><span>29 次</span></div><div><i>4</i><img src="../../../assets/models/fairy-dress-half.png" alt="短袖多款色轮播封面" /><b>短袖多款色轮播</b><span>24 次</span></div><div><i>5</i><img src="../../../assets/models/lyocell-blouse-half.png" alt="面料细节展示封面" /><b>面料细节展示</b><span>18 次</span></div><div><i>6</i><img src="../../../assets/models/stripe-tank-half.png" alt="明星同款上身展示封面" /><b>明星同款上身展示</b><span>15 次</span></div><div><i>7</i><img src="../../../assets/models/host-xiaoqing-half.png" alt="评论感谢互动封面" /><b>评论感谢互动</b><span>12 次</span></div><div><i>8</i><img src="../../../assets/models/fairy-dress-half.png" alt="优惠券领取提醒封面" /><b>优惠券领取提醒</b><span>9 次</span></div><div><i>9</i><img src="../../../assets/models/lyocell-blouse-half.png" alt="新品上身展示封面" /><b>新品上身展示</b><span>7 次</span></div><div><i>10</i><img src="../../../assets/models/stripe-tank-half.png" alt="关注抽奖提醒封面" /><b>关注抽奖提醒</b><span>5 次</span></div></div></section>
         </div>
       </div>
     </div>
@@ -108,7 +105,7 @@
   }
 
   function automaticProductVideos(productIndex) {
-    return videoData.filter(video => video.productIndex === productIndex && video.trigger === '商品讲解' && (!autoModelId || video.modelId === autoModelId));
+    return videoData.filter(video => video.productIndex === productIndex && (!autoModelId || video.modelId === autoModelId));
   }
 
   function videoActionButton(action, videoId) {
@@ -180,16 +177,8 @@
 
   function playNextVideo() {
     const next = videoData.find(video => video.id === queueIds[0]);
-    if (!next) {
-      if (productPlaybackMode === 'once' && currentVideo.trigger === '商品讲解') {
-        isPlaying = false;
-        renderCurrentVideo();
-        showToast('当前商品的视频已各播放一次');
-      } else showToast('播放队列为空');
-      return;
-    }
+    if (!next) { showToast('播放队列为空'); return; }
     queueIds.shift();
-    if (productPlaybackMode === 'loop' && currentVideo.trigger === '商品讲解' && currentVideo.productIndex === currentProduct.index) queueIds.push(currentVideo.id);
     playVideo(next);
   }
 
@@ -226,11 +215,7 @@
   function setCurrentProduct(product) {
     currentProduct = product;
     const videos = automaticProductVideos(product.index);
-    if (videos.length) {
-      queueIds = videos.slice(1).map(video => video.id);
-      playVideo(videos[0]);
-      showToast(productPlaybackMode === 'loop' ? '已开始循环播放当前商品视频' : `将依次播放 ${videos.length} 条视频各一次`);
-    }
+    if (videos.length) playVideo(videos[0]);
     else showToast(autoModelId ? '当前商品没有所选数字模特的伴播视频' : '当前讲解商品暂无可用伴播视频');
   }
 
@@ -294,12 +279,6 @@
     autoModelId = event.target.value;
     const modelName = event.target.options[event.target.selectedIndex].textContent;
     showToast(autoModelId ? `数字模特：${modelName}` : '数字模特：全部');
-  });
-  document.getElementById('productPlaybackMode').addEventListener('change', event => {
-    productPlaybackMode = event.target.value;
-    const loop = productPlaybackMode === 'loop';
-    document.getElementById('productPlaybackHint').textContent = loop ? '同一商品的视频轮流循环播放，直至结束商品讲解' : '点击讲解商品后，每条匹配视频仅播放一次';
-    showToast(loop ? '商品讲解：循环播放' : '商品讲解：单次播放');
   });
   document.getElementById('voiceBoardButton').addEventListener('click', () => setVoiceBoard(true));
   document.getElementById('stopVideo').addEventListener('click', () => {

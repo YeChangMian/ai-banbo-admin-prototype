@@ -151,10 +151,10 @@
     const videos=[
       {id:'V260717001',type:'生成视频',name:'SC26X617_正面展示',template:'正面展示',articleNo:'SC26X617',product:'蝶影寻芳新中式套装三件套',productId:'3829850811488403472',productImage:'assets/products/butterfly-set-white-01.webp',trigger:'商品讲解',plays:42,creator:'王欣怡',created:'今天 10:18',image:'assets/models/host-xiaoqing-half.png'},
       {id:'V260717002',type:'生成视频',name:'SC26L328_转身展示',template:'转身展示',articleNo:'SC26L328',product:'淡紫雪纺吊带连衣裙',productId:'3829834007504355595',productImage:'assets/products/fairy-dress-white-01.webp',trigger:'商品讲解',plays:36,creator:'王欣怡',created:'今天 09:46',image:'assets/models/fairy-dress-half.png'},
-      {id:'V260716018',type:'生成视频',name:'SC26K519_细节展示',template:'细节展示',articleNo:'SC26K519',product:'醋酸莱赛尔针织开衫',productId:'3829978984200929459',productImage:'assets/products/lyocell-blouse-white-01.webp',trigger:'主播口令',plays:28,creator:'李梦琪',created:'昨天 17:20',image:'assets/models/lyocell-blouse-half.png'},
+      {id:'V260716018',type:'生成视频',name:'SC26K519_细节展示',template:'细节展示',articleNo:'SC26K519',product:'醋酸莱赛尔针织开衫',productId:'3829978984200929459',productImage:'assets/products/lyocell-blouse-white-01.webp',trigger:'商品讲解>主播口令',plays:28,creator:'李梦琪',created:'昨天 17:20',image:'assets/models/lyocell-blouse-half.png'},
       {id:'V260721005',type:'生成视频',name:'SC26N106_正面展示',template:'正面展示',articleNo:'SC26N106',product:'莱赛尔棉直筒牛仔裤',productId:'3829979643394523490',productImage:'assets/products/lyocell-denim-jeans-white-01.webp',trigger:'商品讲解',plays:12,creator:'陈航',created:'2026-07-21 09:54',image:'assets/models/qiaohu/front.png'},
-      {id:'V260720012',type:'生成视频',name:'SC26S315_转身展示',template:'转身展示',articleNo:'SC26S315',product:'棉质直筒半身裙',productId:'3829969683273089504',productImage:'assets/products/cotton-straight-skirt-white-01.webp',trigger:'商品讲解',plays:8,creator:'李梦琪',created:'2026-07-20 17:32',image:'assets/models/fairy-dress-half.png'},
-      {id:'V260716012',type:'上传视频',name:'福袋互动提醒.mp4',fileName:'福袋互动提醒.mp4',product:'不关联商品',productId:'',productImage:'',trigger:'主播口令',plays:24,creator:'陈航',created:'昨天 15:32',image:'assets/models/stripe-tank-half.png'}
+      {id:'V260720012',type:'生成视频',name:'SC26S315_转身展示',template:'转身展示',articleNo:'SC26S315',product:'棉质直筒半身裙',productId:'3829969683273089504',productImage:'assets/products/cotton-straight-skirt-white-01.webp',trigger:'商品讲解>弹幕评论',plays:8,creator:'李梦琪',created:'2026-07-20 17:32',image:'assets/models/fairy-dress-half.png'},
+      {id:'V260716012',type:'上传视频',name:'福袋互动提醒.mp4',fileName:'福袋互动提醒.mp4',product:'不关联商品',productId:'',productImage:'',trigger:'弹幕评论',plays:24,creator:'陈航',created:'昨天 15:32',image:'assets/models/stripe-tank-half.png'}
     ];
     const productionTasks=[
       {id:'260721008',videoId:'V260721008',video:'SC26X617_正面展示',articleNo:'SC26X617',product:'蝶影寻芳新中式套装三件套',productId:'3829850811488403472',productImage:'assets/products/butterfly-set-white-01.webp',model:'乔青予',template:'正面展示',trigger:'商品讲解',status:'待确认',creator:'王欣怡',created:'2026-07-21 10:26',image:'assets/models/host-xiaoqing-half.png'},
@@ -380,5 +380,60 @@
     });
     new MutationObserver(markProductWarnings).observe(document.getElementById('videoList'), {childList:true, subtree:true});
     markProductWarnings();
+    const systemTriggerOptions = [
+      ['product', '商品讲解', '关联商品的商品讲解期间自动衔接播放'],
+      ['product-command', '商品讲解>主播口令', '关联商品的商品讲解期间主播口令触发'],
+      ['product-comment', '商品讲解>弹幕评论', '关联商品的商品讲解期间弹幕评论触发'],
+      ['command', '主播口令', '主播口令触发'],
+      ['comment', '弹幕评论', '弹幕评论触发']
+    ];
+    function setupSystemTriggerModal(modalId, attribute, commandFieldId, commentFieldId, commandInputId, commentInputId, prefix) {
+      const modal = document.getElementById(modalId);
+      const firstInput = modal?.querySelector(`[${attribute}]`);
+      const field = firstInput?.closest('.field');
+      if (!modal || !field) return;
+      field.querySelector('.check-list').innerHTML = systemTriggerOptions.map(([kind, name, description], index) => `<label class="check-option trigger-choice"><input type="checkbox" ${attribute}="" data-system-trigger="${kind}" value="${name}" ${index === 0 ? 'checked' : ''}/><span><b>${name}</b><small>${description}</small></span></label>`).join('');
+      const commandField = modal.querySelector(`#${commandFieldId}`);
+      const commentField = modal.querySelector(`#${commentFieldId}`);
+      [commandField, commentField].forEach(item => { item?.removeAttribute('hidden'); item?.classList.add('action-trigger-config'); });
+      commandField?.querySelector('label').replaceChildren('主播口令关键词');
+      commentField?.querySelector('label').replaceChildren('弹幕评论关键词');
+      const productCommandField = commandField?.cloneNode(true);
+      const productCommentField = commentField?.cloneNode(true);
+      if (!productCommandField || !productCommentField) return;
+      productCommandField.id = `${prefix}ProductCommandField`;
+      productCommentField.id = `${prefix}ProductCommentField`;
+      productCommandField.querySelector('label').replaceChildren('商品讲解>主播口令关键词');
+      productCommentField.querySelector('label').replaceChildren('商品讲解>弹幕评论关键词');
+      productCommandField.querySelector('input').id = `${prefix}ProductCommandKeywords`;
+      productCommentField.querySelector('input').id = `${prefix}ProductCommentKeywords`;
+      productCommandField.querySelector('input').placeholder = '输入商品讲解期间的口令关键词';
+      productCommentField.querySelector('input').placeholder = '输入商品讲解期间的弹幕关键词';
+      commandField.after(productCommandField);
+      productCommandField.after(productCommentField);
+      const sync = () => {
+        const selected = [...field.querySelectorAll(`[${attribute}]:checked`)].map(input => input.dataset.systemTrigger);
+        commandField?.classList.toggle('show', selected.includes('command'));
+        commentField?.classList.toggle('show', selected.includes('comment'));
+        productCommandField.classList.toggle('show', selected.includes('product-command'));
+        productCommentField.classList.toggle('show', selected.includes('product-comment'));
+      };
+      field.addEventListener('change', sync);
+      sync();
+      return {field, commandField, commentField, productCommandField, productCommentField};
+    }
+    const uploadTriggerConfig = setupSystemTriggerModal('uploadVideoModal', 'data-upload-trigger', 'uploadVideoCommandField', 'uploadVideoCommentField', 'uploadVideoCommandKeywords', 'uploadVideoCommentKeywords', 'uploadVideo');
+    const batchTriggerConfig = setupSystemTriggerModal('batchTriggerModal', 'data-batch-trigger', 'batchCommandField', 'batchCommentField', 'batchCommandKeywords', 'batchCommentKeywords', 'batch');
+    const videoTriggerFilter = document.getElementById('videoTriggerFilter');
+    if (videoTriggerFilter) videoTriggerFilter.innerHTML = '<option value="">全部触发方式</option>' + systemTriggerOptions.map(([, name]) => `<option>${name}</option>`).join('');
+    document.getElementById('saveBatchTrigger')?.addEventListener('click', () => {
+      const selected = [...document.querySelectorAll('#batchTriggerModal [data-batch-trigger]:checked')].map(input => ({kind: input.dataset.systemTrigger, name: input.value}));
+      const value = selected.map(item => item.name).join('、');
+      const detail = selected.map(item => {
+        const input = item.kind === 'product-command' ? '#batchProductCommandKeywords' : item.kind === 'product-comment' ? '#batchProductCommentKeywords' : item.kind === 'command' ? '#batchCommandKeywords' : '#batchCommentKeywords';
+        return item.kind === 'product' ? '关联商品的商品讲解期间自动衔接播放' : `${item.name}：${document.querySelector(input)?.value || ''}`;
+      }).join('；');
+      window.eval(`videos.filter(video => state.selectedVideos.has(video.id)).forEach(video => { video.trigger = ${JSON.stringify(value)}; video.triggerDetail = ${JSON.stringify(detail)}; }); renderVideos();`);
+    });
   })();
 </script>

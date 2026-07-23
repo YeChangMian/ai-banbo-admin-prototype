@@ -324,14 +324,49 @@
         commentField?.classList.toggle('show', selected.some(item => item.includes('comment')));
       }));
     }
+    const commandField = document.querySelector('#templateModal [data-trigger-config="command"]');
+    const commentField = document.querySelector('#templateModal [data-trigger-config="comment"]');
+    if (commandField && commentField) {
+      commandField.querySelector('label').textContent = '主播口令关键词';
+      commentField.querySelector('label').textContent = '弹幕评论关键词';
+      const productCommandField = commandField.cloneNode(true);
+      const productCommentField = commentField.cloneNode(true);
+      productCommandField.id = 'productCommandTriggerField';
+      productCommentField.id = 'productCommentTriggerField';
+      productCommandField.querySelector('label').textContent = '商品讲解>主播口令关键词';
+      productCommentField.querySelector('label').textContent = '商品讲解>弹幕评论关键词';
+      productCommandField.querySelector('input').id = 'productCommandKeywords';
+      productCommentField.querySelector('input').id = 'productCommentKeywords';
+      productCommandField.querySelector('input').placeholder = '例如：看一下蓝色、换个颜色';
+      productCommentField.querySelector('input').placeholder = '例如：想看蓝色、蓝色款';
+      commandField.after(productCommandField);
+      productCommandField.after(productCommentField);
+      const syncTriggerConfigs = () => {
+        const selected = [...document.querySelectorAll('#templateModal [data-action-trigger]:checked')].map(input => input.dataset.actionTrigger);
+        commandField.classList.toggle('show', selected.includes('command'));
+        commentField.classList.toggle('show', selected.includes('comment'));
+        productCommandField.classList.toggle('show', selected.includes('product-command'));
+        productCommentField.classList.toggle('show', selected.includes('product-comment'));
+      };
+      templateTriggerField?.addEventListener('change', syncTriggerConfigs);
+      const resetTriggerForm = window.resetActionForm;
+      window.resetActionForm = function () {
+        resetTriggerForm();
+        productCommandField.querySelector('input').value = '';
+        productCommentField.querySelector('input').value = '';
+        syncTriggerConfigs();
+      };
+    }
     document.getElementById('actionCreate').addEventListener('click', () => {
       const selected = [...document.querySelectorAll('#templateModal [data-action-trigger]:checked')].map(input => ({kind: input.dataset.actionTrigger, name: input.value}));
-      if (selected.some(item => item.kind.includes('command')) && !document.getElementById('commandKeywords').value.trim()) document.getElementById('commandKeywords').value = '展示一下、换个颜色';
-      if (selected.some(item => item.kind.includes('comment')) && !document.getElementById('commentKeywords').value.trim()) document.getElementById('commentKeywords').value = '想看上身、展示细节';
+      if (selected.some(item => item.kind === 'command') && !document.getElementById('commandKeywords').value.trim()) document.getElementById('commandKeywords').value = '展示一下、换个颜色';
+      if (selected.some(item => item.kind === 'comment') && !document.getElementById('commentKeywords').value.trim()) document.getElementById('commentKeywords').value = '想看上身、展示细节';
+      if (selected.some(item => item.kind === 'product-command') && !document.getElementById('productCommandKeywords').value.trim()) document.getElementById('productCommandKeywords').value = '看一下蓝色、换个颜色';
+      if (selected.some(item => item.kind === 'product-comment') && !document.getElementById('productCommentKeywords').value.trim()) document.getElementById('productCommentKeywords').value = '想看蓝色、蓝色款';
       const detail = selected.map(item => {
         if (item.kind === 'product') return '关联商品的商品讲解期间自动衔接播放';
-        if (item.kind === 'product-command') return `关联商品的商品讲解期间口令触发：${document.getElementById('commandKeywords').value}`;
-        if (item.kind === 'product-comment') return `关联商品的商品讲解期间弹幕评论触发：${document.getElementById('commentKeywords').value}`;
+        if (item.kind === 'product-command') return `关联商品的商品讲解期间口令触发：${document.getElementById('productCommandKeywords').value}`;
+        if (item.kind === 'product-comment') return `关联商品的商品讲解期间弹幕评论触发：${document.getElementById('productCommentKeywords').value}`;
         if (item.kind === 'command') return `口令关键词：${document.getElementById('commandKeywords').value}`;
         return `评论关键词：${document.getElementById('commentKeywords').value}`;
       }).join('；');

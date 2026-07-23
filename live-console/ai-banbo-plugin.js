@@ -166,7 +166,7 @@
     const list = queueIds.map(id => videoData.find(video => video.id === id)).filter(Boolean);
     document.getElementById('playQueueCount').textContent = `${list.length} 条`;
     document.getElementById('playQueue').innerHTML = list.length ? list.map((video, index) => `
-      <article class="banbo-queue-row" draggable="true" data-queue-video="${video.id}"><span class="banbo-drag" title="拖动排序">⋮⋮</span><span class="banbo-index">${String(index + 1).padStart(2, '0')}</span><img class="banbo-mini-cover" src="${video.cover}" alt="${video.name}" /><div><div class="banbo-row-title">${video.name}</div><div class="banbo-row-meta">${triggerMeta(video)}${index === 0 && video.id === 'v3' ? '<span class="banbo-insert-tag">触发插队</span>' : ''}</div></div><div class="banbo-queue-actions">${videoActionButton('play', video.id)}${videoActionButton('remove', video.id)}</div></article>`).join('') : '<div class="banbo-empty compact">暂无待播放视频</div>';
+      <article class="banbo-queue-row" draggable="true" data-queue-video="${video.id}"><span class="banbo-drag" title="拖动排序">⋮⋮</span><span class="banbo-index">${String(index + 1).padStart(2, '0')}</span><img class="banbo-mini-cover" src="${video.cover}" alt="${video.name}" /><div><div class="banbo-row-title">${video.name}${index === 0 && video.id === 'v3' ? ' <span class="banbo-insert-tag">触发排队</span>' : ''}</div><div class="banbo-row-meta">${triggerMeta(video)}</div></div><div class="banbo-queue-actions">${videoActionButton('play', video.id)}${videoActionButton('remove', video.id)}</div></article>`).join('') : '<div class="banbo-empty compact">暂无待播放视频</div>';
   }
 
   function playVideo(video) {

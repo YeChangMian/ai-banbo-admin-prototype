@@ -435,5 +435,20 @@
       }).join('；');
       window.eval(`videos.filter(video => state.selectedVideos.has(video.id)).forEach(video => { video.trigger = ${JSON.stringify(value)}; video.triggerDetail = ${JSON.stringify(detail)}; }); renderVideos();`);
     });
+    const renderVideoModelColumn = () => {
+      const headerRow = document.querySelector('#videoTable thead tr');
+      const productHeader = [...headerRow?.children || []].find(cell => cell.textContent.trim() === '关联商品');
+      if (productHeader && !headerRow.querySelector('[data-video-model-header]')) productHeader.insertAdjacentHTML('afterend', '<th data-video-model-header>数字模特</th>');
+      document.querySelectorAll('#videoList tr').forEach(row => {
+        if (row.querySelector('[data-video-model-cell]')) return;
+        const videoId = row.querySelector('[data-video-check]')?.dataset.videoCheck;
+        if (!videoId) return;
+        const model = window.eval(`(() => { const video = videos.find(item => item.id === ${JSON.stringify(videoId)}); const task = productionTasks.find(item => item.videoId === ${JSON.stringify(videoId)}); return video?.model || task?.model || ''; })()`);
+        const productCell = row.children[3];
+        if (productCell) productCell.insertAdjacentHTML('afterend', `<td data-video-model-cell>${model || '<span class="cell-sub">未关联数字模特</span>'}</td>`);
+      });
+    };
+    new MutationObserver(renderVideoModelColumn).observe(document.getElementById('videoList'), {childList:true, subtree:true});
+    renderVideoModelColumn();
   })();
 </script>

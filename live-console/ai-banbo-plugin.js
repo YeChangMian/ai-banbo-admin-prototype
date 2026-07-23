@@ -13,7 +13,7 @@
     { id: 'v2', name: '面料细节展示', type: '生成视频', modelId: 'ruoxia', model: '林若夏', trigger: '商品讲解>主播口令', triggerCount: 18, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/lyocell-cardigan-half.png', detail: '抬手展示面料、袖口和领口细节', triggerContent: '“看一下<mark>蓝色</mark>款”' },
     { id: 'v6', name: '短袖多款色轮播', type: '生成视频', modelId: 'qiaohu', model: '巧虎', trigger: '商品讲解', triggerCount: 24, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/qiaohu/front.png', detail: '白色、黑色款色轮流展示' },
     { id: 'v7', name: '明星同款上身展示', type: '生成视频', modelId: 'qingyu', model: '乔青予', trigger: '商品讲解', triggerCount: 15, productIndex: '2', product: '王一博同款抗菌短袖', productId: '3829847837299048729', cover: '../assets/models/host-xiaoqing-half.png', detail: '正面站姿展示版型' },
-    { id: 'v3', name: '福袋互动视频', type: '上传视频', modelId: 'qiaohu', model: '巧虎', trigger: '主播口令', triggerCount: 42, productIndex: '', product: '不关联商品', productId: '', cover: '../assets/models/qiaohu/front.png', detail: '口令关键词：福袋来了、参与福袋', triggerContent: '“<mark>福袋</mark>来了”' },
+    { id: 'v3', name: '福袋互动视频', type: '上传视频', modelId: '', model: '', trigger: '主播口令', triggerCount: 42, productIndex: '', product: '不关联商品', productId: '', cover: '../assets/models/qiaohu/front.png', detail: '口令关键词：福袋来了、参与福袋', triggerContent: '“<mark>福袋</mark>来了”' },
     { id: 'v5', name: '关注直播间提醒', type: '上传视频', modelId: 'ruoxia', model: '林若夏', trigger: '商品讲解>弹幕评论', triggerCount: 29, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/lyocell-cardigan-half.png', detail: '评论关键词：怎么关注、怎么领券', triggerComment: '三杯鸡：看一下蓝色款', triggerContent: '“@三杯鸡：看一下<mark>蓝色</mark>款”' }
   ];
 
@@ -54,7 +54,7 @@
               <div class="banbo-switch-control"><span id="companionStatusText">AI伴播已开启</span><button class="switch on" id="companionSwitch" aria-label="开启或关闭AI伴播"></button></div>
             </div>
             <div class="banbo-setting-divider"></div>
-            <div class="banbo-model-control"><div><label for="autoModelSelect">数字模特</label><span>仅自动触发所选模特的伴播视频，其他模特视频需手动选择播放</span></div><select id="autoModelSelect"><option value="">全部</option><option value="qingyu">乔青予</option><option value="ruoxia">林若夏</option><option value="qiaohu">巧虎</option></select></div>
+            <div class="banbo-model-control"><div><label for="autoModelSelect">数字模特</label><span>仅自动触发所选模特的视频和未关联模特的视频，其他模特视频需手动选择播放</span></div><select id="autoModelSelect"><option value="">全部</option><option value="qingyu">乔青予</option><option value="ruoxia">林若夏</option><option value="qiaohu">巧虎</option></select></div>
             <div class="banbo-setting-divider"></div>
             <div class="banbo-model-control"><div><label for="productPlaybackMode">商品讲解播放方式</label><span id="productPlaybackHint">同一商品的视频轮流循环播放，直至结束商品讲解</span></div><select id="productPlaybackMode"><option value="loop">循环播放</option><option value="once">单次播放</option></select></div>
           </section>
@@ -108,7 +108,7 @@
   }
 
   function automaticProductVideos(productIndex) {
-    return videoData.filter(video => video.productIndex === productIndex && video.trigger === '商品讲解' && (!autoModelId || video.modelId === autoModelId));
+    return videoData.filter(video => video.productIndex === productIndex && video.trigger === '商品讲解' && (!autoModelId || !video.modelId || video.modelId === autoModelId));
   }
 
   function videoActionButton(action, videoId) {
@@ -128,7 +128,7 @@
   }
 
   function triggerMeta(video) {
-    return `${video.model} · ${video.trigger}${video.triggerContent ? ` · <span class="banbo-trigger-context">${video.triggerContent}</span>` : ''}`;
+    return `${video.model || '未关联数字模特'} · ${video.trigger}${video.triggerContent ? ` · <span class="banbo-trigger-context">${video.triggerContent}</span>` : ''}`;
   }
 
   function openConfirm(title, message, action) {
@@ -208,7 +208,7 @@
       .filter(video => (!modelId || video.modelId === modelId) && (keyword ? `${video.name} ${video.product} ${video.productId} ${video.detail}`.toLowerCase().includes(keyword) : !video.productIndex))
       .sort((a, b) => b.triggerCount - a.triggerCount);
     document.getElementById('videoList').innerHTML = list.length ? list.map(video => `
-      <article class="banbo-video-row"><img class="banbo-mini-cover" src="${video.cover}" alt="${video.name}" /><div><div class="banbo-row-title">${video.name}</div><div class="banbo-row-meta">${video.model} · ${video.trigger} · 已触发 ${video.triggerCount} 次${video.productIndex ? `<br>${video.product}` : ''}</div></div><div class="banbo-row-actions">${videoActionButton('play', video.id)}${videoActionButton('next', video.id)}</div></article>`).join('') : '<div class="banbo-empty">没有匹配的视频</div>';
+      <article class="banbo-video-row"><img class="banbo-mini-cover" src="${video.cover}" alt="${video.name}" /><div><div class="banbo-row-title">${video.name}</div><div class="banbo-row-meta">${video.model || '未关联数字模特'} · ${video.trigger} · 已触发 ${video.triggerCount} 次${video.productIndex ? `<br>${video.product}` : ''}</div></div><div class="banbo-row-actions">${videoActionButton('play', video.id)}${videoActionButton('next', video.id)}</div></article>`).join('') : '<div class="banbo-empty">没有匹配的视频</div>';
   }
 
   function injectProductVideoCounts() {
@@ -219,7 +219,7 @@
       if (!actions || actions.querySelector('.banbo-product-video-entry') || !videos.length) return;
       const entry = document.createElement('span');
       entry.className = 'banbo-product-video-entry';
-      entry.innerHTML = `<span>1 个伴播视频</span><div class="banbo-product-video-popover"><b>可用伴播视频</b>${videos.map(video => `<div class="banbo-popover-video"><img src="${video.cover}" alt="${video.name}" /><span><strong>${video.name}</strong><small>${video.model} · ${video.trigger} · 已触发 ${video.triggerCount} 次</small></span><div class="banbo-popover-actions">${videoActionButton('play', video.id)}${videoActionButton('next', video.id)}</div></div>`).join('')}</div>`;
+      entry.innerHTML = `<span>1 个伴播视频</span><div class="banbo-product-video-popover"><b>可用伴播视频</b>${videos.map(video => `<div class="banbo-popover-video"><img src="${video.cover}" alt="${video.name}" /><span><strong>${video.name}</strong><small>${video.model || '未关联数字模特'} · ${video.trigger} · 已触发 ${video.triggerCount} 次</small></span><div class="banbo-popover-actions">${videoActionButton('play', video.id)}${videoActionButton('next', video.id)}</div></div>`).join('')}</div>`;
       actions.insertBefore(entry, actions.querySelector('button'));
       if (product) row.dataset.banboProductId = product.id;
     });

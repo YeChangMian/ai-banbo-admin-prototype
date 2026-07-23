@@ -14,7 +14,7 @@
     { id: 'v6', name: '短袖多款色轮播', type: '生成视频', modelId: 'qiaohu', model: '巧虎', trigger: '商品讲解', triggerCount: 24, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/qiaohu/front.png', detail: '白色、黑色款色轮流展示' },
     { id: 'v7', name: '明星同款上身展示', type: '生成视频', modelId: 'qingyu', model: '乔青予', trigger: '商品讲解', triggerCount: 15, productIndex: '2', product: '王一博同款抗菌短袖', productId: '3829847837299048729', cover: '../assets/models/host-xiaoqing-half.png', detail: '正面站姿展示版型' },
     { id: 'v3', name: '福袋互动视频', type: '上传视频', modelId: 'qiaohu', model: '巧虎', trigger: '主播口令', triggerCount: 42, productIndex: '', product: '不关联商品', productId: '', cover: '../assets/models/qiaohu/front.png', detail: '口令关键词：福袋来了、参与福袋' },
-    { id: 'v5', name: '关注直播间提醒', type: '上传视频', modelId: 'ruoxia', model: '林若夏', trigger: '弹幕评论', triggerCount: 29, productIndex: '', product: '不关联商品', productId: '', cover: '../assets/models/lyocell-cardigan-half.png', detail: '评论关键词：怎么关注、怎么领券', triggerComment: '小鹿：看一下蓝色款' }
+    { id: 'v5', name: '关注直播间提醒', type: '上传视频', modelId: 'ruoxia', model: '林若夏', trigger: '弹幕评论', triggerCount: 29, productIndex: '', product: '不关联商品', productId: '', cover: '../assets/models/lyocell-cardigan-half.png', detail: '评论关键词：怎么关注、怎么领券', triggerComment: '三杯鸡：看一下蓝色款' }
   ];
 
   const products = [

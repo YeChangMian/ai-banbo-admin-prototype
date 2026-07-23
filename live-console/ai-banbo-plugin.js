@@ -24,7 +24,7 @@
   ];
 
   let currentProduct = products[0];
-  let currentVideo = videoData[0];
+  let currentVideo = videoData.find(video => video.id === 'v5');
   let companionEnabled = true;
   let isPlaying = true;
   let autoModelId = '';

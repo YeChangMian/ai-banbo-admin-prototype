@@ -97,7 +97,7 @@
 
         <section class="view" data-page="tasks"><div class="section"><div class="panel"><div class="panel-head task-toolbar"><div class="toolbar"><button class="btn" data-view-jump="create"><i data-lucide="arrow-left"></i>返回制作伴播</button><div class="search"><i data-lucide="search"></i><input id="taskSearch" placeholder="搜索任务ID、视频名称或商品ID" /></div><select class="filter-select" id="taskStatusFilter"><option value="">全部状态</option><option>排队中</option><option>生成中</option><option>待确认</option><option>已完成</option><option>已废弃</option><option>已取消</option></select><select class="filter-select" id="taskCreatorFilter"><option value="">全部创建人</option><option>王欣怡</option><option>李梦琪</option><option>陈航</option></select></div></div><div class="panel-body"><div class="data-table-wrap"><table class="data-table"><thead><tr><th>任务ID</th><th>视频</th><th>商品</th><th>数字模特</th><th>展示模版</th><th>状态</th><th>创建信息</th><th>操作</th></tr></thead><tbody id="taskList"></tbody></table></div><div class="pager"><span id="taskTotal">共 0 条</span><select aria-label="制作任务每页条数"><option>20条/页</option><option>50条/页</option></select><button class="icon-btn" aria-label="上一页"><i data-lucide="chevron-left"></i></button><span class="page-current">1</span><button class="icon-btn" aria-label="下一页"><i data-lucide="chevron-right"></i></button></div></div></div></div></section>
 
-        <section class="view" data-page="videos"><div class="section"><div class="panel"><div class="panel-head"><div class="filter-bar" style="margin:0"><div class="search"><i data-lucide="search"></i><input id="videoSearch" placeholder="搜索视频名称、商品名称或商品ID" /></div><select class="filter-select" id="videoTypeFilter"><option value="">全部类型</option><option>生成视频</option><option>上传视频</option></select><select class="filter-select" id="videoTriggerFilter"><option value="">全部触发方式</option><option>商品讲解</option><option>主播口令</option><option>评论触发</option></select><select class="filter-select" id="videoCreatorFilter"><option value="">全部创建人</option><option>王欣怡</option><option>李梦琪</option><option>陈航</option></select></div><button class="btn primary" data-modal="uploadVideoModal"><i data-lucide="upload"></i>上传视频</button></div><div class="panel-body"><div class="batch-bar"><label><input type="checkbox" id="videoSelectAll" />全选</label><span>已选 <b id="videoSelectedCount">0</b> 条</span><div class="batch-actions"><button class="batch-action" id="batchTrigger" disabled>修改触发条件</button><button class="batch-action" id="batchProducts" disabled>修改关联商品</button><button class="batch-action danger" id="batchVideoDiscard" disabled>废弃</button></div></div><div class="data-table-wrap"><table class="data-table" id="videoTable"><thead><tr><th>选择</th><th>类型 / 视频</th><th>名称</th><th>关联商品</th><th>触发条件</th><th>播放次数</th><th>创建信息</th></tr></thead><tbody id="videoList"></tbody></table></div><div class="pager"><span>共 24 条</span><select aria-label="伴播视频每页条数"><option>20条/页</option><option>50条/页</option></select><button class="icon-btn" aria-label="上一页"><i data-lucide="chevron-left"></i></button><span class="page-current">1</span><span>2</span><button class="icon-btn" aria-label="下一页"><i data-lucide="chevron-right"></i></button></div></div></div></div></section>
+        <section class="view" data-page="videos"><div class="section"><div class="panel"><div class="panel-head"><div class="filter-bar" style="margin:0"><div class="search"><i data-lucide="search"></i><input id="videoSearch" placeholder="搜索视频名称、商品名称或商品ID" /></div><select class="filter-select" id="videoTypeFilter"><option value="">全部类型</option><option>生成视频</option><option>上传视频</option></select><select class="filter-select" id="videoTriggerFilter"><option value="">全部触发方式</option><option>商品讲解</option><option>主播口令</option><option>评论触发</option></select><select class="filter-select" id="videoCreatorFilter"><option value="">全部创建人</option><option>王欣怡</option><option>李梦琪</option><option>陈航</option></select></div><button class="btn primary" data-modal="uploadVideoModal"><i data-lucide="upload"></i>上传视频</button></div><div class="panel-body"><div class="batch-bar" id="videoBatchBar"><label class="batch-select-label"><input type="checkbox" id="videoSelectAll" />全选</label><span class="batch-select-label">已选 <b id="videoSelectedCount">0</b> 条</span><div class="batch-actions"><button class="batch-action" id="batchTrigger">修改触发条件</button><button class="batch-action" id="batchProducts">修改关联商品</button><button class="batch-action" id="batchModels">修改关联模特</button><button class="batch-action danger" id="batchVideoDiscard">废弃</button></div><div class="batch-selection" hidden><button class="btn primary" id="confirmVideoBatch">确认</button><button class="btn" id="cancelVideoBatch">取消</button></div></div><div class="data-table-wrap"><table class="data-table" id="videoTable"><thead><tr><th>选择</th><th>类型 / 视频</th><th>名称</th><th>关联商品</th><th>触发条件</th><th>播放次数</th><th>创建信息</th></tr></thead><tbody id="videoList"></tbody></table></div><div class="pager"><span>共 24 条</span><select aria-label="伴播视频每页条数"><option>20条/页</option><option>50条/页</option></select><button class="icon-btn" aria-label="上一页"><i data-lucide="chevron-left"></i></button><span class="page-current">1</span><span>2</span><button class="icon-btn" aria-label="下一页"><i data-lucide="chevron-right"></i></button></div></div></div></div></section>
 
         <section class="view" data-page="products"><div class="section stack"><div class="panel store-strip"><div class="panel-body"><div class="store-strip-row"><div class="store-current"><span>当前店铺</span><strong class="store-name">三彩官方旗舰店</strong><button class="text-action" data-modal="storeSwitchModal">[切换]</button></div><div class="store-actions"><span>上次同步：今天 09:30</span><button class="btn primary" id="syncProducts"><i data-lucide="refresh-cw"></i>同步抖店商品</button></div></div></div></div><div class="panel"><div class="panel-head"><div class="search"><i data-lucide="search"></i><input id="productSearch" placeholder="搜索商品名称或商品ID" /></div><span style="color:var(--muted);font-size:11px">近7日销量默认倒序</span></div><div class="panel-body"><div class="batch-bar"><label><input type="checkbox" id="productSelectAll" />全选</label><span>已选 <b id="productSelectedCount">0</b> 件</span><div class="batch-actions"><button class="batch-action" id="batchCreate" disabled>制作伴播</button></div></div><div class="data-table-wrap"><table class="data-table wide" id="productTable"><thead><tr><th>选择</th><th>模特图</th><th>白底图 / 款色</th><th>商品名称 / ID</th><th><button class="text-action" data-filter-menu="category">类目⌄</button></th><th><button class="text-action" data-filter-menu="tag">标签⌄</button></th><th>近7日销量 ↓</th><th><button class="text-action" data-filter-menu="status">抖店状态⌄</button></th><th>伴播视频数量</th></tr></thead><tbody id="productList"></tbody></table></div><div class="pager"><span>共 36 件商品</span><select aria-label="商品每页条数"><option>20条/页</option><option>50条/页</option></select><button class="icon-btn" aria-label="上一页"><i data-lucide="chevron-left"></i></button><span class="page-current">1</span><span>2</span><button class="icon-btn" aria-label="下一页"><i data-lucide="chevron-right"></i></button></div></div></div></div></section>
 
@@ -120,6 +120,7 @@
   <div class="modal-mask" id="uploadVideoModal"><div class="modal"><div class="modal-head"><h2>上传伴播视频</h2><button class="modal-close" data-close-modal><i data-lucide="x"></i></button></div><div class="modal-body"><div class="form-grid"><div class="field"><label>视频文件</label><button class="upload-box" id="uploadVideoFile" style="width:150px">+ 选择视频文件</button><p id="uploadVideoFilename" style="margin:6px 0 0;color:var(--muted);font-size:11px">上传后直接使用文件名作为视频名称</p></div><div class="field"><label>关联商品（支持多选）</label><input placeholder="输入商品ID或标题搜索" /></div><div class="field"><label>触发方式（支持多选）</label><div class="check-list"><label class="check-option"><input type="checkbox" data-upload-trigger value="商品讲解" checked/>商品讲解</label><label class="check-option"><input type="checkbox" data-upload-trigger value="主播口令"/>主播口令</label><label class="check-option"><input type="checkbox" data-upload-trigger value="评论触发"/>评论触发</label></div></div><div class="field" id="uploadVideoCommandField" hidden><label>口令关键词</label><input placeholder="输入口令关键词，多个关键词用“、”隔开" /></div><div class="field" id="uploadVideoCommentField" hidden><label>评论关键词</label><input placeholder="输入评论关键词，多个关键词用“、”隔开" /></div></div></div><div class="modal-foot"><button class="btn" data-close-modal>取消</button><button class="btn primary" data-save="伴播视频已上传">上传</button></div></div></div>
   <div class="modal-mask" id="batchTriggerModal"><div class="modal"><div class="modal-head"><h2>修改触发条件</h2><button class="modal-close" data-close-modal><i data-lucide="x"></i></button></div><div class="modal-body"><div class="form-grid"><div class="field"><label>触发方式（支持多选）</label><div class="check-list"><label class="check-option"><input type="checkbox" data-batch-trigger value="商品讲解" checked/>商品讲解</label><label class="check-option"><input type="checkbox" data-batch-trigger value="主播口令"/>主播口令</label><label class="check-option"><input type="checkbox" data-batch-trigger value="评论触发"/>评论触发</label></div></div><div class="field" id="batchCommandField" hidden><label>口令关键词</label><input id="batchCommandKeywords" placeholder="输入口令关键词，多个关键词用“、”隔开" /></div><div class="field" id="batchCommentField" hidden><label>评论关键词</label><input id="batchCommentKeywords" placeholder="输入评论关键词，多个关键词用“、”隔开" /></div></div></div><div class="modal-foot"><button class="btn" data-close-modal>取消</button><button class="btn primary" id="saveBatchTrigger">保存</button></div></div></div>
   <div class="modal-mask" id="batchProductModal"><div class="modal"><div class="modal-head"><h2>修改关联商品</h2><button class="modal-close" data-close-modal><i data-lucide="x"></i></button></div><div class="modal-body"><div class="search"><i data-lucide="search"></i><input id="batchProductSearch" placeholder="搜索商品名称或商品ID" /></div><div class="modal-selection-grid" id="batchProductGrid"></div></div><div class="modal-foot"><button class="btn" data-close-modal>取消</button><button class="btn primary" id="saveBatchProducts">保存</button></div></div></div>
+  <div class="modal-mask" id="batchModelModal"><div class="modal"><div class="modal-head"><h2>修改关联模特</h2><button class="modal-close" data-close-modal><i data-lucide="x"></i></button></div><div class="modal-body"><div class="modal-selection-grid" id="batchModelGrid"></div></div><div class="modal-foot"><button class="btn" data-close-modal>取消</button><button class="btn primary" id="saveBatchModel">保存</button></div></div></div>
   <div class="modal-mask" id="liveAccountModal"><div class="modal"><div class="modal-head"><h2>新增直播账号</h2><button class="modal-close" data-close-modal><i data-lucide="x"></i></button></div><div class="modal-body"><div class="form-grid"><div class="field"><label>抖音号</label><div style="display:flex;gap:8px"><input style="width:240px" placeholder="请输入抖音号" /><button class="btn">搜索</button></div></div><div class="account-row"><span class="account-logo">抖</span><div class="account-copy"><b>三彩穿搭官方号</b><span>抖音号：SC2026LIVE01</span></div><button class="btn primary" data-save="直播账号已接入">确认接入</button></div></div></div></div></div>
   <div class="modal-mask" id="storeSubscribeModal"><div class="modal"><div class="modal-head"><h2>新增店铺</h2><button class="modal-close" data-close-modal><i data-lucide="x"></i></button></div><div class="modal-body" style="display:grid;place-items:center;min-height:180px;color:var(--muted);font-size:13px">请前往抖店服务市场订阅 AI 伴播服务</div><div class="modal-foot"><button class="btn" data-close-modal>取消</button><button class="btn primary" data-save="正在前往抖店服务市场">去订阅 &gt;</button></div></div></div>
   <div class="modal-mask" id="storeSwitchModal"><div class="modal"><div class="modal-head"><h2>切换店铺</h2><button class="modal-close" data-close-modal><i data-lucide="x"></i></button></div><div class="modal-body"><div class="form-grid"><label class="check-option"><input type="radio" name="store" value="三彩官方旗舰店" checked />三彩官方旗舰店</label><label class="check-option"><input type="radio" name="store" value="绮丽女装旗舰店" />绮丽女装旗舰店</label></div></div><div class="modal-foot"><button class="btn" data-close-modal>取消</button><button class="btn primary" id="saveStoreSwitch">确认</button></div></div></div>
@@ -195,7 +196,7 @@
     function showReview(generatedCount,failedCount=0,unGeneratedCount=0){const selected=products.filter(p=>state.products.has(p.id)),model=models.find(m=>m.id===state.model),template=templates.find(t=>t.id===state.template),sources=selected.length?selected:[{id:'',name:'不关联商品',colors:'',white:model.image}];$('#generateReady').style.display='none';$('#reviewArea').classList.add('show');$('#prevStep').style.display='none';$('#generationResultSummary').innerHTML=`${generatedCount?`<span class="result-stat success">已生成视频 <b>${generatedCount}</b></span>`:''}${unGeneratedCount?`<span class="result-stat warn">未生成 <b>${unGeneratedCount}</b></span>`:''}${failedCount?`<span class="result-stat fail">生成失败 <b>${failedCount}</b></span>`:''}`;$('#reviewGrid').innerHTML=Array.from({length:generatedCount},(_,i)=>{const p=sources[i%sources.length],title=selected.length?`${p.name} · 视频 ${i+1}`:`${template.name} · 视频 ${i+1}`;return `<article class="review-card" data-review-card data-result-product-id="${p.id||''}" data-result-index="${i+1}"><img src="${model.image}" alt="${title}"/><div><div class="asset-top"><h3>${title}</h3><span class="tag amber" data-review-status>待确认</span></div><p>${template.name}${selected.length?`<br>${p.colors}`:'<br>不关联商品'}<br>AI 质检：未发现明显异常</p><div class="review-actions"><button class="btn" data-preview="${model.image}" data-preview-title="${title}" data-confirm-preview><i data-lucide="play"></i>预览</button><button class="btn primary" data-approve>确认</button><button class="btn" data-regenerate>重新生成</button></div></div></article>`}).join('');$('#approveAll').innerHTML=generatedCount?'<i data-lucide="check-check"></i>全部确认':'返回第一步';icons();toast(generatedCount?'视频制作完成，请确认':'任务已停止，没有可确认的视频')}
     function showCreationComplete(hasDiscarded=false){clearInterval(generationState.timer);generationState.running=false;$('#generateReady').style.display='none';$('#reviewArea').classList.remove('show');$('#creationCompleteTitle').textContent=hasDiscarded?'本次结果已处理完成':'已全部确认';$('#creationCompleteNote').textContent=hasDiscarded?'已确认视频已进入伴播视频库，废弃视频不再保留':'视频已进入伴播视频库';$('#creationComplete').classList.add('show');$('#prevStep').style.display='none';$('#nextStep').style.display='none';icons();toast(hasDiscarded?'本次结果已处理完成':'视频已全部确认')}
     function resetCreationFlow(){state.products.clear();state.model='';state.template='';$('#creationComplete').classList.remove('show');$('#generateReady').style.display='grid';$('#reviewArea').classList.remove('show');$('#reviewGrid').innerHTML='';$('#generationResultSummary').innerHTML='';$('#generateProgress').hidden=true;$('#progressBar').style.width='0%';$('#progressValue').textContent='0%';$('#progressVideoValue').textContent='0 / 0';$('#progressText').textContent='正在准备素材';$('#generateButton').disabled=false;renderCreateChoices();renderSummary();setStep(1)}
-    function moveReviewCardToVideos(card){if(!card)return;const product=products.find(p=>p.id===card.dataset.resultProductId),template=templates.find(t=>t.id===state.template),model=models.find(m=>m.id===state.model),index=card.dataset.resultIndex||'1',taskId=`260722${String(productionTasks.length+1).padStart(3,'0')}`,videoId=`V${taskId}`,name=product?`${product.articleNo}_${template.name}`:`${template.name}_不关联商品_${index}`,created='2026-07-22 10:30';videos.unshift({id:videoId,type:'生成视频',name,template:template.name,product:product?.name||'不关联商品',productId:product?.id||'',articleNo:product?.articleNo||'',productImage:product?.white||null,trigger:template.trigger,creator:'王欣怡',created,plays:0,image:model.image});productionTasks.unshift({id:taskId,videoId,video:name,articleNo:product?.articleNo||'',product:product?.name||'不关联商品',productId:product?.id||'',productImage:product?.white||model.image,model:model.name,template:template.name,trigger:template.trigger,status:'已完成',creator:'王欣怡',created,image:model.image});if(product)product.videos+=1;card.remove();renderVideos();renderTasks();renderProducts()}
+    function moveReviewCardToVideos(card){if(!card)return;const product=products.find(p=>p.id===card.dataset.resultProductId),template=templates.find(t=>t.id===state.template),model=models.find(m=>m.id===state.model),index=card.dataset.resultIndex||'1',taskId=`260722${String(productionTasks.length+1).padStart(3,'0')}`,videoId=`V${taskId}`,name=product?`${product.articleNo}_${template.name}`:`${template.name}_不关联商品_${index}`,created='2026-07-22 10:30';videos.unshift({id:videoId,type:'生成视频',name,template:template.name,product:product?.name||'不关联商品',productId:product?.id||'',articleNo:product?.articleNo||'',productImage:product?.white||null,model:model.name,trigger:template.trigger,creator:'王欣怡',created,plays:0,image:model.image});productionTasks.unshift({id:taskId,videoId,video:name,articleNo:product?.articleNo||'',product:product?.name||'不关联商品',productId:product?.id||'',productImage:product?.white||model.image,model:model.name,template:template.name,trigger:template.trigger,status:'已完成',creator:'王欣怡',created,image:model.image});if(product)product.videos+=1;card.remove();renderVideos();renderTasks();renderProducts()}
     function finishWhenAllConfirmed(){if(!$('#reviewGrid [data-review-card]'))showCreationComplete(generationState.discarded>0)}
     let previewConfirmCard=null,previewTaskId=null;function confirmReviewCard(card){if(!card)return;moveReviewCardToVideos(card);toast('已加入伴播视频');finishWhenAllConfirmed()}function regenerateReviewCard(card,button){if(!card||!button)return;button.disabled=true;button.textContent='生成中...';setTimeout(()=>{if(!card.isConnected)return;button.disabled=false;button.textContent='重新生成';toast('视频已重新生成')},1200)}function discardReviewCard(card){if(!card)return;const product=products.find(item=>item.id===card.dataset.resultProductId),template=templates.find(item=>item.id===state.template),model=models.find(item=>item.id===state.model),index=card.dataset.resultIndex||'1',taskId=`260722${String(productionTasks.length+1).padStart(3,'0')}`,videoId=`V${taskId}`,name=product?`${product.articleNo}_${template.name}`:`${template.name}_不关联商品_${index}`;productionTasks.unshift({id:taskId,videoId,video:name,articleNo:product?.articleNo||'',product:product?.name||'不关联商品',productId:product?.id||'',productImage:product?.white||model.image,model:model.name,template:template.name,trigger:template.trigger,status:'已废弃',creator:'王欣怡',created:'2026-07-22 10:30',image:model.image});card.remove();generationState.discarded+=1;renderTasks();toast('视频已废弃');finishWhenAllConfirmed()}
     function openTaskPreview(taskId){const task=productionTasks.find(item=>item.id===taskId);if(!task||!['待确认','已完成','已废弃'].includes(task.status))return;previewTaskId=taskId;previewConfirmCard=null;$('#previewImage').src=task.image;$('#previewTitle').textContent=task.video;$('#previewPlayer').classList.remove('is-video','is-playing');$('#previewConfirmFoot').hidden=false;$('#previewRegenerate').hidden=false;$('#previewDiscard').hidden=task.status==='已废弃';$('#previewConfirm').hidden=task.status==='已完成';$('#previewConfirm').textContent=task.status==='已废弃'?'改为可用':'确认';openModal('previewModal')}
@@ -206,7 +207,7 @@
     $('#previewRegenerate').addEventListener('click',()=>{if(!previewTaskId)return;const task=productionTasks.find(item=>item.id===previewTaskId);$('#previewModal').classList.remove('open');confirmAction('确认重新生成','重新生成后，新视频将进入待确认状态。',()=>{regenerateTask(task);previewTaskId=null})});
     function renderVideos(){const keyword=$('#videoSearch').value.trim().toLowerCase(),type=$('#videoTypeFilter').value,trigger=$('#videoTriggerFilter').value,creator=$('#videoCreatorFilter').value;const rows=videos.filter(v=>!v.discarded&&(!keyword||`${v.name}${v.product}${v.productId}${v.articleNo||''}${v.id}`.toLowerCase().includes(keyword))&&(!type||v.type===type)&&(!trigger||v.trigger.includes(trigger))&&(!creator||v.creator===creator));$('#videoList').innerHTML=rows.map(v=>`<tr><td><input type="checkbox" data-video-check="${v.id}" ${state.selectedVideos.has(v.id)?'checked':''}/></td><td><div class="table-media"><button class="media-tile" data-video-preview data-library-video="${v.id}" data-preview="${v.image}" data-preview-title="${v.name}"><img src="${v.image}" alt="${v.name}"/></button><div><span class="tag ${v.type==='生成视频'?'blue':''}">${v.type}</span><span class="inline-meta">${v.id}</span></div></div></td><td><div class="cell-title">${v.name}</div>${v.template?`<div class="cell-sub">展示模版：${v.template}</div>`:''}</td><td>${v.productImage?`<div class="table-media"><button class="media-tile" data-preview="${v.productImage}" data-preview-title="${v.product}"><img src="${v.productImage}" alt="${v.product}"/></button><div class="product-title"><div class="cell-title">${v.product}</div><div class="cell-sub">货号 ${v.articleNo} · ${v.productId}</div></div></div>`:`<span class="cell-sub">不关联商品</span>`}</td><td><div class="tag-list">${v.trigger.split('、').map(item=>`<span class="tag rose">${item}</span>`).join('')}</div></td><td><b>${v.plays}</b> 次</td><td>${v.creator}<span class="inline-meta">${v.created}</span></td></tr>`).join('');updateVideoBatch();icons()}
     ['videoSearch','videoTypeFilter','videoTriggerFilter','videoCreatorFilter'].forEach(id=>$('#'+id).addEventListener(id==='videoSearch'?'input':'change',renderVideos));
-    function taskVideoPayload(task){return {id:task.videoId,type:'生成视频',name:task.video,template:task.template,articleNo:task.articleNo,product:task.product,productId:task.productId,productImage:task.productImage,trigger:task.trigger,plays:0,creator:task.creator,created:task.created,image:task.image}}
+    function taskVideoPayload(task){return {id:task.videoId,type:'生成视频',name:task.video,template:task.template,articleNo:task.articleNo,product:task.product,productId:task.productId,productImage:task.productImage,model:task.model,trigger:task.trigger,plays:0,creator:task.creator,created:task.created,image:task.image}}
     function ensureTaskVideo(task){let video=videos.find(item=>item.id===task.videoId);if(!video){video=taskVideoPayload(task);videos.unshift(video)}video.discarded=false;return video}
     function discardTaskVideo(task){const video=videos.find(item=>item.id===task.videoId);if(video)video.discarded=true;task.status='已废弃';state.selectedVideos.delete(task.videoId);renderTasks();renderVideos()}
     function restoreTaskVideo(task){ensureTaskVideo(task);task.status='已完成';renderTasks();renderVideos()}
@@ -450,5 +451,119 @@
     };
     new MutationObserver(renderVideoModelColumn).observe(document.getElementById('videoList'), {childList:true, subtree:true});
     renderVideoModelColumn();
+  })();
+</script>
+<style>
+  #videoBatchBar:not(.selecting) .batch-select-label{display:none}
+  #videoBatchBar.selecting .batch-actions{display:none}
+  #videoBatchBar.selecting .batch-selection{display:flex!important;align-items:center;gap:8px}
+  #videoTable:not(.batch-selecting) th:first-child,#videoTable:not(.batch-selecting) td:first-child{display:none}
+  #videoList tr.batch-unavailable{opacity:.5}
+  #videoList input[data-video-check]:disabled{cursor:not-allowed}
+</style>
+<script>
+  (() => {
+    let batchMode = null;
+    const $ = selector => document.querySelector(selector);
+    const selectedIds = () => window.eval('Array.from(state.selectedVideos)');
+    const eligible = video => !['product', 'model'].includes(batchMode) || video.type === '上传视频';
+    const currentVideos = () => window.eval('videos.filter(video => !video.discarded)');
+
+    function resetBatchMode() {
+      batchMode = null;
+      window.eval('state.selectedVideos.clear()');
+      $('#videoBatchBar').classList.remove('selecting');
+      $('#videoTable').classList.remove('batch-selecting');
+      $('#batchTrigger').disabled = false;
+      $('#batchProducts').disabled = false;
+      $('#batchModels').disabled = false;
+      $('#batchVideoDiscard').disabled = false;
+      window.eval('renderVideos()');
+    }
+
+    function syncBatchMode() {
+      const bar = $('#videoBatchBar');
+      const table = $('#videoTable');
+      const selecting = Boolean(batchMode);
+      if (!selecting) {
+        $('#batchTrigger').disabled = false;
+        $('#batchProducts').disabled = false;
+        $('#batchModels').disabled = false;
+        $('#batchVideoDiscard').disabled = false;
+      }
+      bar.classList.toggle('selecting', selecting);
+      table.classList.toggle('batch-selecting', selecting);
+      $('#batch-selection').hidden = !selecting;
+      $('#videoSelectedCount').textContent = selectedIds().length;
+      $('#videoSelectAll').checked = selecting && currentVideos().filter(eligible).length > 0 && currentVideos().filter(eligible).every(video => selectedIds().includes(video.id));
+      document.querySelectorAll('#videoList [data-video-check]').forEach(input => {
+        const video = window.eval(`videos.find(video => video.id === ${JSON.stringify(input.dataset.videoCheck)})`);
+        const allowed = !batchMode || eligible(video);
+        input.disabled = !allowed;
+        input.closest('tr')?.classList.toggle('batch-unavailable', selecting && !allowed);
+        input.title = selecting && !allowed ? (batchMode === 'product' ? '生成视频不可修改关联商品' : '生成视频不可修改关联模特') : '';
+      });
+    }
+
+    function beginBatchMode(mode) {
+      batchMode = mode;
+      window.eval('state.selectedVideos.clear(); renderVideos()');
+      syncBatchMode();
+    }
+
+    function renderBatchModelGrid() {
+      const models = window.eval('models');
+      $('#batchModelGrid').innerHTML = `<label class="modal-selection-card"><input type="radio" name="batch-model" value="" checked/><div style="width:100%;aspect-ratio:1;display:grid;place-items:center;border-radius:5px;background:#f2f3f5;color:#767b84;font-size:12px">不关联</div><b>不关联数字模特</b></label>` + models.map(model => `<label class="modal-selection-card"><input type="radio" name="batch-model" value="${model.id}"/><img src="${model.image}" alt="${model.name}"/><b>${model.name}</b><span class="inline-meta">${model.type}</span></label>`).join('');
+    }
+
+    function confirmBatchMode() {
+      const ids = selectedIds();
+      if (!ids.length) return window.eval("toast('请选择视频')");
+      if (batchMode === 'trigger') return window.eval("openModal('batchTriggerModal')");
+      if (batchMode === 'product') return window.eval("renderBatchProductGrid(); openModal('batchProductModal')");
+      if (batchMode === 'model') { renderBatchModelGrid(); return window.eval("openModal('batchModelModal')"); }
+      if (batchMode === 'discard') return window.eval(`confirmAction('确认废弃视频', '将废弃已选 ${ids.length} 条视频。废弃后不在伴播视频库展示。', () => { videos.filter(video => state.selectedVideos.has(video.id)).forEach(video => { video.discarded = true; const task = productionTasks.find(item => item.videoId === video.id); if (task) task.status = '已废弃'; }); state.selectedVideos.clear(); renderVideos(); renderTasks(); toast('视频已废弃'); window.__resetVideoBatch(); })`);
+    }
+
+    document.addEventListener('click', event => {
+      const button = event.target.closest('#batchTrigger,#batchProducts,#batchModels,#batchVideoDiscard');
+      if (button) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        beginBatchMode(button.id === 'batchTrigger' ? 'trigger' : button.id === 'batchProducts' ? 'product' : button.id === 'batchModels' ? 'model' : 'discard');
+        return;
+      }
+      if (event.target.closest('#confirmVideoBatch')) { event.preventDefault(); confirmBatchMode(); return; }
+      if (event.target.closest('#cancelVideoBatch')) { event.preventDefault(); resetBatchMode(); return; }
+    }, true);
+
+    $('#videoSelectAll').addEventListener('change', event => {
+      if (!batchMode) return;
+      const ids = event.target.checked ? currentVideos().filter(eligible).map(video => video.id) : [];
+      window.eval(`state.selectedVideos = new Set(${JSON.stringify(ids)}); renderVideos()`);
+      event.stopImmediatePropagation();
+      syncBatchMode();
+    }, true);
+
+    document.addEventListener('change', event => {
+      if (!event.target.matches('[data-video-check]')) return;
+      setTimeout(syncBatchMode, 0);
+    });
+
+    $('#saveBatchProducts').addEventListener('click', () => setTimeout(resetBatchMode, 0));
+    $('#saveBatchTrigger').addEventListener('click', () => setTimeout(resetBatchMode, 0));
+    $('#saveBatchModel').addEventListener('click', () => {
+      const modelId = document.querySelector('input[name="batch-model"]:checked')?.value || '';
+      const model = window.eval(`models.find(item => item.id === ${JSON.stringify(modelId)})`);
+      window.eval(`videos.filter(video => state.selectedVideos.has(video.id) && video.type === '上传视频').forEach(video => { video.model = ${JSON.stringify(model?.name || '')}; });`);
+      $('#batchModelModal').classList.remove('open');
+      resetBatchMode();
+      window.eval("toast('关联数字模特已修改')");
+    });
+
+    document.querySelectorAll('#batchProductModal [data-close-modal],#batchTriggerModal [data-close-modal],#batchModelModal [data-close-modal]').forEach(button => button.addEventListener('click', () => setTimeout(resetBatchMode, 0)));
+    window.__resetVideoBatch = resetBatchMode;
+    new MutationObserver(syncBatchMode).observe($('#videoList'), {childList:true, subtree:true});
+    syncBatchMode();
   })();
 </script>

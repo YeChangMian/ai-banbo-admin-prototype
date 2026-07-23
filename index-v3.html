@@ -269,7 +269,8 @@
     const sizeField = document.createElement('div');
     sizeField.className = 'field';
     sizeField.innerHTML = `<label>生成视频尺寸</label><div class="video-size-grid" role="radiogroup" aria-label="生成视频尺寸">${sizeChoices.map(([value, label, shape]) => `<button class="video-size-option ${value === '9:16' ? 'active' : ''}" data-video-size="${value}" role="radio" aria-checked="${value === '9:16'}">${shape ? `<i class="video-size-shape ${shape}"></i>` : ''}<b>${label}</b></button>`).join('')}</div>`;
-    methodPanel.before(sizeField);
+    const categoryField = document.querySelector('[data-display-category]')?.closest('.field');
+    categoryField?.before(sizeField);
 
     const selectSize = value => document.querySelectorAll('[data-video-size]').forEach(button => {
       const selected = button.dataset.videoSize === value;
@@ -301,5 +302,48 @@
       const details = generationSection?.querySelector('.detail-info');
       if (details && !details.querySelector('[data-video-size-detail]')) details.insertAdjacentHTML('beforeend', `<div data-video-size-detail><span>生成视频尺寸</span><b>${template?.videoSize || '9:16'}</b></div>`);
     };
+
+    const triggerDefinitions = [
+      ['product', '商品讲解', '关联商品的商品讲解期间自动衔接播放'],
+      ['product-command', '商品讲解>主播口令', '关联商品的商品讲解期间主播口令触发'],
+      ['product-comment', '商品讲解>弹幕评论', '关联商品的商品讲解期间弹幕评论触发'],
+      ['command', '主播口令', '主播口令触发'],
+      ['comment', '弹幕评论', '弹幕评论触发']
+    ];
+    const triggerStyle = document.createElement('style');
+    triggerStyle.textContent = '.trigger-choice{min-height:54px;align-items:flex-start}.trigger-choice span{display:grid;gap:3px}.trigger-choice b{font-size:12px}.trigger-choice small{color:var(--muted);font-size:10px;line-height:1.35}.product-link-warning{display:block;margin-top:4px;color:var(--red);font-size:10px;font-weight:700}';
+    document.head.append(triggerStyle);
+    const templateTriggerField = document.querySelector('#templateModal [data-action-trigger]')?.closest('.field');
+    if (templateTriggerField) {
+      templateTriggerField.querySelector('.check-list').innerHTML = triggerDefinitions.map(([kind, name, description], index) => `<label class="check-option trigger-choice"><input type="checkbox" data-action-trigger="${kind}" value="${name}" ${index === 0 ? 'checked' : ''}/><span><b>${name}</b><small>${description}</small></span></label>`).join('');
+      templateTriggerField.querySelectorAll('[data-action-trigger]').forEach(input => input.addEventListener('change', () => {
+        const selected = [...templateTriggerField.querySelectorAll('[data-action-trigger]:checked')].map(item => item.dataset.actionTrigger);
+        const commandField = document.querySelector('[data-trigger-config="command"]');
+        const commentField = document.querySelector('[data-trigger-config="comment"]');
+        commandField?.classList.toggle('show', selected.some(item => item.includes('command')));
+        commentField?.classList.toggle('show', selected.some(item => item.includes('comment')));
+      }));
+    }
+    document.getElementById('actionCreate').addEventListener('click', () => {
+      const selected = [...document.querySelectorAll('#templateModal [data-action-trigger]:checked')].map(input => ({kind: input.dataset.actionTrigger, name: input.value}));
+      if (selected.some(item => item.kind.includes('command')) && !document.getElementById('commandKeywords').value.trim()) document.getElementById('commandKeywords').value = '展示一下、换个颜色';
+      if (selected.some(item => item.kind.includes('comment')) && !document.getElementById('commentKeywords').value.trim()) document.getElementById('commentKeywords').value = '想看上身、展示细节';
+      const detail = selected.map(item => {
+        if (item.kind === 'product') return '关联商品的商品讲解期间自动衔接播放';
+        if (item.kind === 'product-command') return `关联商品的商品讲解期间口令触发：${document.getElementById('commandKeywords').value}`;
+        if (item.kind === 'product-comment') return `关联商品的商品讲解期间弹幕评论触发：${document.getElementById('commentKeywords').value}`;
+        if (item.kind === 'command') return `口令关键词：${document.getElementById('commandKeywords').value}`;
+        return `评论关键词：${document.getElementById('commentKeywords').value}`;
+      }).join('；');
+      window.eval(`if (pendingTemplate) { pendingTemplate.trigger = ${JSON.stringify(selected.map(item => item.name).join('、'))}; pendingTemplate.triggerDetail = ${JSON.stringify(detail)}; }`);
+    });
+    const markProductWarnings = () => document.querySelectorAll('#videoList tr').forEach(row => {
+      const cells = [...row.cells];
+      const productCell = cells.find(cell => cell.textContent.includes('不关联商品'));
+      const triggerCell = cells.find(cell => cell.textContent.includes('商品讲解'));
+      if (productCell && triggerCell && !productCell.querySelector('.product-link-warning')) productCell.insertAdjacentHTML('beforeend', '<span class="product-link-warning">当前触发方式须关联商品</span>');
+    });
+    new MutationObserver(markProductWarnings).observe(document.getElementById('videoList'), {childList:true, subtree:true});
+    markProductWarnings();
   })();
 </script>

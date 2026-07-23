@@ -14,7 +14,7 @@
     { id: 'v6', name: '短袖多款色轮播', type: '生成视频', modelId: 'qiaohu', model: '巧虎', trigger: '商品讲解', triggerCount: 24, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/qiaohu/front.png', detail: '白色、黑色款色轮流展示' },
     { id: 'v7', name: '明星同款上身展示', type: '生成视频', modelId: 'qingyu', model: '乔青予', trigger: '商品讲解', triggerCount: 15, productIndex: '2', product: '王一博同款抗菌短袖', productId: '3829847837299048729', cover: '../assets/models/host-xiaoqing-half.png', detail: '正面站姿展示版型' },
     { id: 'v3', name: '福袋互动视频', type: '上传视频', modelId: 'qiaohu', model: '巧虎', trigger: '主播口令', triggerCount: 42, productIndex: '', product: '不关联商品', productId: '', cover: '../assets/models/qiaohu/front.png', detail: '口令关键词：福袋来了、参与福袋' },
-    { id: 'v5', name: '关注直播间提醒', type: '上传视频', modelId: 'ruoxia', model: '林若夏', trigger: '评论触发', triggerCount: 29, productIndex: '', product: '不关联商品', productId: '', cover: '../assets/models/lyocell-cardigan-half.png', detail: '评论关键词：怎么关注、怎么领券' }
+    { id: 'v5', name: '关注直播间提醒', type: '上传视频', modelId: 'ruoxia', model: '林若夏', trigger: '弹幕评论', triggerCount: 29, productIndex: '', product: '不关联商品', productId: '', cover: '../assets/models/lyocell-cardigan-half.png', detail: '评论关键词：怎么关注、怎么领券', triggerComment: '小鹿：看一下蓝色款' }
   ];
 
   const products = [
@@ -62,7 +62,7 @@
             <div class="banbo-card-head"><h3>当前播放</h3><span class="banbo-tag green" id="playingState">播放中</span></div>
             <div class="banbo-playing">
               <img class="banbo-video-cover" id="currentVideoCover" src="${currentVideo.cover}" alt="正在播放视频" />
-              <div><h4 id="currentVideoName">${currentVideo.name}</h4><div class="banbo-playing-product" id="currentPlayingProduct">${currentProduct.name}</div><div class="banbo-playing-meta"><span id="currentVideoModel">${currentVideo.model}</span> · <span id="currentVideoType">${currentVideo.type}</span> · <span id="currentVideoTrigger">${currentVideo.trigger}</span><br><span id="currentVideoDetail">${currentVideo.detail}</span></div><div class="banbo-progress"><span id="playingProgress"></span></div><div class="banbo-controls"><button class="banbo-btn primary" id="stopVideo">停止</button><button class="banbo-btn danger" id="nextVideo">播放下一个</button></div></div>
+              <div><h4 id="currentVideoName">${currentVideo.name}</h4><div class="banbo-playing-product" id="currentPlayingProduct">${currentProduct.name}</div><div class="banbo-playing-meta"><span id="currentVideoModel">${currentVideo.model}</span> · <span id="currentVideoType">${currentVideo.type}</span> · <span id="currentVideoTrigger">${currentVideo.trigger}</span><br><span id="currentVideoDetail">${currentVideo.detail}</span></div><div class="banbo-trigger-comment" id="currentTriggerComment" hidden><span>触发评论</span><b></b></div><div class="banbo-progress"><span id="playingProgress"></span></div><div class="banbo-controls"><button class="banbo-btn primary" id="stopVideo">停止</button><button class="banbo-btn danger" id="nextVideo">播放下一个</button></div></div>
             </div>
             <div class="banbo-section-divider"></div>
             <div class="banbo-card-head"><h3>播放队列</h3><span id="playQueueCount"></span></div>
@@ -152,6 +152,9 @@
     document.getElementById('currentVideoType').textContent = currentVideo.type;
     document.getElementById('currentVideoTrigger').textContent = currentVideo.trigger;
     document.getElementById('currentVideoDetail').textContent = currentVideo.detail;
+    const comment = document.getElementById('currentTriggerComment');
+    comment.hidden = !currentVideo.triggerComment;
+    comment.querySelector('b').textContent = currentVideo.triggerComment || '';
     document.getElementById('playingState').textContent = isPlaying ? '播放中' : (companionEnabled ? '已停止' : '已暂停');
     document.getElementById('playingState').className = `banbo-tag ${isPlaying ? 'green' : 'gray'}`;
     document.getElementById('playingProgress').style.width = isPlaying ? '38%' : '0';
@@ -174,7 +177,7 @@
     isPlaying = true;
     document.getElementById('companionSwitch').classList.add('on');
     renderCurrentVideo();
-    if (voiceBoardEnabled) appendVoiceLine('触发记录', `命中“${video.trigger}”，开始播放「${video.name}」。`, 'triggered');
+    if (voiceBoardEnabled) appendVoiceLine('触发记录', `命中“${video.trigger}”${video.triggerComment ? `：${video.triggerComment}` : ''}，开始播放「${video.name}」。`, 'triggered');
     showToast(`正在播放：${video.name}`);
   }
 

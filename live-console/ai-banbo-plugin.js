@@ -10,11 +10,11 @@
 
   const videoData = [
     { id: 'v1', name: '速干短袖正面展示', type: '生成视频', modelId: 'qingyu', model: '乔青予', trigger: '商品讲解', triggerCount: 36, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/host-xiaoqing-half.png', detail: '正面展示（多款色）' },
-    { id: 'v2', name: '面料细节展示', type: '生成视频', modelId: 'ruoxia', model: '林若夏', trigger: '主播口令', triggerCount: 18, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/lyocell-cardigan-half.png', detail: '抬手展示面料、袖口和领口细节' },
+    { id: 'v2', name: '面料细节展示', type: '生成视频', modelId: 'ruoxia', model: '林若夏', trigger: '商品讲解>主播口令', triggerCount: 18, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/lyocell-cardigan-half.png', detail: '抬手展示面料、袖口和领口细节', triggerContent: '“看一下<mark>蓝色</mark>款”' },
     { id: 'v6', name: '短袖多款色轮播', type: '生成视频', modelId: 'qiaohu', model: '巧虎', trigger: '商品讲解', triggerCount: 24, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/qiaohu/front.png', detail: '白色、黑色款色轮流展示' },
     { id: 'v7', name: '明星同款上身展示', type: '生成视频', modelId: 'qingyu', model: '乔青予', trigger: '商品讲解', triggerCount: 15, productIndex: '2', product: '王一博同款抗菌短袖', productId: '3829847837299048729', cover: '../assets/models/host-xiaoqing-half.png', detail: '正面站姿展示版型' },
-    { id: 'v3', name: '福袋互动视频', type: '上传视频', modelId: 'qiaohu', model: '巧虎', trigger: '主播口令', triggerCount: 42, productIndex: '', product: '不关联商品', productId: '', cover: '../assets/models/qiaohu/front.png', detail: '口令关键词：福袋来了、参与福袋' },
-    { id: 'v5', name: '关注直播间提醒', type: '上传视频', modelId: 'ruoxia', model: '林若夏', trigger: '弹幕评论', triggerCount: 29, productIndex: '', product: '不关联商品', productId: '', cover: '../assets/models/lyocell-cardigan-half.png', detail: '评论关键词：怎么关注、怎么领券', triggerComment: '三杯鸡：看一下蓝色款' }
+    { id: 'v3', name: '福袋互动视频', type: '上传视频', modelId: 'qiaohu', model: '巧虎', trigger: '主播口令', triggerCount: 42, productIndex: '', product: '不关联商品', productId: '', cover: '../assets/models/qiaohu/front.png', detail: '口令关键词：福袋来了、参与福袋', triggerContent: '“<mark>福袋</mark>来了”' },
+    { id: 'v5', name: '关注直播间提醒', type: '上传视频', modelId: 'ruoxia', model: '林若夏', trigger: '商品讲解>弹幕评论', triggerCount: 29, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/lyocell-cardigan-half.png', detail: '评论关键词：怎么关注、怎么领券', triggerComment: '三杯鸡：看一下蓝色款', triggerContent: '“@三杯鸡：看一下<mark>蓝色</mark>款”' }
   ];
 
   const products = [
@@ -62,7 +62,7 @@
             <div class="banbo-card-head"><h3>当前播放</h3><span class="banbo-tag green" id="playingState">播放中</span></div>
             <div class="banbo-playing">
               <img class="banbo-video-cover" id="currentVideoCover" src="${currentVideo.cover}" alt="正在播放视频" />
-              <div><h4 id="currentVideoName">${currentVideo.name}</h4><div class="banbo-playing-product" id="currentPlayingProduct">${currentProduct.name}</div><div class="banbo-playing-meta"><span id="currentVideoModel">${currentVideo.model}</span> · <span id="currentVideoType">${currentVideo.type}</span> · <span id="currentVideoTrigger">${currentVideo.trigger}</span><br><span id="currentVideoDetail">${currentVideo.detail}</span></div><div class="banbo-trigger-comment" id="currentTriggerComment" hidden><span>触发评论</span><b></b></div><div class="banbo-progress"><span id="playingProgress"></span></div><div class="banbo-controls"><button class="banbo-btn primary" id="stopVideo">停止</button><button class="banbo-btn danger" id="nextVideo">播放下一个</button></div></div>
+              <div><h4 id="currentVideoName">${currentVideo.name}</h4><div class="banbo-playing-meta"><span id="currentVideoModel">${currentVideo.model}</span> · <span id="currentVideoTrigger">${currentVideo.trigger}</span><span id="currentTriggerContent"></span></div><div class="banbo-progress"><span id="playingProgress"></span></div><div class="banbo-controls"><button class="banbo-btn primary" id="stopVideo">停止</button><button class="banbo-btn danger" id="nextVideo">播放下一个</button></div></div>
             </div>
             <div class="banbo-section-divider"></div>
             <div class="banbo-card-head"><h3>播放队列</h3><span id="playQueueCount"></span></div>
@@ -77,7 +77,7 @@
       <div class="tab-content" data-banbo-panel="data">
         <div class="banbo-stack">
           <section class="banbo-card"><div class="banbo-card-head"><h3>本场伴播数据</h3><span>实时</span></div><div class="banbo-stat-grid"><div class="banbo-stat"><span>伴播时长</span><b>1.6小时</b></div><div class="banbo-stat"><span>触发次数</span><b>18</b></div><div class="banbo-stat"><span>播放视频</span><b>26</b></div></div></section>
-          <section class="banbo-card"><div class="banbo-card-head"><h3>触发方式统计</h3><span>共 18 次</span></div><div class="banbo-data-list"><div><span>商品讲解</span><b>11</b></div><div><span>主播口令</span><b>4</b></div><div><span>评论触发</span><b>3</b></div></div></section>
+          <section class="banbo-card"><div class="banbo-card-head"><h3>触发方式统计</h3><span>共 18 次</span></div><div class="banbo-data-list"><div><span>商品讲解</span><b>11</b></div><div><span>主播口令</span><b>4</b></div><div><span>弹幕评论</span><b>3</b></div></div></section>
           <section class="banbo-card"><div class="banbo-card-head"><h3>伴播视频 Top10</h3><span>按播放次数倒序</span></div><div class="banbo-top-list"><div><i>1</i><img src="../assets/models/stripe-tank-half.png" alt="福袋互动视频封面" /><b>福袋互动视频</b><span>42 次</span></div><div><i>2</i><img src="../assets/models/host-xiaoqing-half.png" alt="速干短袖正面展示流封面" /><b>速干短袖正面展示流</b><span>36 次</span></div><div><i>3</i><img src="../assets/models/host-xiaoqing-half.png" alt="关注直播间提醒封面" /><b>关注直播间提醒</b><span>29 次</span></div><div><i>4</i><img src="../assets/models/fairy-dress-half.png" alt="短袖多款色轮播封面" /><b>短袖多款色轮播</b><span>24 次</span></div><div><i>5</i><img src="../assets/models/lyocell-blouse-half.png" alt="面料细节展示封面" /><b>面料细节展示</b><span>18 次</span></div><div><i>6</i><img src="../assets/models/stripe-tank-half.png" alt="明星同款上身展示封面" /><b>明星同款上身展示</b><span>15 次</span></div><div><i>7</i><img src="../assets/models/host-xiaoqing-half.png" alt="评论感谢互动封面" /><b>评论感谢互动</b><span>12 次</span></div><div><i>8</i><img src="../assets/models/fairy-dress-half.png" alt="优惠券领取提醒封面" /><b>优惠券领取提醒</b><span>9 次</span></div><div><i>9</i><img src="../assets/models/lyocell-blouse-half.png" alt="新品上身展示封面" /><b>新品上身展示</b><span>7 次</span></div><div><i>10</i><img src="../assets/models/stripe-tank-half.png" alt="关注抽奖提醒封面" /><b>关注抽奖提醒</b><span>5 次</span></div></div></section>
         </div>
       </div>
@@ -127,6 +127,10 @@
     showToast.timer = window.setTimeout(() => toast.classList.remove('show'), 1800);
   }
 
+  function triggerMeta(video) {
+    return `${video.model} · ${video.trigger}${video.triggerContent ? ` · <span class="banbo-trigger-context">${video.triggerContent}</span>` : ''}`;
+  }
+
   function openConfirm(title, message, action) {
     document.getElementById('banboConfirmTitle').textContent = title;
     document.getElementById('banboConfirmMessage').textContent = message;
@@ -147,14 +151,9 @@
   function renderCurrentVideo() {
     document.getElementById('currentVideoCover').src = currentVideo.cover;
     document.getElementById('currentVideoName').textContent = currentVideo.name;
-    document.getElementById('currentPlayingProduct').textContent = currentVideo.productIndex ? currentProduct.name : '不关联商品';
     document.getElementById('currentVideoModel').textContent = currentVideo.model;
-    document.getElementById('currentVideoType').textContent = currentVideo.type;
     document.getElementById('currentVideoTrigger').textContent = currentVideo.trigger;
-    document.getElementById('currentVideoDetail').textContent = currentVideo.detail;
-    const comment = document.getElementById('currentTriggerComment');
-    comment.hidden = !currentVideo.triggerComment;
-    comment.querySelector('b').textContent = currentVideo.triggerComment || '';
+    document.getElementById('currentTriggerContent').innerHTML = currentVideo.triggerContent ? ` · <span class="banbo-trigger-context">${currentVideo.triggerContent}</span>` : '';
     document.getElementById('playingState').textContent = isPlaying ? '播放中' : (companionEnabled ? '已停止' : '已暂停');
     document.getElementById('playingState').className = `banbo-tag ${isPlaying ? 'green' : 'gray'}`;
     document.getElementById('playingProgress').style.width = isPlaying ? '38%' : '0';
@@ -167,7 +166,7 @@
     const list = queueIds.map(id => videoData.find(video => video.id === id)).filter(Boolean);
     document.getElementById('playQueueCount').textContent = `${list.length} 条`;
     document.getElementById('playQueue').innerHTML = list.length ? list.map((video, index) => `
-      <article class="banbo-queue-row" draggable="true" data-queue-video="${video.id}"><span class="banbo-drag" title="拖动排序">⋮⋮</span><span class="banbo-index">${String(index + 1).padStart(2, '0')}</span><img class="banbo-mini-cover" src="${video.cover}" alt="${video.name}" /><div><div class="banbo-row-title">${video.name}</div><div class="banbo-row-meta">${video.model} · ${video.trigger}${video.productIndex ? ` · ${video.product}` : ''}${index === 0 && video.id === 'v3' ? '<span class="banbo-insert-tag">触发插队</span>' : ''}</div></div><div class="banbo-queue-actions">${videoActionButton('play', video.id)}${videoActionButton('remove', video.id)}</div></article>`).join('') : '<div class="banbo-empty compact">暂无待播放视频</div>';
+      <article class="banbo-queue-row" draggable="true" data-queue-video="${video.id}"><span class="banbo-drag" title="拖动排序">⋮⋮</span><span class="banbo-index">${String(index + 1).padStart(2, '0')}</span><img class="banbo-mini-cover" src="${video.cover}" alt="${video.name}" /><div><div class="banbo-row-title">${video.name}</div><div class="banbo-row-meta">${triggerMeta(video)}${index === 0 && video.id === 'v3' ? '<span class="banbo-insert-tag">触发插队</span>' : ''}</div></div><div class="banbo-queue-actions">${videoActionButton('play', video.id)}${videoActionButton('remove', video.id)}</div></article>`).join('') : '<div class="banbo-empty compact">暂无待播放视频</div>';
   }
 
   function playVideo(video) {

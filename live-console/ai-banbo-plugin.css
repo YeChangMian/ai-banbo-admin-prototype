@@ -176,9 +176,8 @@
 .banbo-playing h4 { margin: 0; font-size: 18px; line-height: 1.35; }
 .banbo-playing-product { max-width: 100%; margin-top: 7px; overflow: hidden; color: var(--banbo-text); font-size: 13px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
 .banbo-playing-meta { margin: 8px 0 12px; color: var(--banbo-muted); font-size: 13px; line-height: 1.55; }
-.banbo-trigger-comment { display: flex; align-items: center; gap: 8px; margin: -3px 0 12px; padding: 8px 10px; border-radius: 6px; background: #f4faf6; color: #3c8659; font-size: 12px; }
-.banbo-trigger-comment span { flex: 0 0 auto; color: #6c987a; }
-.banbo-trigger-comment b { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.banbo-trigger-context { color: var(--banbo-muted); }
+.banbo-trigger-context mark { border-radius: 3px; background: #fde7ef; color: #b94669; padding: 1px 3px; }
 .banbo-progress { height: 6px; overflow: hidden; border-radius: 99px; background: #eee7ea; }
 .banbo-progress span { display: block; width: 38%; height: 100%; border-radius: inherit; background: var(--banbo); transition: width .3s ease; }
 .banbo-controls { display: flex; gap: 8px; margin-top: 12px; }

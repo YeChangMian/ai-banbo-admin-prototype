@@ -121,7 +121,7 @@
 
   <div class="modal-mask" id="previewModal"><div class="modal"><div class="modal-head"><h2 id="previewTitle">视频播放</h2><button class="modal-close" data-close-modal><i data-lucide="x"></i></button></div><div class="modal-body"><div class="video-player" id="previewPlayer"><img class="preview-media" id="previewImage" src="assets/models/host-xiaoqing-half.png" alt="视频预览" /><button class="video-player-control" id="previewPlayButton" aria-label="播放视频"><i data-lucide="play"></i></button><div class="video-player-progress"><i></i></div></div></div><div class="modal-foot" id="previewConfirmFoot" hidden><button class="btn danger" id="previewDiscard">废弃</button><button class="btn" id="previewRegenerate">重新生成</button><button class="btn primary" id="previewConfirm"><i data-lucide="check"></i>确认</button></div></div></div>
   <div class="modal-mask" id="confirmModal"><div class="modal"><div class="modal-head"><h2 id="confirmTitle">确认操作</h2><button class="modal-close" data-close-modal><i data-lucide="x"></i></button></div><div class="modal-body" id="confirmMessage" style="color:var(--muted);font-size:13px;line-height:1.7"></div><div class="modal-foot"><button class="btn" data-close-modal>取消</button><button class="btn primary" id="confirmAction">确认</button></div></div></div>
-  <div class="modal-mask" id="modelModal"><div class="modal model-create-modal"><div class="modal-head"><h2>创建数字模特</h2><button class="modal-close" data-close-modal><i data-lucide="x"></i></button></div><div class="modal-body"><div class="form-grid"><div class="field"><label>形象类型</label><div class="check-list"><label class="check-option"><input type="radio" name="modelType" value="真人形象"/>真人形象</label><label class="check-option"><input type="radio" name="modelType" value="动画形象" checked/>动画形象</label></div></div><div class="field"><label>模特名称</label><input value="巧虎" placeholder="请输入模特名称" /></div><div class="field"><label>正脸图片</label><div class="model-reference-grid"><figure class="model-reference"><img src="assets/models/qiaohu/face.png" alt="巧虎正脸图片"/><span>正脸</span></figure><button class="model-reference-add" data-demo-upload="正脸图片">+ 重新上传</button></div><p class="model-material-note">必填，用于锁定面部和核心识别特征。</p></div><div class="field"><label>参考图片（选填，最多 9 张）</label><div class="model-reference-grid"><figure class="model-reference"><img src="assets/models/qiaohu/front.png" alt="巧虎全身正面参考"/><span>全身正面</span></figure><figure class="model-reference"><img src="assets/models/qiaohu/action.png" alt="巧虎典型动作参考"/><span>典型动作</span></figure><figure class="model-reference"><img src="assets/models/qiaohu/flower.png" alt="巧虎道具互动参考"/><span>道具互动</span></figure><button class="model-reference-add" data-demo-upload="参考图片">+ 添加图片</button></div><p class="model-material-note">建议补充全身正面、侧面、背面、不同表情和典型动作；图片越完整，形象一致性越高。</p></div></div></div><div class="modal-foot"><button class="btn" data-close-modal>取消</button><button class="btn primary" id="modelAnalyzeCreate"><i data-lucide="scan-line"></i>分析并创建</button></div></div></div>
+  <div class="modal-mask" id="modelModal"><div class="modal model-create-modal"><div class="modal-head"><h2>创建数字模特</h2><button class="modal-close" data-close-modal><i data-lucide="x"></i></button></div><div class="modal-body"><div class="form-grid"><div class="field"><label>形象类型</label><div class="check-list"><label class="check-option"><input type="radio" name="modelType" value="真人形象"/>真人形象</label><label class="check-option"><input type="radio" name="modelType" value="动画形象" checked/>动画形象</label></div></div><div class="field"><label>模特名称</label><input value="巧虎" placeholder="请输入模特名称" /></div><div class="field model-body-type" hidden><label>体型</label><div class="check-list model-body-type-options"><label class="check-option"><input type="radio" name="modelBodyType" value="标准" checked/><i data-lucide="user-round"></i><span>标准</span></label><label class="check-option"><input type="radio" name="modelBodyType" value="瘦小"/><i data-lucide="minimize-2"></i><span>瘦小</span></label><label class="check-option"><input type="radio" name="modelBodyType" value="高瘦"/><i data-lucide="move-vertical"></i><span>高瘦</span></label><label class="check-option"><input type="radio" name="modelBodyType" value="高壮"/><i data-lucide="dumbbell"></i><span>高壮</span></label><label class="check-option"><input type="radio" name="modelBodyType" value="肥胖"/><i data-lucide="circle-user-round"></i><span>肥胖</span></label><label class="check-option"><input type="radio" name="modelBodyType" value="青少年"/><i data-lucide="graduation-cap"></i><span>青少年</span></label><label class="check-option"><input type="radio" name="modelBodyType" value="儿童"/><i data-lucide="baby"></i><span>儿童</span></label></div></div><div class="field"><label>正脸图片</label><div class="model-reference-grid"><figure class="model-reference"><img src="assets/models/qiaohu/face.png" alt="巧虎正脸图片"/><span>正脸</span></figure><button class="model-reference-add" data-demo-upload="正脸图片">+ 重新上传</button></div><p class="model-material-note">必填，用于锁定面部和核心识别特征。</p></div><div class="field"><label>参考图片（选填，最多 9 张）</label><div class="model-reference-grid"><figure class="model-reference"><img src="assets/models/qiaohu/front.png" alt="巧虎全身正面参考"/><span>全身正面</span></figure><figure class="model-reference"><img src="assets/models/qiaohu/action.png" alt="巧虎典型动作参考"/><span>典型动作</span></figure><figure class="model-reference"><img src="assets/models/qiaohu/flower.png" alt="巧虎道具互动参考"/><span>道具互动</span></figure><button class="model-reference-add" data-demo-upload="参考图片">+ 添加图片</button></div><p class="model-material-note">建议补充全身正面、侧面、背面、不同表情和典型动作；图片越完整，形象一致性越高。</p></div></div></div><div class="modal-foot"><button class="btn" data-close-modal>取消</button><button class="btn primary" id="modelAnalyzeCreate"><i data-lucide="scan-line"></i>分析并创建</button></div></div></div>
   <div class="modal-mask" id="modelAnalysisModal"><div class="modal model-analysis-modal"><div class="modal-head"><h2>正在分析数字模特</h2></div><div class="modal-body"><div class="model-analysis-wait"><i data-lucide="scan-face"></i><h3>正在解析形象素材</h3><p id="modelAnalysisText">正在识别面部特征</p><div class="progress"><div class="progress-track"><div class="progress-bar" id="modelAnalysisBar"></div></div><div class="progress-copy"><span>请稍候，分析完成后将展示结果</span><b id="modelAnalysisValue">0%</b></div></div></div></div></div></div>
   <div class="modal-mask" id="modelResultModal"><div class="modal model-result-modal"><div class="modal-head"><h2>数字模特分析结果</h2></div><div class="modal-body" id="modelResultBody"></div><div class="modal-foot"><button class="btn" id="cancelAnalyzedModel">取消</button><button class="btn" id="regenerateAnalyzedModel"><i data-lucide="refresh-cw"></i>重新生成</button><button class="btn primary" id="confirmAnalyzedModel"><i data-lucide="check"></i>确认</button></div></div></div>
   <div class="modal-mask" id="backgroundModal"><div class="modal background-create-modal"><div class="modal-head"><h2>创建指定背景</h2><button class="modal-close" data-close-modal><i data-lucide="x"></i></button></div><div class="modal-body"><div class="background-stepper"><span class="active" data-background-step="1"><i>1</i>上传直播间画面</span><span data-background-step="2"><i>2</i>框选展示区域</span></div><div class="background-form-step active" data-background-form-step="1"><div class="field"><label>背景名称</label><input id="backgroundNameInput" value="三彩直播间主景" placeholder="请输入背景名称"/></div><div class="field"><label>直播间画面</label><button class="upload-box background-upload" id="backgroundUploadButton"><i data-lucide="upload"></i><span>上传直播间画面</span></button><p class="model-material-note">上传完整的直播间画面截图，用于确定视频真实背景。</p></div></div><div class="background-form-step" data-background-form-step="2"><div class="field"><label>生成视频尺寸</label><div class="background-ratio-grid" aria-label="生成视频尺寸"><button type="button" class="background-ratio-option" data-background-ratio="1:1"><i class="ratio-shape ratio-square"></i><span>1:1</span></button><button type="button" class="background-ratio-option" data-background-ratio="4:3"><i class="ratio-shape ratio-four-three"></i><span>4:3</span></button><button type="button" class="background-ratio-option" data-background-ratio="3:4"><i class="ratio-shape ratio-three-four"></i><span>3:4</span></button><button type="button" class="background-ratio-option" data-background-ratio="16:9"><i class="ratio-shape ratio-wide"></i><span>16:9</span></button><button type="button" class="background-ratio-option active" data-background-ratio="9:16"><i class="ratio-shape ratio-tall"></i><span>9:16</span></button><button type="button" class="background-ratio-option" data-background-ratio="21:9"><i class="ratio-shape ratio-ultrawide"></i><span>21:9</span></button></div></div><div class="field"><label>伴播展示区域</label><p class="model-material-note">可拖动位置或缩放展示区域，视频尺寸将保持不变。</p><div class="background-stage"><div class="background-canvas" id="backgroundCanvas"><img src="assets/backgrounds/fashion-simple-source.png" alt="直播间画面示例"/><div class="background-selection" id="backgroundSelection"><span>伴播展示区域</span><i class="background-selection-resize" aria-hidden="true"></i></div></div></div></div></div></div><div class="modal-foot"><button class="btn" data-close-modal>取消</button><button class="btn" id="backgroundPrevButton" hidden>上一步</button><button class="btn primary" id="backgroundNextButton">下一步</button><button class="btn primary" id="saveBackground" hidden>保存背景</button></div></div></div>
@@ -150,7 +150,7 @@
     ];
     const models=[
       {id:'qiaohu',name:'巧虎',type:'动画形象',note:'2D动画IP · 固定角色特征',tags:['动画形象','黄色虎纹','幼儿体态'],image:'assets/models/qiaohu/face.png',analysisImage:'assets/models/qiaohu/front.png',face:'assets/models/qiaohu/face.png',references:['assets/models/qiaohu/front.png','assets/models/qiaohu/action.png','assets/models/qiaohu/flower.png'],created:'2026-07-20 14:30'},
-      {id:'ruoxia',name:'林若夏',note:'轻熟优雅 · 小骨架',tags:['小骨架','窄肩','高腰线'],image:'assets/models/lin-ruoxia-face-source.png',analysisImage:'assets/models/lin-ruoxia-analysis.png',face:'assets/models/lin-ruoxia-face-source.png',prefix:'lyocell-cardigan',created:'2026-07-04 10:18'}
+      {id:'ruoxia',name:'林若夏',note:'轻熟优雅 · 小骨架',tags:['小骨架','窄肩','高腰线'],bodyType:'瘦小',image:'assets/models/lin-ruoxia-face-source.png',analysisImage:'assets/models/lin-ruoxia-analysis.png',face:'assets/models/lin-ruoxia-face-source.png',prefix:'lyocell-cardigan',created:'2026-07-04 10:18'}
     ];
     const templates=[
       {id:'colors',name:'正面展示',note:'正面站姿，展示整体版型；支持多款色切换',category:'上装、下装',colorMode:'多款色',trigger:'商品讲解',triggerDetail:'商品讲解期间循环衔接播放',method:'参考图 + 提示词',source:'参考图：正面展示参考图',prompt:'模特正面站立，镜头展示服饰整体版型，动作自然，支持切换多个商品款色。',audio:'无音频',count:48,creator:'王欣怡',created:'2026-07-08 11:20',image:'assets/models/host-xiaoqing-half.png'},
@@ -260,7 +260,7 @@
     function animationModelDetailMarkup(m){return `<section class="detail-section"><div class="model-detail-summary animation-model-summary"><img src="${m.image}" alt="${m.name}标准形象图"/><div class="model-summary-copy"><h3>${m.name}</h3><p>动画数字模特解析成果</p><div class="model-summary-list"><div><span>形象类型</span><b>${m.type}</b></div><div><span>创建时间</span><b>${m.created}</b></div></div></div></div></section><section class="detail-section"><h3>创建素材</h3><div class="detail-info"><div><span>正脸图片</span><b>1 张</b></div><div><span>参考图片</span><b>${m.references.length} 张</b></div><div><span>形象视频</span><b>IP-动画礼盒4-终稿.mp4</b></div></div></section><section class="detail-section"><h3>参考图片</h3><div class="animation-reference-grid">${m.references.map((src,index)=>`<figure class="model-asset"><img src="${src}" alt="巧虎参考图片${index+1}"/><figcaption>${['全身正面','典型动作','道具互动'][index]}</figcaption></figure>`).join('')}</div></section><section class="detail-section"><h3>形象解析</h3><div class="detail-info"><div><span>美术风格</span><b>2D 卡通动画，粗黑描边，纯色块上色</b></div><div><span>角色结构</span><b>幼儿体态，约 2.5 头身，大头短肢，圆耳和长尾</b></div><div><span>面部特征</span><b>黄色虎脸、黑色额纹、白色口鼻区、黑色椭圆眼</b></div><div><span>固定服饰</span><b>红色上衣、深蓝短裤、蓝色运动鞋</b></div><div><span>动态特征</span><b>表情幅度大，四肢动作活泼，尾巴随动作自然摆动</b></div></div></section><section class="detail-section"><h3>固定形象特征</h3><div class="character-traits"><span class="tag">黄色虎纹</span><span class="tag">圆形耳朵</span><span class="tag">白色口鼻</span><span class="tag">红色上衣</span><span class="tag">深蓝短裤</span><span class="tag">蓝色运动鞋</span><span class="tag">黑黄条纹尾巴</span></div></section><section class="detail-section"><h3>形象视频</h3><video class="animation-video" controls preload="metadata" poster="${m.image}"><source src="assets/models/qiaohu/character-reference.mp4" type="video/mp4"/></video></section>`}
     document.addEventListener('click',event=>{const detail=event.target.closest('[data-detail-type="model"]');if(detail){const m=models.find(x=>x.id===detail.dataset.detailId);if(m){$('#drawerBody').innerHTML=m.type==='动画形象'?animationModelDetailMarkup(m):modelDetailMarkup(m);const creationSection=[...$('#drawerBody').querySelectorAll('.detail-section')].find(section=>section.querySelector('h3')?.textContent==='创建素材');creationSection?.remove();if(m.type==='动画形象')$('.animation-reference-grid')?.insertAdjacentHTML('afterbegin',`<figure class="model-asset"><img src="${m.face}" alt="${m.name}正脸图片"/><figcaption>正脸</figcaption></figure>`);icons()}}});
     function openModal(id){$('#'+id).classList.add('open')}function closeModal(el){el.closest('.modal-mask').classList.remove('open')}function actionAnalysisRunning(){return $('#actionAnalysis').classList.contains('active')&&!$('#actionAnalysisResult').classList.contains('active')}document.addEventListener('click',event=>{const modalTrigger=event.target.closest('[data-modal]');if(modalTrigger){if(modalTrigger.dataset.modal==='templateModal')resetActionForm();openModal(modalTrigger.dataset.modal)}const closeTrigger=event.target.closest('[data-close-modal]');if(closeTrigger){const mask=closeTrigger.closest('.modal-mask');if(mask?.id==='templateModal'&&actionAnalysisRunning())toast('动作正在生成和分析，请稍候');else closeModal(closeTrigger)}if(event.target.classList.contains('modal-mask')){if(event.target.id==='templateModal'&&actionAnalysisRunning())toast('动作正在生成和分析，请稍候');else event.target.classList.remove('open')}const save=event.target.closest('[data-save]');if(save){closeModal(save);toast(save.dataset.save)}});
-    function syncModelCreationType(type){const animation=type==='动画形象';$$('#modelModal input[name="modelType"]').forEach(input=>input.checked=input.value===type);const nameInput=$('#modelModal input[placeholder="请输入模特名称"]');if(nameInput)nameInput.value=animation?'巧虎':'';$$('#modelModal .model-reference').forEach(item=>item.hidden=!animation);const addButtons=$$('#modelModal .model-reference-add');if(addButtons[0])addButtons[0].textContent=animation?'+ 重新上传':'+ 上传正脸图片';if(addButtons[1])addButtons[1].textContent='+ 添加图片'}
+    function syncModelCreationType(type){const animation=type==='动画形象';$$('#modelModal input[name="modelType"]').forEach(input=>input.checked=input.value===type);const nameInput=$('#modelModal input[placeholder="请输入模特名称"]');if(nameInput)nameInput.value=animation?'巧虎':'';$('.model-body-type').hidden=animation;$$('#modelModal .model-reference').forEach(item=>item.hidden=!animation);const addButtons=$$('#modelModal .model-reference-add');if(addButtons[0])addButtons[0].textContent=animation?'+ 重新上传':'+ 上传正脸图片';if(addButtons[1])addButtons[1].textContent='+ 添加图片'}
     document.addEventListener('click',event=>{if(event.target.closest('[data-modal="modelModal"]'))syncModelCreationType(state.modelType)});$$('#modelModal input[name="modelType"]').forEach(input=>input.addEventListener('change',()=>syncModelCreationType(input.value)));
     document.addEventListener('click',event=>{const detail=event.target.closest('[data-detail-type="model"],[data-detail-type="template"]');if(!detail)return;const type=detail.dataset.detailType,id=detail.dataset.detailId;setTimeout(()=>{if(!$('#detailDrawer').classList.contains('open')||$('#drawerBody .drawer-actions'))return;$('#drawerBody').insertAdjacentHTML('beforeend',`<div class="drawer-actions"><button class="btn" data-edit-asset="${type}" data-edit-id="${id}"><i data-lucide="pencil"></i>修改</button><button class="btn danger" data-delete-asset="${type}" data-delete-id="${id}"><i data-lucide="trash-2"></i>删除</button></div>`);icons()},0)},true);
     document.addEventListener('click',event=>{const edit=event.target.closest('[data-edit-asset]');if(edit){$('#detailDrawer').classList.remove('open');if(edit.dataset.editAsset==='model'){$('#modelModal .modal-head h2').textContent='修改数字模特';syncModelCreationType(models.find(model=>model.id===edit.dataset.editId)?.type||'真人形象');openModal('modelModal')}else{$('#templateModal .modal-head h2').textContent='修改展示模版';resetActionForm();openModal('templateModal')}return}const remove=event.target.closest('[data-delete-asset]');if(remove){const isModel=remove.dataset.deleteAsset==='model';const list=isModel?models:templates;const asset=list.find(item=>item.id===remove.dataset.deleteId);confirmAction(`确认删除${isModel?'数字模特':'展示模版'}`,`删除后，“${asset?.name||''}”将无法继续用于制作伴播。`,()=>{const index=list.findIndex(item=>item.id===remove.dataset.deleteId);if(index>=0)list.splice(index,1);if(isModel&&state.model===remove.dataset.deleteId)state.model='';if(!isModel&&state.template===remove.dataset.deleteId)state.template='';$('#detailDrawer').classList.remove('open');renderCreateChoices();renderAssets();renderSummary();toast('已删除')})}});
@@ -272,49 +272,6 @@
 </html>
 <script>
   (() => {
-    const sizeChoices = [
-      ['自动匹配', '自动<br>匹配', ''], ['1:1', '1:1', 'square'], ['4:3', '4:3', 'ratio-4-3'],
-      ['3:4', '3:4', 'ratio-3-4'], ['16:9', '16:9', 'ratio-16-9'], ['9:16', '9:16', 'ratio-9-16'], ['21:9', '21:9', 'ratio-21-9']
-    ];
-    const methodPanel = document.querySelector('[data-action-method-panel="image"]');
-    if (!methodPanel) return;
-    const sizeField = document.createElement('div');
-    sizeField.className = 'field';
-    sizeField.innerHTML = `<label>生成视频尺寸</label><div class="video-size-grid" role="radiogroup" aria-label="生成视频尺寸">${sizeChoices.map(([value, label, shape]) => `<button class="video-size-option ${value === '9:16' ? 'active' : ''}" data-video-size="${value}" role="radio" aria-checked="${value === '9:16'}">${shape ? `<i class="video-size-shape ${shape}"></i>` : ''}<b>${label}</b></button>`).join('')}</div>`;
-    const categoryField = document.querySelector('[data-display-category]')?.closest('.field');
-    categoryField?.before(sizeField);
-
-    const selectSize = value => document.querySelectorAll('[data-video-size]').forEach(button => {
-      const selected = button.dataset.videoSize === value;
-      button.classList.toggle('active', selected);
-      button.setAttribute('aria-checked', selected);
-    });
-    document.addEventListener('click', event => {
-      const choice = event.target.closest('[data-video-size]');
-      if (choice) selectSize(choice.dataset.videoSize);
-    });
-
-    const originalReset = window.resetActionForm;
-    window.resetActionForm = function () {
-      originalReset();
-      selectSize('9:16');
-    };
-    document.getElementById('actionCreate').addEventListener('click', () => {
-      const size = document.querySelector('[data-video-size].active')?.dataset.videoSize || '9:16';
-      window.eval(`if (pendingTemplate) pendingTemplate.videoSize = ${JSON.stringify(size)}`);
-    });
-
-    const originalOpenDrawer = window.openDrawer;
-    window.openDrawer = function (type, id) {
-      originalOpenDrawer(type, id);
-      if (type !== 'template') return;
-      const template = window.eval(`templates.find(item => item.id === ${JSON.stringify(id)})`);
-      const sections = [...document.querySelectorAll('#drawerBody .detail-section')];
-      const generationSection = sections.find(section => section.querySelector('h3')?.textContent === '生成方式');
-      const details = generationSection?.querySelector('.detail-info');
-      if (details && !details.querySelector('[data-video-size-detail]')) details.insertAdjacentHTML('beforeend', `<div data-video-size-detail><span>生成视频尺寸</span><b>${template?.videoSize || '9:16'}</b></div>`);
-    };
-
     const triggerDefinitions = [
       ['product', '商品讲解', '关联商品的商品讲解期间自动衔接播放'],
       ['product-command', '商品讲解>主播口令', '关联商品的商品讲解期间主播口令触发'],
@@ -976,6 +933,7 @@
   })();
 </script>
 <style>
+  .model-body-type-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.model-body-type-options .check-option{position:relative;min-height:78px;display:grid;place-items:center;align-content:center;gap:6px;border-radius:6px;background:#fff;padding:8px;color:#767a82;font-size:11px;font-weight:700}.model-body-type-options .check-option input{position:absolute;opacity:0;pointer-events:none}.model-body-type-options .check-option svg{width:27px;height:27px;stroke-width:1.7}.model-body-type-options .check-option:has(input:checked){border-color:var(--rose);background:var(--rose-soft);color:var(--rose-dark);box-shadow:0 0 0 1px rgba(182,79,107,.1)}.model-body-type-options .check-option:has(input:checked)::after{content:"";position:absolute;right:7px;top:7px;width:7px;height:4px;border-left:1.5px solid var(--rose-dark);border-bottom:1.5px solid var(--rose-dark);transform:rotate(-45deg)}@media(max-width:560px){.model-body-type-options{grid-template-columns:repeat(3,minmax(0,1fr))}}
   .model-analysis-modal{width:min(560px,100%)}.model-analysis-wait{display:grid;min-height:250px;place-items:center;align-content:center;text-align:center}.model-analysis-wait>svg{width:42px;height:42px;color:var(--rose)}.model-analysis-wait h3{margin:14px 0 6px;font-size:17px}.model-analysis-wait p{margin:0;color:var(--muted);font-size:12px}.model-analysis-wait .progress{width:min(400px,100%)}.model-result-modal{width:min(820px,100%);max-height:calc(100vh - 32px);display:grid;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden}.model-result-modal>.modal-body{min-height:0;overflow-y:auto;overscroll-behavior:contain}.model-result-summary{display:grid;grid-template-columns:210px minmax(0,1fr);gap:16px;align-items:start}.model-result-summary>img{width:210px;aspect-ratio:3/4;border:1px solid var(--line);border-radius:6px;object-fit:contain;background:#f4f4f5}.model-result-copy h3{margin:0;font-size:18px}.model-result-copy p{margin:7px 0 0;color:var(--muted);font-size:12px}.model-result-body .detail-section{margin-top:20px}@media(max-width:640px){.model-result-summary{grid-template-columns:1fr}.model-result-summary>img{width:100%;max-width:220px}}
 </style>
 <script>
@@ -987,16 +945,17 @@
     const resultMarkup = model => {
       const references = model.type === '动画形象' ? model.references : [];
       const analysisImage = model.analysisImage || model.image;
-      return `<div class="model-result-body"><section class="detail-section"><div class="model-result-summary"><img src="${model.face}" alt="${model.name}正脸图"/><div class="model-result-copy"><h3>${model.name}</h3><p>${model.type} · 素材分析完成</p><div class="detail-info" style="margin-top:14px"><div><span>形象类型</span><b>${model.type}</b></div><div><span>正脸图</span><b>已识别</b></div><div><span>参考图</span><b>${references.length} 张</b></div></div></div></div></section>${references.length?`<section class="detail-section"><h3>参考图</h3><div class="animation-reference-grid">${references.map((src,index)=>`<figure class="model-asset"><img src="${src}" alt="${model.name}参考图${index+1}"/><figcaption>参考图 ${index+1}</figcaption></figure>`).join('')}</div></section>`:''}<section class="detail-section"><h3>分析生成图</h3><img class="model-analysis-result" src="${analysisImage}" alt="${model.name}分析生成图"/></section></div>`;
+      return `<div class="model-result-body"><section class="detail-section"><div class="model-result-summary"><img src="${model.face}" alt="${model.name}正脸图"/><div class="model-result-copy"><h3>${model.name}</h3><p>${model.type} · 素材分析完成</p><div class="detail-info" style="margin-top:14px"><div><span>形象类型</span><b>${model.type}</b></div>${model.type==='真人形象'?`<div><span>体型</span><b>${model.bodyType||'标准'}</b></div>`:''}<div><span>正脸图</span><b>已识别</b></div><div><span>参考图</span><b>${references.length} 张</b></div></div></div></div></section>${references.length?`<section class="detail-section"><h3>参考图</h3><div class="animation-reference-grid">${references.map((src,index)=>`<figure class="model-asset"><img src="${src}" alt="${model.name}参考图${index+1}"/><figcaption>参考图 ${index+1}</figcaption></figure>`).join('')}</div></section>`:''}<section class="detail-section"><h3>分析生成图</h3><img class="model-analysis-result" src="${analysisImage}" alt="${model.name}分析生成图"/></section></div>`;
     };
     $('#modelAnalyzeCreate').addEventListener('click', () => {
       const type = document.querySelector('#modelModal input[name="modelType"]:checked')?.value || '动画形象';
       const name = getModelInput()?.value.trim() || (type === '动画形象' ? '新建动画形象' : '新建数字模特');
       const isAnimation = type === '动画形象';
+      const bodyType = document.querySelector('#modelModal input[name="modelBodyType"]:checked')?.value || '标准';
       pendingModel = isAnimation ? {
         id:`model-${Date.now()}`,name,type,note:'动画形象 · 已完成素材解析',tags:['动画形象','已解析'],image:'assets/models/qiaohu/face.png',analysisImage:'assets/models/qiaohu/front.png',face:'assets/models/qiaohu/face.png',references:['assets/models/qiaohu/front.png','assets/models/qiaohu/action.png','assets/models/qiaohu/flower.png'],created:'2026-08-07 15:30',createdFromAnalysis:true
       } : {
-        id:`model-${Date.now()}`,name,type,note:'真人形象 · 已完成素材解析',tags:['真人形象','已解析'],image:'assets/models/lin-ruoxia-face-source.png',analysisImage:'assets/models/lin-ruoxia-analysis.png',face:'assets/models/lin-ruoxia-face-source.png',prefix:'lyocell-cardigan',created:'2026-08-07 15:30',createdFromAnalysis:true
+        id:`model-${Date.now()}`,name,type,note:`真人形象 · ${bodyType} · 已完成素材解析`,tags:['真人形象',bodyType,'已解析'],bodyType,image:'assets/models/lin-ruoxia-face-source.png',analysisImage:'assets/models/lin-ruoxia-analysis.png',face:'assets/models/lin-ruoxia-face-source.png',prefix:'lyocell-cardigan',created:'2026-08-07 15:30',createdFromAnalysis:true
       };
       $('#modelModal').classList.remove('open');
       $('#modelAnalysisBar').style.width = '0%';
@@ -1124,7 +1083,46 @@
 <style>
   .background-ratio-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:9px}.background-ratio-option{min-height:82px;display:grid;place-items:center;align-content:center;gap:7px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--muted);cursor:pointer}.background-ratio-option:hover{border-color:#d5b0bc}.background-ratio-option.active{border-color:var(--rose);background:var(--rose-soft);color:var(--rose-dark);box-shadow:0 0 0 2px rgba(182,79,107,.09)}.ratio-shape{display:block;width:28px;height:28px;border:2px solid currentColor}.ratio-four-three{width:34px;height:26px}.ratio-three-four{width:25px;height:34px}.ratio-wide{width:38px;height:22px}.ratio-tall{width:22px;height:38px}.ratio-ultrawide{width:42px;height:18px}.background-ratio-option span{font-size:11px;font-weight:700}.background-selection-resize{position:absolute;right:-5px;bottom:-5px;width:10px;height:10px;border:2px solid #fff;background:var(--rose);box-shadow:0 0 0 1px var(--rose);cursor:nwse-resize}.background-selection{cursor:move}@media(max-width:640px){.background-ratio-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
   #backgroundModal .background-form-step[data-background-form-step="2"]{margin:0;padding:0;background:transparent}.background-stage{display:flex;justify-content:center;margin-top:10px;padding:14px;background:#eef0f3}.background-stage .background-canvas{margin:0}
+  .model-card-attribute{margin:4px 0 0;color:var(--muted);font-size:11px;line-height:1.45}
 </style>
+<script>
+  (() => {
+    const grids = [document.querySelector('#templateGrid'), document.querySelector('#createTemplateGrid')].filter(Boolean);
+    function renderTemplateTrigger() {
+      grids.forEach(grid => grid.querySelectorAll('.asset-card, .choice-card').forEach(card => {
+        const template = window.eval(`templates.find(item => item.name === ${JSON.stringify(card.querySelector('h3')?.textContent || '')})`);
+        if (!template) return;
+        card.querySelector('.asset-trigger')?.remove();
+        const description = card.querySelector('.asset-body > p') || card.querySelector(':scope > p');
+        if (description) description.textContent = template.trigger;
+      }));
+    }
+    grids.forEach(grid => new MutationObserver(renderTemplateTrigger).observe(grid, {childList:true}));
+    renderTemplateTrigger();
+  })();
+</script>
+<script>
+  (() => {
+    const grids = [document.querySelector('#modelGrid'), document.querySelector('#createModelGrid')].filter(Boolean);
+    function renderModelAttribute() {
+      grids.forEach(grid => grid.querySelectorAll('.asset-card, .choice-card').forEach(card => {
+        const model = window.eval(`models.find(item => item.name === ${JSON.stringify(card.querySelector('h3')?.textContent || '')})`);
+        if (!model) return;
+        const body = card.querySelector('.asset-body');
+        const content = body || card;
+        content.querySelectorAll(':scope > p:not(.model-card-attribute)').forEach(item => item.remove());
+        const attribute = model.type === '动画形象'
+          ? `特征：${model.tags.filter(tag => tag !== '动画形象').join('、')}`
+          : `体型：${model.bodyType || '标准'}`;
+        const existing = content.querySelector('.model-card-attribute');
+        if (existing) { existing.textContent = attribute; return; }
+        content.querySelector('h3')?.insertAdjacentHTML('afterend', `<p class="model-card-attribute">${attribute}</p>`);
+      }));
+    }
+    grids.forEach(grid => new MutationObserver(renderModelAttribute).observe(grid, {childList:true}));
+    renderModelAttribute();
+  })();
+</script>
 <script>
   (() => {
     const taskList = document.querySelector('#taskList');

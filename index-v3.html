@@ -48,6 +48,7 @@
     .create-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;flex-wrap:wrap}.create-toolbar-left,.create-toolbar-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.create-store{height:38px;display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:6px;background:#fafafb;padding:0 10px;font-size:12px}.create-store span{color:var(--muted)}.create-store b{font-size:12px}.sync-icon{width:38px;height:38px}.sort-select{min-width:150px}.choice-card{overflow:hidden}.choice-card .choice-detail{position:absolute;right:8px;bottom:8px;z-index:3;height:27px;display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:5px;background:rgba(255,255,255,.94);padding:0 8px;color:var(--rose-dark);font-size:11px;font-weight:700}.choice-card.has-detail{padding-bottom:43px}.choice-product-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:7px}.choice-product-tags .tag{font-size:10px}.summary-column{position:sticky;top:0;align-self:start;display:grid;gap:10px}.summary-column .summary{position:static}.history-entry{width:100%;min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:11px 13px;text-align:left;box-shadow:var(--shadow)}.history-entry span{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:750}.history-entry svg{width:17px;color:var(--rose)}.history-entry small{color:var(--muted);font-size:11px}.history-pending{display:inline-flex;align-items:center;min-height:20px;border-radius:4px;background:var(--amber-soft);color:var(--amber);padding:2px 6px;font-size:10px;font-weight:750;white-space:nowrap}.task-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px}.task-toolbar .toolbar{width:100%;flex-wrap:nowrap}.task-toolbar .search{width:min(360px,100%);flex:1 1 320px}.task-toolbar .filter-select{flex:0 0 140px}.task-video{display:flex;align-items:center;gap:9px}.task-video img{width:58px;height:58px;border-radius:5px;object-fit:cover;object-position:top}.modal-selection-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:12px}.modal-selection-card{position:relative;border:1px solid var(--line);border-radius:6px;padding:8px}.modal-selection-card:has(input:checked){border-color:var(--rose);background:var(--rose-soft)}.modal-selection-card input{position:absolute;left:8px;top:8px;width:15px;height:15px;accent-color:var(--rose)}.modal-selection-card img{width:100%;aspect-ratio:1;border-radius:5px;object-fit:cover}.modal-selection-card b{display:block;margin-top:7px;overflow:hidden;font-size:11px;text-overflow:ellipsis;white-space:nowrap}.drawer-actions{display:flex;justify-content:flex-end;gap:8px;border-top:1px solid var(--line);margin-top:18px;padding-top:14px}@media(max-width:900px){.summary-column{position:static}.modal-selection-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:820px){.task-toolbar .toolbar{flex-wrap:wrap}}
     .create-toolbar-right{justify-content:flex-end;margin-left:auto}.sort-text{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}.sort-text button{border:0;background:transparent;padding:0;color:var(--muted);font-size:12px;cursor:pointer}.sort-text button.active{color:var(--rose-dark);font-weight:700}.sort-divider{color:#c9cbd0}.product-wizard-title{align-items:center}.product-head-controls{display:flex;align-items:center;justify-content:flex-end;gap:10px;min-width:0}.product-head-controls .create-store{flex:0 0 220px;min-width:220px;white-space:nowrap}.product-head-controls .create-store>svg{width:16px;color:var(--rose-dark);flex:0 0 auto}.product-head-controls .search{flex:0 0 260px;width:260px}.product-head-controls .search input{min-width:0}.create-toolbar #createAddProducts{width:32px;height:32px;border:1px solid var(--rose);border-radius:5px;background:var(--rose);color:#fff;box-shadow:0 2px 5px rgba(182,79,107,.22)}.create-toolbar #createAddProducts:hover{background:var(--rose-dark);border-color:var(--rose-dark)}.create-toolbar #createAddProducts svg{width:17px;height:17px}@media(max-width:1180px){.product-wizard-title{align-items:flex-start;flex-direction:column}.product-head-controls{width:100%;justify-content:flex-start}.product-head-controls .search{flex:1;width:auto}}@media(max-width:720px){.product-head-controls{align-items:stretch;flex-direction:column}.product-head-controls .create-store,.product-head-controls .search{width:100%;min-width:0;flex-basis:auto}.create-toolbar-right{width:100%}}
   </style>
+  <link rel="stylesheet" href="assets/template-flow-v4.css" />
 </head>
 <body>
   <div class="app">
@@ -110,7 +111,7 @@
 
         <section class="view" data-page="models"><div class="section"><div class="panel"><div class="panel-head"><div class="search"><i data-lucide="search"></i><input id="modelSearch" placeholder="搜索模特名称或标签" /></div><button class="btn primary" data-modal="modelModal"><i data-lucide="plus"></i>创建数字模特</button></div><div class="panel-body"><div class="asset-grid" id="modelGrid"></div><div class="pager"><span id="modelTotalCount">共 2 个数字模特</span><span class="page-current">1</span></div></div></div></div></section>
 
-        <section class="view" data-page="templates"><div class="section"><div class="panel"><div class="panel-head"><div class="filter-bar" style="margin:0"><div class="search"><i data-lucide="search"></i><input id="templateSearch" placeholder="搜索模版名称" /></div><select class="filter-select"><option>全部触发方式</option><option>商品讲解</option><option>主播口令</option><option>评论触发</option></select></div><button class="btn primary" data-modal="templateModal"><i data-lucide="plus"></i>创建展示模版</button></div><div class="panel-body"><div class="asset-grid" id="templateGrid"></div><div class="pager"><span id="templateTotalCount">共 12 个动作模版</span><span class="page-current">1</span></div></div></div></div></section>
+        <section class="view" data-page="templates"><div class="section"><div class="panel"><div class="panel-head"><div class="filter-bar" style="margin:0"><div class="search"><i data-lucide="search"></i><input id="templateSearch" placeholder="搜索模版名称" /></div><select class="filter-select"><option>全部触发方式</option><option>商品讲解</option><option>主播口令</option><option>评论触发</option></select></div><button class="btn primary" data-modal="templateModal"><i data-lucide="plus"></i>创建展示模版</button></div><div class="panel-body"><div class="asset-grid" id="templateGrid"></div><div class="pager"><span id="templateTotalCount">共 2 个展示模版</span><span class="page-current">1</span></div></div></div></div></section>
 
         <section class="view" data-page="accounts"><div class="section stack"><div class="panel"><div class="panel-head"><h2>直播账号接入</h2><button class="btn primary" data-modal="liveAccountModal"><i data-lucide="plus"></i>新增账号</button></div><div class="panel-body"><div class="filter-bar"><div class="search"><i data-lucide="search"></i><input placeholder="搜索账号名称或抖音号" /></div><span style="color:var(--muted);font-size:11px">同一账号移除后72小时可重新加回</span></div><div class="data-table-wrap"><table class="data-table account-table"><thead><tr><th>账号</th><th>抖音号</th><th>接入时间</th><th>接入人</th><th>操作</th></tr></thead><tbody><tr><td><span class="account-name"><span class="account-logo">抖</span><b>三彩穿搭官方号</b></span></td><td>SC2026LIVE01</td><td>2026-07-09 10:28</td><td>王欣怡</td><td><button class="text-action danger" data-confirm-title="确认移除账号" data-confirm-message="移除后72小时内不可重新接入。">移除</button></td></tr><tr><td><span class="account-name"><span class="account-logo">抖</span><b>三彩大码女装号</b></span></td><td>SC2026LIVE02</td><td>2026-07-12 14:06</td><td>李梦琪</td><td><button class="text-action danger" data-confirm-title="确认移除账号" data-confirm-message="移除后72小时内不可重新接入。">移除</button></td></tr></tbody></table></div></div></div><div class="panel"><div class="panel-head"><h2>店铺授权</h2><button class="btn primary" data-modal="storeSubscribeModal"><i data-lucide="plus"></i>新增店铺</button></div><div class="panel-body"><div class="filter-bar"><div class="search"><i data-lucide="search"></i><input placeholder="搜索店铺名称或店铺ID" /></div></div><div class="data-table-wrap"><table class="data-table account-table"><thead><tr><th>店铺</th><th>店铺ID</th><th>授权状态</th><th>授权到期时间</th><th>操作</th></tr></thead><tbody><tr><td><span class="account-name"><span class="account-logo" style="background:var(--rose)">三</span><b>三彩官方旗舰店</b></span></td><td>141916002681</td><td><span class="tag green">授权中</span></td><td>2027-06-30 23:59</td><td><button class="text-action danger" data-confirm-title="确认解除授权" data-confirm-message="解除后将停止同步该店铺商品。">解除授权</button></td></tr><tr><td><span class="account-name"><span class="account-logo" style="background:#69717e">绮</span><b>绮丽女装旗舰店</b></span></td><td>142830197526</td><td><span class="tag amber">已失效</span></td><td>2026-06-30 23:59</td><td><div class="row-actions"><button class="text-action" data-modal="storeSubscribeModal">授权</button><button class="text-action danger" data-confirm-title="确认删除店铺" data-confirm-message="删除后店铺记录将从系统移除。">删除店铺</button></div></td></tr></tbody></table></div></div></div></div></section>
 
@@ -155,10 +156,8 @@
       {id:'ruoxia',name:'林若夏',systemPreset:true,note:'轻熟优雅 · 小骨架',tags:['小骨架','窄肩','高腰线'],bodyType:'瘦小',image:'assets/models/lin-ruoxia-face-source.png',analysisImage:'assets/models/lin-ruoxia-analysis.png',face:'assets/models/lin-ruoxia-face-source.png',prefix:'lyocell-cardigan',created:'2026-07-04 10:18'}
     ];
     const templates=[
-      {id:'colors',name:'正面展示',systemPreset:true,note:'正面站姿，展示整体版型；支持多搭配变装',colorMode:'多搭配变装',trigger:'商品讲解',triggerDetail:'商品讲解期间循环衔接播放',method:'参考图 + 提示词',source:'参考图：正面展示参考图',prompt:'模特正面站立，镜头展示服饰整体版型，动作自然，支持切换多个商品搭配。',audio:'无音频',count:48,creator:'系统预设',created:'2026-07-08 11:20',image:'assets/models/host-xiaoqing-half.png',exampleVideo:'assets/models/qiaohu/character-reference.mp4'},
-      {id:'detail',name:'细节展示',systemPreset:true,note:'靠近镜头展示面料、袖口和领口细节',colorMode:'单搭配',trigger:'商品讲解',triggerDetail:'商品讲解期间循环衔接播放',method:'参考视频',source:'参考视频：面料细节展示视频',prompt:'参考视频驱动模特靠近镜头展示面料、袖口和领口细节。',audio:'细节展示音频.mp3',count:36,creator:'系统预设',created:'2026-07-07 16:05',image:'assets/models/lyocell-blouse-half.png',exampleVideo:'assets/models/qiaohu/character-reference.mp4'},
-      {id:'outfit',name:'转身展示',systemPreset:true,note:'自然转身，展示侧面版型和整体垂感',colorMode:'单搭配',trigger:'主播口令',triggerDetail:'口令关键词：看一下模特效果',method:'参考图 + 提示词',source:'参考图：转身展示参考图',prompt:'模特自然转身，展示服饰侧面版型和整体垂感，动作连贯。',audio:'无音频',count:29,creator:'系统预设',created:'2026-07-06 09:42',image:'assets/models/fairy-dress-half.png',exampleVideo:'assets/models/qiaohu/character-reference.mp4'},
-      {id:'benefit',name:'福袋提醒',systemPreset:true,note:'举牌提醒并开心挥手，配合主播口令使用',colorMode:'单搭配',trigger:'主播口令',triggerDetail:'口令关键词：福袋来了、参与福袋',method:'参考视频',source:'参考视频：活动提醒视频',prompt:'举牌提醒并开心挥手，配合直播间福袋口令使用。',audio:'促单提示音.mp3',count:22,creator:'系统预设',created:'2026-07-05 18:10',image:'assets/models/stripe-tank-half.png',exampleVideo:'assets/models/qiaohu/character-reference.mp4'}
+      {id:'colors',name:'正面展示',systemPreset:true,type:'服饰展示',note:'正面站姿，展示服饰整体版型',colorMode:'单搭配',trigger:'商品讲解',triggerDetail:'商品讲解期间循环衔接播放',method:'多素材生成',source:'参考图：模特图、服饰搭配正面图、服饰搭配反面图',referenceCount:3,referenceImages:['assets/models/host-xiaoqing-half.png','assets/products/butterfly-set-white-01.webp','assets/products/butterfly-set-detail-01.jpeg'],prompt:'真人模特正面自然站立，完整展示服饰搭配的版型、比例与穿着效果，动作自然，镜头稳定。',audio:'无音频',generationSize:'9:16',duration:5,count:48,creator:'系统预设',created:'2026-07-08 11:20',image:'assets/models/host-xiaoqing-half.png',exampleVideo:'assets/templates/template-example.mp4',referenceVideoUrl:'assets/templates/template-example.mp4'},
+      {id:'ip-interaction',name:'IP互动',systemPreset:true,type:'IP形象互动',note:'IP形象在直播间完成招手和回应互动',colorMode:'单搭配',trigger:'主播口令',triggerDetail:'口令关键词：和大家打个招呼',method:'多素材生成',source:'参考图：IP形象图',referenceCount:1,referenceImages:['assets/models/qiaohu/face.png'],prompt:'保持IP角色外观一致，在直播间中面向镜头招手并做出开心回应，动作连贯自然。',audio:'无音频',generationSize:'9:16',duration:5,count:22,creator:'系统预设',created:'2026-07-08 11:20',image:'assets/models/qiaohu/action.png',exampleVideo:'assets/models/qiaohu/character-reference.mp4',referenceVideoUrl:'assets/models/qiaohu/character-reference.mp4'}
     ];
     const videos=[
       {id:'V260717001',type:'生成视频',name:'清夏通勤搭配_正面展示',template:'正面展示',articleNo:'SC26X617、SC26N106',product:'蝶影寻芳新中式套装三件套 + 莱赛尔棉直筒牛仔裤',productId:'3829850811488403472、3829979643394523490',productImage:'assets/products/butterfly-set-white-01.webp',relatedSkus:[{productId:'3829850811488403472',name:'【蝶影寻芳】三彩2026夏季新中式套装剪花上衣三件套',articleNo:'SC26X617',color:'浅粉',image:'assets/products/butterfly-set-white-01.webp'},{productId:'3829979643394523490',name:'三彩莱赛尔棉直筒牛仔裤女2026夏季新款高腰显瘦',articleNo:'SC26N106',color:'浅蓝',image:'assets/products/lyocell-denim-jeans-white-01.webp'}],trigger:'商品讲解',plays:42,creator:'王欣怡',created:'今天 10:18',image:'assets/models/host-xiaoqing-half.png'},
@@ -179,7 +178,7 @@
       {id:'260716018',videoId:'V260716018',video:'SC26K519_细节展示',articleNo:'SC26K519',product:'醋酸莱赛尔针织开衫',productId:'3829978984200929459',productImage:'assets/products/lyocell-blouse-white-01.webp',model:'乔青予',template:'细节展示',trigger:'主播口令',status:'已完成',creator:'李梦琪',created:'2026-07-16 17:20',image:'assets/models/lyocell-blouse-half.png'},
       {id:'260720009',videoId:'V260720009',video:'SC26V208_细节展示',articleNo:'SC26V208',product:'V领针织短袖上衣',productId:'3829975058474991928',productImage:'assets/products/vneck-knit-top-white-01.webp',model:'乔青予',template:'细节展示',trigger:'商品讲解',status:'已废弃',creator:'王欣怡',created:'2026-07-20 16:18',image:'assets/models/host-xiaoqing-half.png'}
     ];
-    const state={page:'dashboard',step:1,products:new Set(),selectedSkus:new Set(),productLibrary:new Set(),model:'',modelType:'动画形象',template:'',background:{mode:'',name:'',image:'',rect:null},positionReferences:(()=>{const defaultReferences=[{id:'position-reference-fashion',name:'时尚简约直播间',image:'assets/backgrounds/fashion-simple-source.png'}];try{const saved=JSON.parse(localStorage.getItem('ai-banbo-position-references')||'[]');return Array.isArray(saved)&&saved.length?saved:defaultReferences}catch{return defaultReferences}})(),selectedVideos:new Set(),selectedTableProducts:new Set(),productSort:'sales',videoBatchMode:''};
+    const state={page:'dashboard',step:1,products:new Set(),selectedSkus:new Set(),productLibrary:new Set(),model:'',modelType:'动画形象',template:'',background:{mode:'',name:'',image:'',rect:null},positionReferences:(()=>{const defaultReferences=[{id:'position-reference-fashion',name:'时尚简约直播间',image:'assets/backgrounds/fashion-simple-source.png'}];try{const raw=localStorage.getItem('ai-banbo-position-references');if(raw===null)return defaultReferences;const saved=JSON.parse(raw);return Array.isArray(saved)?saved:defaultReferences}catch{return defaultReferences}})(),selectedVideos:new Set(),selectedTableProducts:new Set(),productSort:'sales',videoBatchMode:''};
     const pageCopy={dashboard:['工作台','今天需要处理的伴播内容都在这里'],create:['制作伴播','选择商品、数字模特和展示模版，直接制作可用视频'],tasks:['历史制作任务','查看每一条视频的生成进度和结果'],videos:['伴播视频库','统一管理生成视频和上传视频'],products:['商品列表','商品信息由抖店自动同步和分析'],models:['数字模特','管理可重复使用的数字模特'],templates:['展示模版','管理员维护可复用动作，普通用户只需选择'],accounts:['账号与店铺','管理直播账号接入和店铺授权'],team:['团队管理','管理团队成员的使用权限']};
     const $=selector=>document.querySelector(selector); const $$=selector=>[...document.querySelectorAll(selector)];
     $$('#templateModal > .modal-mask, #templateModal > .drawer-mask, #templateModal > .toast').forEach(overlay=>document.body.appendChild(overlay));
@@ -246,7 +245,7 @@
     $('#actionCreate').addEventListener('click',()=>{if(!$('#actionNameInput').value.trim())$('#actionNameInput').value='新建展示模版';if(activeActionMethod()==='image'&&!$('#actionPrompt').value.trim())$('#actionPrompt').value='模特自然站立并展示商品整体版型，动作流畅，镜头稳定。';const requiredUpload=$(`[data-demo-upload="${activeActionMethod()==='image'?'参考图':'参考视频'}"]`);if(requiredUpload.dataset.uploaded!=='true'){requiredUpload.dataset.uploaded='true';requiredUpload.classList.add('uploaded');requiredUpload.textContent=`${requiredUpload.dataset.demoUpload}已使用演示素材`}if(!selectedActionTriggers().length)$('[data-action-trigger="product"]').checked=true;$('#analysisProgressView').hidden=false;$('#actionAnalysisResult').classList.remove('active');$('#actionAnalysisBar').style.width='0';$('#actionAnalysisValue').textContent='0%'});
     $('#actionCreate').addEventListener('click',()=>{if($('[data-action-trigger="command"]').checked&&!$('#commandKeywords').value.trim())$('#commandKeywords').value='展示一下、换个颜色';if($('[data-action-trigger="comment"]').checked&&!$('#commentKeywords').value.trim())$('#commentKeywords').value='想看上身、展示细节'});
     $('#actionCreate').addEventListener('click',()=>{if(!validateActionStep(3))return;const existing=editingTemplateId?templates.find(item=>item.id===editingTemplateId):null,colorMode=$('[name="actionColorMode"]:checked').value,triggers=selectedActionTriggers(),method=activeActionMethod(),referenceCount=$$('[data-reference-image][data-uploaded="true"]').length;pendingTemplate={...(existing||{}),id:existing?.id||`template-${Date.now()}`,name:$('#actionNameInput').value.trim(),systemPreset:false,note:$('#actionPrompt').value.trim()||'参考视频驱动生成展示动作',tags:[],colorMode,trigger:triggers.join('、'),triggerDetail:actionTriggerDetails(triggers),method:method==='image'?'参考图 + 提示词':'参考视频',source:method==='image'?`参考图：已上传 ${referenceCount||1} 张`:'参考视频：已上传',prompt:$('#actionPrompt').value.trim()||'按参考视频还原动作姿态、镜头和节奏。',audio:$('[data-demo-upload="动作音频"]').dataset.uploaded==='true'?'已上传音频':'无音频',count:existing?.count||0,creator:existing?.creator||'王欣怡',created:existing?.created||'2026-07-17 17:30',image:existing?.image||'assets/models/host-xiaoqing-half.png',type:$('#actionTypeSelect').value};$('#actionForm').hidden=true;$('#actionAnalysis').classList.add('active');$('#actionPrev').hidden=true;$('#actionNext').hidden=true;$('#actionCreate').hidden=true;$('#actionCancel').hidden=true;icons();let progress=0;clearInterval(actionAnalysisTimer);actionAnalysisTimer=setInterval(()=>{progress=Math.min(100,progress+10);$('#actionAnalysisBar').style.width=`${progress}%`;$('#actionAnalysisValue').textContent=`${progress}%`;$('#actionAnalysisText').textContent=progress<25?'正在检查参考素材完整性':progress<55?'正在生成动作视频':progress<80?'正在识别动作姿态和镜头节奏':'正在生成动作封面';if(progress===100){clearInterval(actionAnalysisTimer);$('#analysisProgressView').hidden=true;$('#analysisResultName').textContent=pendingTemplate.name;const resultImage=$('#actionAnalysisResult>img');resultImage.dataset.preview=pendingTemplate.image;resultImage.dataset.previewTitle=`${pendingTemplate.name}动作视频预览`;$('#analysisResultComposition').textContent=pendingTemplate.colorMode;$('#analysisResultTrigger').textContent=pendingTemplate.trigger;$('#actionAnalysisResult').classList.add('active');$('#actionFinish').hidden=false;$('#actionCancel').hidden=false;$('#actionCancel').textContent='返回修改';$('#actionCancel').removeAttribute('data-close-modal')}},180)});
-    $('#actionCancel').addEventListener('click',event=>{if($('#actionAnalysisResult').classList.contains('active')){event.stopPropagation();setActionStep(3)}});$('#actionFinish').addEventListener('click',()=>{if(!pendingTemplate)return;const index=templates.findIndex(item=>item.id===pendingTemplate.id),wasEditing=index>=0;if(wasEditing)templates[index]=pendingTemplate;else{templates.unshift(pendingTemplate);createdTemplateCount+=1}$('#templateTotalCount').textContent=`共 ${templates.length} 个动作模版`;renderAssets();renderCreateChoices();closeModal($('#actionFinish'));toast(wasEditing?'展示模版已更新':'展示模版已创建');pendingTemplate=null;editingTemplateId=''});
+    $('#actionCancel').addEventListener('click',event=>{if($('#actionAnalysisResult').classList.contains('active')){event.stopPropagation();setActionStep(3)}});$('#actionFinish').addEventListener('click',()=>{if(!pendingTemplate)return;const index=templates.findIndex(item=>item.id===pendingTemplate.id),wasEditing=index>=0;if(wasEditing)templates[index]=pendingTemplate;else{templates.unshift(pendingTemplate);createdTemplateCount+=1}$('#templateTotalCount').textContent=`共 ${templates.length} 个展示模版`;renderAssets();renderCreateChoices();closeModal($('#actionFinish'));toast(wasEditing?'展示模版已更新':'展示模版已创建');pendingTemplate=null;editingTemplateId=''});
     $$('[data-action-method]').forEach(button=>button.addEventListener('click',()=>{$$('[data-action-method]').forEach(x=>x.classList.toggle('active',x===button));$$('[data-action-method-panel]').forEach(x=>x.classList.toggle('active',x.dataset.actionMethodPanel===button.dataset.actionMethod))}));
     $$('[data-action-trigger]').forEach(input=>input.addEventListener('change',()=>{const field=$(`[data-trigger-config="${input.dataset.actionTrigger}"]`);if(field)field.classList.toggle('show',input.checked)}));
     $$('[data-demo-upload]').forEach(button=>button.addEventListener('click',()=>{button.dataset.uploaded='true';button.classList.add('uploaded');button.textContent=button.dataset.referenceImage?`参考图 ${button.dataset.referenceImage} 已上传`:`${button.dataset.demoUpload}已上传`}));
@@ -285,6 +284,12 @@
   .sku-info-popover.show{display:block}
   .sku-info-popover strong{display:block;overflow:hidden;color:var(--text);font-size:12px;line-height:1.45;text-overflow:ellipsis;white-space:nowrap}
   .sku-info-popover span{display:block;margin-top:5px;color:var(--muted);font-size:11px;line-height:1.35}
+</style>
+<style>
+  .position-display-section.position-section-expanded{position:fixed;inset:20px;z-index:90;display:grid;grid-template-rows:auto minmax(0,1fr);overflow:hidden;border:1px solid #d7d9dd;border-radius:8px;background:#fff;padding:22px;box-shadow:0 18px 50px rgba(20,20,25,.24)}
+  .position-section-expanded .position-editor-stage{grid-template-columns:240px minmax(300px,1fr) 170px;gap:24px;min-height:0;padding:16px 0 0}
+  .position-section-expanded .position-canvas{width:min(420px,calc((100vh - 130px)*.5625));min-width:280px}
+  @media(max-width:760px){.position-display-section.position-section-expanded{inset:10px;padding:14px}.position-section-expanded .position-editor-stage{grid-template-columns:1fr;overflow:auto}.position-section-expanded .position-canvas{width:min(280px,100%);min-width:0}}
 </style>
 <script>
   (() => {
@@ -592,7 +597,7 @@
     data(`state.compositionGroups=${JSON.stringify(current)}`);data('renderSummary()');
   }
   function openGroup(id){const group=groupData(true).find(item=>item.id===id);if(!group)return;window.__compositionEditingId=id;$('#compositionModalTitle').textContent='搭配组明细';$('#compositionNameInput').value=group.name;$('#compositionModalItems').innerHTML=group.items.map(item=>`<article class="composition-modal-item"><div class="composition-modal-image"><img src="${item.image}" alt="${item.name}${item.color}"/></div><div><b>${item.name}</b><small>${item.category}｜${item.color}｜${item.articleNo}</small>${viewMarks(item,'composition-modal-view-mark')}</div><div class="composition-modal-actions"><button type="button" class="composition-icon-action" data-remove-group-sku="${item.id}" title="移出搭配组" aria-label="移出搭配组"><i data-lucide="log-out"></i></button><button type="button" class="composition-icon-action danger" data-remove-sku="${item.id}" title="移除商品" aria-label="移除商品"><i data-lucide="x"></i></button></div></article>`).join('');$('#compositionModal').classList.add('open');window.lucide?.createIcons();}
-  function removeFromGroup(groupId,skuId){const next=cleanGroups().flatMap(group=>{if(group.id!==groupId)return[group];const remaining=group.skuIds.filter(id=>id!==skuId);return remaining.length>0?[{...group,skuIds:remaining}]:[]});commit(next);$('#compositionModal').classList.remove('open');if(data('state.step')>1)data('setStep(1)');data("toast('商品已移出搭配组，可在第一步重新搭配')");}
+  function removeFromGroup(groupId,skuId){const next=cleanGroups().flatMap(group=>{if(group.id!==groupId)return[group];const remaining=group.skuIds.filter(id=>id!==skuId);return remaining.length>0?[{...group,skuIds:remaining}]:[]});commit(next);$('#compositionModal').classList.remove('open');if(data('state.step')>2)data('setStep(2)');data("toast('商品已移出搭配组，可在商品步骤重新搭配')");}
   function removeSkuInstance(skuInstanceId){const instance=selectedSkus().find(item=>item.id===skuInstanceId);if(!instance)return;if(instance.isCopy){const next=(data('state.compositionCopies')||[]).filter(copy=>copy.id!==skuInstanceId);data(`state.compositionCopies=${JSON.stringify(next)}`)}else data('state.selectedSkus').delete(instance.skuKey);if(!selectedSkus().some(item=>item.productId===instance.productId))data('state.products').delete(instance.productId)}
   function removeSku(skuId){removeSkuInstance(skuId);const next=cleanGroups().map(group=>({...group,skuIds:group.skuIds.filter(id=>id!==skuId)})).filter(group=>group.skuIds.length>0);data(`state.compositionGroups=${JSON.stringify(next)}`);$('#compositionModal').classList.remove('open');data('renderCreateChoices()');renderComposition();data('renderSummary()');data("toast('商品已移除，只能通过添加商品重新加入')");}
   function removeGroup(groupId){const group=cleanGroups().find(item=>item.id===groupId);if(!group)return;group.skuIds.forEach(id=>removeSkuSelection(id));const next=cleanGroups().filter(item=>item.id!==groupId);data(`state.compositionGroups=${JSON.stringify(next)}`);data('renderCreateChoices()');renderComposition();data('renderSummary()');data("toast('搭配组商品已移除，只能通过添加商品重新加入')");}
@@ -642,11 +647,12 @@
     const closeButton=event.target.closest('[data-close-modal]');
     if(closeButton)compositionModal.classList.remove('open');
   });
-  $('#nextStep').addEventListener('click',()=>{if(data('state.step')===1)finalizeSingleGroups();setTimeout(()=>data('renderSummary()'),0)},true);
+  $('#nextStep').addEventListener('click',()=>{if(data('state.step')===2)finalizeSingleGroups();setTimeout(()=>data('renderSummary()'),0)},true);
   $('#prevStep').addEventListener('click',()=>setTimeout(()=>data('renderSummary()'),0));
   new MutationObserver(renderComposition).observe($('#createProductGrid'),{childList:true});
   renderComposition();
   window.syncDefaultSkuGroups=syncDefaultSkuGroups;
+  window.finalizeSingleGroups=finalizeSingleGroups;
   window.openCompositionGroup=openGroup;
   window.compositionSkuInstances=selectedSkus;
   const title=$('[data-step-indicator="1"]'); if(title)title.lastChild.textContent='商品选择与搭配';
@@ -889,7 +895,7 @@
   })();
 </script>
 <style>
-  .upload-stepper,.background-stepper{position:relative;display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:0 0 20px;padding-bottom:14px;border-bottom:1px solid var(--line);color:var(--muted);font-size:12px;font-weight:700}.upload-stepper:before,.background-stepper:before{content:"";position:absolute;left:25%;right:25%;top:11px;height:1px;background:#dde0e5}.upload-stepper span,.background-stepper span{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:7px}.upload-stepper span:before{content:"1";width:22px;height:22px;display:grid;place-items:center;border-radius:50%;background:#eceef1;font-style:normal}.upload-stepper span:nth-child(2):before{content:"2"}.upload-stepper span.active,.background-stepper span.active{color:var(--rose-dark)}.upload-stepper span.active:before,.upload-stepper span.done:before,.background-stepper span.active i,.background-stepper span.done i{background:var(--rose);color:#fff}.background-stepper span i{width:22px;height:22px;display:grid;place-items:center;border-radius:50%;background:#eceef1;font-style:normal}.position-modal{width:min(620px,100%);max-height:calc(100vh - 32px);display:grid;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden}.position-modal .modal-body{min-height:0;overflow-y:auto;padding-top:16px;background:#eef0f3}.position-reference{margin-bottom:14px;border:1px solid #dfe2e7;border-radius:6px;background:#fff;padding:11px}.position-reference-library{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.position-reference-add-tile,.position-reference-card{position:relative;min-width:0;aspect-ratio:1;border:1px solid var(--line);border-radius:6px;background:#fff;padding:4px;text-align:left}.position-reference-add-tile{display:grid;place-items:center;align-content:center;gap:6px;border:1px dashed #cfd3d9;color:#747881}.position-reference-add-tile:hover{border-color:var(--rose);background:var(--rose-soft);color:var(--rose-dark)}.position-reference-add-tile svg{width:24px;height:24px}.position-reference-add-tile span{font-size:10px;line-height:1.2;text-align:center}.position-reference-card.selected{border-color:var(--rose);box-shadow:0 0 0 2px rgba(182,79,107,.1)}.position-reference-card button[data-select-position-reference]{display:block;width:100%;height:100%;padding:0;text-align:left}.position-reference-card img{width:100%;height:100%;object-fit:contain;border-radius:4px;background:#fff}.position-reference-delete{position:absolute;right:5px;top:5px;width:20px;height:20px;display:grid;place-items:center;border-radius:4px;background:rgba(35,36,40,.68);color:#fff}.position-reference-delete:hover{background:var(--red)}.position-reference-delete svg{width:12px;height:12px}.position-canvas{position:relative;width:min(270px,100%);aspect-ratio:9/16;margin:0 auto;border:1px solid #d7d9dd;border-radius:6px;background:#fff;overflow:hidden}.position-canvas:before{content:"9 : 16";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#a2a6ad;font-size:14px;font-weight:700}.position-canvas.has-reference:before{display:none}.position-canvas>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff}.position-frame{position:absolute;z-index:2;border:2px solid var(--red);background:rgba(215,69,69,.08);cursor:move}.position-resize{position:absolute;right:-6px;bottom:-6px;width:12px;height:12px;border:2px solid #fff;border-radius:2px;background:var(--red);box-shadow:0 0 0 1px var(--red);cursor:nwse-resize}.position-frame span,.background-selection span{display:none}.position-guide{margin:12px 0 0;color:var(--muted);font-size:11px;line-height:1.6;text-align:center}.position-ratio{margin:0 0 12px;color:var(--muted);font-size:12px;text-align:center}.upload-video-note{margin:4px 0 0;color:var(--muted);font-size:11px;line-height:1.5}#uploadVideoModal .modal{max-height:calc(100vh - 32px);display:grid;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden}#uploadVideoModal .modal-body{min-height:0;overflow-y:auto}
+  .upload-stepper,.background-stepper{position:relative;display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:0 0 20px;padding-bottom:14px;border-bottom:1px solid var(--line);color:var(--muted);font-size:12px;font-weight:700}.upload-stepper:before,.background-stepper:before{content:"";position:absolute;left:25%;right:25%;top:11px;height:1px;background:#dde0e5}.upload-stepper span,.background-stepper span{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:7px}.upload-stepper span:before{content:"1";width:22px;height:22px;display:grid;place-items:center;border-radius:50%;background:#eceef1;font-style:normal}.upload-stepper span:nth-child(2):before{content:"2"}.upload-stepper span.active,.background-stepper span.active{color:var(--rose-dark)}.upload-stepper span.active:before,.upload-stepper span.done:before,.background-stepper span.active i,.background-stepper span.done i{background:var(--rose);color:#fff}.background-stepper span i{width:22px;height:22px;display:grid;place-items:center;border-radius:50%;background:#eceef1;font-style:normal}.position-modal{width:min(1040px,calc(100vw - 32px));height:min(860px,calc(100vh - 32px));display:grid;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden}.position-modal .modal-body{min-height:0;overflow-y:auto;padding:16px 28px 20px;background:#fff}.position-modal #videoPositionStepper{margin-bottom:14px}.position-reference{margin:0 0 14px;border:0;background:#fff;padding:0}.position-section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:9px}.position-section-head h3{display:inline;margin:0;font-size:14px}.position-section-head span{margin-left:10px;color:var(--rose);font-size:12px}.position-reference-library{display:flex;gap:9px;min-height:82px;overflow-x:auto;padding:1px 2px 5px}.position-reference-add-tile,.position-reference-card{position:relative;flex:0 0 112px;width:112px;height:76px;min-width:0;border:1px solid var(--line);border-radius:6px;background:#fff;padding:3px;text-align:left}.position-reference-add-tile{display:grid;place-items:center;align-content:center;gap:4px;border:1px dashed #cfd3d9;color:#747881}.position-reference-add-tile:hover{border-color:var(--rose);background:var(--rose-soft);color:var(--rose-dark)}.position-reference-add-tile svg{width:20px;height:20px}.position-reference-add-tile span{font-size:10px;line-height:1.2;text-align:center}.position-reference-card.selected{border-color:var(--rose);box-shadow:0 0 0 2px rgba(182,79,107,.1)}.position-reference-card button[data-select-position-reference]{display:block;width:100%;height:100%;padding:0;text-align:left}.position-reference-card img{width:100%;height:100%;object-fit:cover;border-radius:3px;background:#fff}.position-reference-delete{position:absolute;right:-6px;top:-6px;z-index:4;width:20px;height:20px;display:grid;place-items:center;border:2px solid #fff;border-radius:50%;background:#6f747d;color:#fff;box-shadow:0 1px 4px rgba(0,0,0,.18)}.position-reference-delete:hover{background:var(--red)}.position-reference-delete svg{width:11px;height:11px}.position-display-section{border-top:1px solid var(--line);padding-top:13px}.position-display-head{display:flex;align-items:center;justify-content:space-between;gap:16px}.position-display-copy{display:flex;align-items:center;gap:14px;min-width:0}.position-display-copy h3{margin:0;font-size:14px;white-space:nowrap}.position-display-copy h3 em{color:var(--red);font-style:normal}.position-ratio{display:flex;gap:10px;flex-wrap:wrap;margin:0;color:var(--muted);font-size:11px;line-height:1.5}.position-expand{height:32px;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:5px;background:#fff;padding:0 10px;color:#5d626c;font-size:11px;font-weight:700;white-space:nowrap}.position-expand:hover{border-color:var(--rose);color:var(--rose-dark)}.position-expand svg{width:14px;height:14px}.position-coordinate-fields{display:grid;gap:10px;margin:0;color:#4f535b;font-size:12px;font-weight:750}.position-coordinate-row{display:grid;grid-template-columns:78px minmax(0,1fr);align-items:start;gap:8px}.position-coordinate-row>span{padding-top:8px;text-align:right;line-height:18px;white-space:nowrap}.position-coordinate-points{display:grid;gap:8px}.position-coordinate-points label{display:flex;align-items:center;gap:6px}.position-coordinate-points b{width:12px;flex:0 0 12px;color:#4f535b;font-size:12px;font-weight:750}.position-coordinate-input{height:34px;display:flex;align-items:center;min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:5px;background:#fff}.position-coordinate-input:focus-within{border-color:var(--rose);box-shadow:0 0 0 2px rgba(182,79,107,.1)}.position-coordinate-input input{width:100%;min-width:0;height:32px;border:0;padding:0 6px 0 10px;color:var(--text);font-size:12px;font-weight:700;outline:0;-moz-appearance:textfield}.position-coordinate-input input::-webkit-inner-spin-button,.position-coordinate-input input::-webkit-outer-spin-button{margin:0;-webkit-appearance:none}.position-coordinate-input em{padding-right:9px;color:var(--muted);font-size:11px;font-style:normal}.position-editor-stage{display:grid;grid-template-columns:210px minmax(280px,1fr) 130px;align-items:center;gap:18px;min-height:0;padding:10px 0 2px}.position-editor-stage.position-stage-expanded{position:fixed;left:24px;right:24px;top:92px;bottom:84px;z-index:90;grid-template-columns:240px minmax(300px,1fr) 170px;gap:24px;padding:22px;background:#fff;border:1px solid #d7d9dd;box-shadow:0 18px 50px rgba(20,20,25,.2)}.position-canvas{position:relative;width:min(318px,calc((100vh - 340px)*.5625));min-width:250px;aspect-ratio:9/16;margin:0 auto;border:1px solid #d7d9dd;border-radius:4px;background:#fff;overflow:hidden;touch-action:none}.position-editor-stage.position-stage-expanded .position-canvas{width:min(420px,calc((100vh - 180px)*.5625));min-width:280px}.position-canvas:before{content:"9 : 16";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#a2a6ad;font-size:14px;font-weight:700}.position-canvas.has-reference:before{display:none}.position-canvas>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff}.position-frame{position:absolute;z-index:2;border:2px solid var(--red);background:rgba(215,69,69,.08);cursor:move}.position-resize{position:absolute;right:-6px;bottom:-6px;width:12px;height:12px;border:2px solid #fff;border-radius:2px;background:var(--red);box-shadow:0 0 0 1px var(--red);cursor:nwse-resize}.position-frame span,.background-selection span{display:none}.position-nudge{display:grid;grid-template-columns:repeat(3,48px);grid-template-rows:repeat(3,36px);grid-template-areas:". up ." "left value right" ". down .";justify-content:center;align-self:center}.position-controls{display:grid;gap:18px;align-content:center}.position-nudge button,.position-nudge output,.position-nudge-value{width:48px;height:36px;display:grid;place-items:center;border:1px solid var(--line);background:#fff;color:#666b74}.position-nudge button:hover{z-index:1;border-color:var(--rose);color:var(--rose-dark)}.position-nudge button svg{width:16px;height:16px}.position-nudge [data-position-nudge="up"]{grid-area:up}.position-nudge [data-position-nudge="left"]{grid-area:left}.position-nudge-value{grid-area:value;display:flex;align-items:center;gap:1px;padding:0 3px}.position-nudge-value:focus-within{position:relative;z-index:2;border-color:var(--rose);box-shadow:0 0 0 2px rgba(182,79,107,.1)}.position-nudge-value input{width:29px;min-width:0;height:34px;border:0;padding:0;color:var(--rose-dark);font-size:10px;font-weight:750;text-align:right;outline:0;-moz-appearance:textfield}.position-nudge-value input::-webkit-inner-spin-button,.position-nudge-value input::-webkit-outer-spin-button{margin:0;-webkit-appearance:none}.position-nudge-value em{color:var(--rose-dark);font-size:9px;font-style:normal;font-weight:750}.position-nudge [data-position-nudge="right"]{grid-area:right}.position-nudge [data-position-nudge="down"]{grid-area:down}.position-stage-spacer{width:130px}.upload-video-note{margin:4px 0 0;color:var(--muted);font-size:11px;line-height:1.5}#uploadVideoModal .modal{max-height:calc(100vh - 32px);display:grid;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden}#uploadVideoModal .modal-body{min-height:0;overflow-y:auto}@media(max-width:760px){.position-modal .modal-body{padding:14px}.position-display-copy{align-items:flex-start;flex-direction:column;gap:4px}.position-editor-stage,.position-editor-stage.position-stage-expanded{position:relative;inset:auto;grid-template-columns:1fr;padding:10px 0 2px;border:0;box-shadow:none}.position-controls{order:2}.position-nudge{order:2}.position-stage-spacer{display:none}.position-canvas,.position-editor-stage.position-stage-expanded .position-canvas{width:min(280px,100%)}.position-display-head{align-items:center}.position-display-copy .position-ratio span:last-child{display:none}}
 </style>
 <script>
   (() => {
@@ -897,7 +903,7 @@
     const positionModal = document.createElement('div');
     positionModal.className = 'modal-mask';
     positionModal.id = 'videoPositionModal';
-    positionModal.innerHTML = `<div class="modal position-modal"><div class="modal-head"><h2 id="videoPositionTitle">设置伴播视频展示位置</h2><button class="modal-close" data-close-video-position><i data-lucide="x"></i></button></div><div class="modal-body"><div class="upload-stepper" id="videoPositionStepper"><span class="done">上传视频</span><span class="active">设置展示位置</span></div><div class="position-reference"><input type="file" id="positionReferenceFile" accept="image/*" hidden/><div class="position-reference-library" id="positionReferenceLibrary"></div></div><p class="position-ratio" id="videoPositionRatio">已解析视频比例：9 : 16</p><div class="position-canvas" id="videoPositionCanvas"><img id="videoPositionReference" alt="定位参考图片" hidden/><div class="position-frame" id="videoPositionFrame"><i class="position-resize" data-position-resize></i></div></div><p class="position-guide">拖动伴播视频区域调整位置；拖动右下角控制点等比缩放，视频比例保持不变。</p></div><div class="modal-foot"><button class="btn" data-close-video-position>取消</button><button class="btn primary" id="saveVideoPosition">保存</button></div></div>`;
+    positionModal.innerHTML = `<div class="modal position-modal"><div class="modal-head"><h2 id="videoPositionTitle">设置伴播视频展示位置</h2><button class="modal-close" data-close-video-position><i data-lucide="x"></i></button></div><div class="modal-body"><div class="upload-stepper" id="videoPositionStepper"><span class="done">上传视频</span><span class="active">设置展示位置</span></div><section class="position-reference"><div class="position-section-head"><div><h3>定位参考图</h3><span>点击图库中的图片即可选用</span></div></div><input type="file" id="positionReferenceFile" accept="image/*" hidden/><div class="position-reference-library" id="positionReferenceLibrary"></div></section><section class="position-display-section"><div class="position-display-head"><div class="position-display-copy"><h3><em>*</em> 展示位置</h3><p class="position-ratio"><span id="videoPositionRatio">视频尺寸比例：9 : 16</span><span>拖动或缩放展示区域后保存，视频比例保持不变。</span></p></div><button type="button" class="position-expand" id="togglePositionExpand"><i data-lucide="maximize-2"></i><span>全屏放大</span></button></div><div class="position-coordinate-fields" aria-label="展示位置参数"><div class="position-coordinate-row"><span>视频大小缩放</span><span class="position-coordinate-input"><input id="videoPositionScale" type="number" min="1" max="100" step="0.01" inputmode="decimal" aria-label="视频大小缩放百分比"/><em>%</em></span></div><div class="position-coordinate-row"><span>左上角点位</span><div class="position-coordinate-points"><label title="展示框左侧相对画布左侧的位置"><b>X</b><span class="position-coordinate-input"><input id="videoPositionX" type="number" min="0" max="100" step="0.01" inputmode="decimal" aria-label="左上角 X 位置百分比"/><em>%</em></span></label><label title="展示框顶部相对画布顶部的位置"><b>Y</b><span class="position-coordinate-input"><input id="videoPositionY" type="number" min="0" max="100" step="0.01" inputmode="decimal" aria-label="左上角 Y 位置百分比"/><em>%</em></span></label></div></div></div><div class="position-editor-stage"><div class="position-nudge" aria-label="微调展示位置"><button type="button" data-position-nudge="up" title="向上微调 0.01"><i data-lucide="chevron-up"></i></button><button type="button" data-position-nudge="left" title="向左微调 0.01"><i data-lucide="chevron-left"></i></button><output>0.01</output><button type="button" data-position-nudge="right" title="向右微调 0.01"><i data-lucide="chevron-right"></i></button><button type="button" data-position-nudge="down" title="向下微调 0.01"><i data-lucide="chevron-down"></i></button></div><div class="position-canvas" id="videoPositionCanvas" tabindex="0" aria-label="伴播视频展示位置画布"><img id="videoPositionReference" alt="定位参考图片" hidden/><div class="position-frame" id="videoPositionFrame"><i class="position-resize" data-position-resize></i></div></div><div class="position-stage-spacer" aria-hidden="true"></div></div></section></div><div class="modal-foot"><button class="btn" data-close-video-position>取消</button><button class="btn primary" id="saveVideoPosition">保存</button></div></div>`;
     document.body.append(positionModal);
 
     const uploadModal = $('#uploadVideoModal');
@@ -923,9 +929,22 @@
     let drag = null;
     const canvas = $('#videoPositionCanvas');
     const frame = $('#videoPositionFrame');
+    const displaySection = positionModal.querySelector('.position-display-section');
+    const editorStage = positionModal.querySelector('.position-editor-stage');
+    const positionControls = document.createElement('div');
+    positionControls.className = 'position-controls';
+    const coordinateFields = positionModal.querySelector('.position-coordinate-fields');
+    const nudgeControls = positionModal.querySelector('.position-nudge');
+    positionControls.append(coordinateFields, nudgeControls);
+    editorStage.insertBefore(positionControls, editorStage.firstElementChild);
+    const modalPanel = positionModal.querySelector('.position-modal');
+    const expandButton = $('#togglePositionExpand');
     const reference = $('#videoPositionReference');
     const referenceLibrary = $('#positionReferenceLibrary');
     const referenceFile = $('#positionReferenceFile');
+    const positionScaleInput = $('#videoPositionScale');
+    const positionXInput = $('#videoPositionX');
+    const positionYInput = $('#videoPositionY');
     const frameHeight = width => width * (9 / 16) / videoAspect;
     const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
     const savedReferences = () => window.eval('state.positionReferences || []');
@@ -944,7 +963,10 @@
       referenceLibrary.innerHTML = `<button type="button" class="position-reference-add-tile" id="addPositionReference" title="新增上传定位参考图片" aria-label="新增上传定位参考图片"><i data-lucide="plus"></i><span>上传定位参考图</span></button>${references.map(item => `<article class="position-reference-card ${item.id === referenceImageId ? 'selected' : ''}" data-position-reference-card="${item.id}"><button type="button" data-select-position-reference="${item.id}" title="选择定位参考图片"><img src="${item.image}" alt="定位参考图片"/></button><button type="button" class="position-reference-delete" data-delete-position-reference="${item.id}" title="删除定位参考图片" aria-label="删除定位参考图片"><i data-lucide="x"></i></button></article>`).join('')}`;
       icons();
     };
-    const applyPosition = () => {
+    const applyPosition = activeInput => {
+      const ratio = (9 / 16) / videoAspect;
+      const maxScale = Math.min(100, 100 / ratio);
+      position.width = clamp(position.width, 1, maxScale);
       const height = frameHeight(position.width);
       position.left = clamp(position.left, 0, 100 - position.width);
       position.top = clamp(position.top, 0, 100 - height);
@@ -952,6 +974,12 @@
       frame.style.top = `${position.top}%`;
       frame.style.width = `${position.width}%`;
       frame.style.height = `${height}%`;
+      positionScaleInput.max = maxScale.toFixed(2);
+      positionXInput.max = (100 - position.width).toFixed(2);
+      positionYInput.max = (100 - height).toFixed(2);
+      if (activeInput !== positionScaleInput || Number(positionScaleInput.value) !== position.width) positionScaleInput.value = position.width.toFixed(2);
+      if (activeInput !== positionXInput || Number(positionXInput.value) !== position.left) positionXInput.value = position.left.toFixed(2);
+      if (activeInput !== positionYInput || Number(positionYInput.value) !== position.top) positionYInput.value = position.top.toFixed(2);
     };
     const openPositionEditor = kind => {
       target = kind;
@@ -959,9 +987,10 @@
       position = {...(first?.position || {left:31, top:28, width:38})};
       videoAspect = first?.videoAspect || 9 / 16;
       applyReferenceImage(first?.positionReferenceImage || '', first?.positionReferenceName || '直播间定位参考图.png', first?.positionReferenceId || '');
-      $('#videoPositionTitle').textContent = kind === 'batch' ? '修改伴播视频展示位置' : '设置伴播视频展示位置';
+      $('#videoPositionTitle').textContent = kind === 'batch' ? '修改展示位置' : '设置展示位置';
       $('#videoPositionStepper').hidden = kind === 'batch';
-      $('#videoPositionRatio').textContent = `已解析视频比例：${videoAspect === 9 / 16 ? '9 : 16' : '16 : 9'}`;
+      $('#videoPositionRatio').textContent = `视频尺寸比例：${videoAspect === 9 / 16 ? '9 : 16' : '16 : 9'}`;
+      setExpanded(false);
       applyPosition();
       window.eval("openModal('videoPositionModal')");
       window.lucide?.createIcons();
@@ -984,19 +1013,79 @@
         referenceFile.click();
         return;
       }
+      const remove = event.target.closest('[data-delete-position-reference]');
+      if (remove) {
+        event.preventDefault();
+        event.stopPropagation();
+        const item = savedReferences().find(referenceItem => referenceItem.id === remove.dataset.deletePositionReference);
+        saveReferences(savedReferences().filter(referenceItem => referenceItem.id !== remove.dataset.deletePositionReference));
+        if (item?.id === referenceImageId) applyReferenceImage('', '', '');
+        else renderReferenceLibrary();
+        window.eval("toast('定位参考图片已删除')");
+        return;
+      }
       const select = event.target.closest('[data-select-position-reference]');
       if (select) {
         const item = savedReferences().find(referenceItem => referenceItem.id === select.dataset.selectPositionReference);
         if (item) applyReferenceImage(item.image, item.name, item.id);
         return;
       }
-      const remove = event.target.closest('[data-delete-position-reference]');
-      if (!remove) return;
-      const item = savedReferences().find(referenceItem => referenceItem.id === remove.dataset.deletePositionReference);
-      saveReferences(savedReferences().filter(referenceItem => referenceItem.id !== remove.dataset.deletePositionReference));
-      if (item?.id === referenceImageId) applyReferenceImage('', '', '');
-      else renderReferenceLibrary();
-      window.eval("toast('定位参考图片已删除')");
+    });
+    const setExpanded = expanded => {
+      displaySection.classList.toggle('position-section-expanded', expanded);
+      expandButton.innerHTML = `<i data-lucide="${expanded ? 'minimize-2' : 'maximize-2'}"></i><span>${expanded ? '退出全屏' : '全屏放大'}</span>`;
+      window.lucide?.createIcons();
+    };
+    expandButton.addEventListener('click', () => setExpanded(!displaySection.classList.contains('position-section-expanded')));
+    const nudgeStepControl = document.createElement('span');
+    nudgeStepControl.className = 'position-nudge-value';
+    nudgeStepControl.innerHTML = '<input id="positionNudgeStep" type="number" value="0.01" min="0.01" max="1" step="0.01" inputmode="decimal" aria-label="微调参数百分比" title="可修改微调参数"/><em>%</em>';
+    positionModal.querySelector('.position-nudge output').replaceWith(nudgeStepControl);
+    const nudgeStepInput = $('#positionNudgeStep');
+    const nudgeDirectionNames = {up:'向上',down:'向下',left:'向左',right:'向右'};
+    positionModal.querySelectorAll('[data-position-nudge]').forEach(button => {
+      button.title = `按设置参数${nudgeDirectionNames[button.dataset.positionNudge]}微调`;
+    });
+    const nudgePosition = direction => {
+      const normalizedStep = clamp(Number(nudgeStepInput.value) || 0.01, 0.01, 1);
+      nudgeStepInput.value = String(normalizedStep);
+      const step = normalizedStep;
+      if (direction === 'up') position.top -= step;
+      if (direction === 'down') position.top += step;
+      if (direction === 'left') position.left -= step;
+      if (direction === 'right') position.left += step;
+      applyPosition();
+    };
+    nudgeStepInput.addEventListener('change', () => {
+      nudgeStepInput.value = String(clamp(Number(nudgeStepInput.value) || 0.01, 0.01, 1));
+    });
+    const applyCoordinateInput = (axis, input) => {
+      if (input.value.trim() === '') return;
+      const value = Number(input.value);
+      if (!Number.isFinite(value)) return;
+      position[axis] = value;
+      applyPosition(input);
+    };
+    const applyScaleInput = () => {
+      if (positionScaleInput.value.trim() === '') return;
+      const value = Number(positionScaleInput.value);
+      if (!Number.isFinite(value)) return;
+      position.width = value;
+      applyPosition(positionScaleInput);
+    };
+    positionScaleInput.addEventListener('input', applyScaleInput);
+    positionXInput.addEventListener('input', () => applyCoordinateInput('left', positionXInput));
+    positionYInput.addEventListener('input', () => applyCoordinateInput('top', positionYInput));
+    [positionScaleInput, positionXInput, positionYInput].forEach(input => input.addEventListener('change', applyPosition));
+    positionModal.querySelector('.position-nudge').addEventListener('click', event => {
+      const button = event.target.closest('[data-position-nudge]');
+      if (button) nudgePosition(button.dataset.positionNudge);
+    });
+    canvas.addEventListener('keydown', event => {
+      const directions = {ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right'};
+      if (!directions[event.key]) return;
+      event.preventDefault();
+      nudgePosition(directions[event.key]);
     });
     canvas.addEventListener('pointerdown', event => {
       const bounds = canvas.getBoundingClientRect();
@@ -1012,8 +1101,8 @@
         position.left = drag.position.left + dx;
         position.top = drag.position.top + dy;
       } else {
-        const maxWidth = Math.min(88, 100 - drag.position.left, (100 - drag.position.top) / ((9 / 16) / videoAspect));
-        position.width = clamp(drag.position.width + dx, 16, maxWidth);
+        const maxWidth = Math.min(100, 100 - drag.position.left, (100 - drag.position.top) / ((9 / 16) / videoAspect));
+        position.width = clamp(drag.position.width + dx, 1, maxWidth);
         position.left = drag.position.left;
         position.top = drag.position.top;
       }
@@ -1044,6 +1133,7 @@
     });
     document.addEventListener('click', event => {
       if (event.target.closest('[data-close-video-position]') || event.target === positionModal) {
+        setExpanded(false);
         positionModal.classList.remove('open');
         if (target === 'batch') window.__resetVideoBatch();
       }
@@ -1553,7 +1643,7 @@
     $('#confirmAnalyzedModel').addEventListener('click', () => {
       if (!pendingModel) return;
       const wasEditing = Boolean(editingModelId);
-      window.eval(`(() => { const next = ${JSON.stringify(pendingModel)}; const index = models.findIndex(item => item.id === next.id); if (index >= 0) models[index] = next; else models.push(next); state.model = next.id; renderCreateChoices(); renderAssets(); renderSummary(); setStep(2); })()`);
+      window.eval(`(() => { const next = ${JSON.stringify(pendingModel)}; const index = models.findIndex(item => item.id === next.id); if (index >= 0) models[index] = next; else models.push(next); state.model = next.id; renderCreateChoices(); renderAssets(); renderSummary(); setStep(3); })()`);
       $('#modelResultModal').classList.remove('open');
       pendingModel = null;
       editingModelId = '';
@@ -1842,7 +1932,7 @@
     return groups.map(group=>({id:group.items[0].productId||group.items[0].id,groupId:group.id,productIds:[...new Set(group.items.map(item=>item.productId||item.id))],groupName:group.name,name:group.items.map(item=>item.name).join(' + '),articleNo:[...new Set(group.items.map(item=>item.articleNo))].join('、'),colors:group.items.map(item=>item.color),white:group.items[0].white||group.items[0].image,skuKey:group.items[0].skuKey,items:group.items.map(item=>({...item,id:item.productId||item.id,white:item.white||item.image}))}));
   }`);
   data(`renderSummary = function(){
-    const instances=window.compositionSkuInstances?window.compositionSkuInstances():selectedSkuSources(),selected=[...new Map(instances.map(item=>[item.skuKey,item])).values()],groups=generationSources(),model=models.find(m=>m.id===state.model),template=templates.find(t=>t.id===state.template),isProductStep=state.step===1;
+    const instances=window.compositionSkuInstances?window.compositionSkuInstances():selectedSkuSources(),selected=[...new Map(instances.map(item=>[item.skuKey,item])).values()],groups=generationSources(),model=models.find(m=>m.id===state.model),template=templates.find(t=>t.id===state.template),isProductStep=state.step===2;
     const productCount=new Set(selected.map(sku=>sku.productId||sku.id)).size;
     $('#summaryProductCount').textContent=selected.length?productCount+' 商品 '+selected.length+' SKU':'未选择';
     $('#summaryGroupCount').textContent=isProductStep?'搭配中':groups.length+' 个';
@@ -1907,3 +1997,9 @@
   });
 })();
 </script>
+<style>
+  .position-nudge input{grid-area:value;width:36px;height:36px;min-width:0;border:1px solid var(--line);border-radius:0;background:#fff;padding:0 2px;color:var(--rose-dark);font-size:10px;font-weight:750;text-align:center;-moz-appearance:textfield}
+  .position-nudge input::-webkit-inner-spin-button,.position-nudge input::-webkit-outer-spin-button{margin:0;-webkit-appearance:none}
+  .position-nudge input:focus{position:relative;z-index:2;border-color:var(--rose);outline:0;box-shadow:0 0 0 2px rgba(182,79,107,.1)}
+</style>
+<script src="assets/template-flow-v4.js"></script>

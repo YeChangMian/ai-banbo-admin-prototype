@@ -9,12 +9,12 @@
   document.getElementById('commentModalMask')?.remove();
 
   const videoData = [
-    { id: 'v1', name: '速干短袖正面展示', type: '生成视频', modelId: 'qingyu', model: '乔青予', trigger: '商品讲解', triggerCount: 36, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/host-xiaoqing-half.png', detail: '正面展示（多款色）' },
-    { id: 'v2', name: '面料细节展示', type: '生成视频', modelId: 'ruoxia', model: '林若夏', trigger: '商品讲解>主播口令', triggerCount: 18, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/lyocell-cardigan-half.png', detail: '抬手展示面料、袖口和领口细节', triggerContent: '“看一下<mark>蓝色</mark>款”' },
-    { id: 'v6', name: '短袖多款色轮播', type: '生成视频', modelId: 'qiaohu', model: '巧虎', trigger: '商品讲解', triggerCount: 24, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/qiaohu/front.png', detail: '白色、黑色款色轮流展示' },
-    { id: 'v7', name: '明星同款上身展示', type: '生成视频', modelId: 'qingyu', model: '乔青予', trigger: '商品讲解', triggerCount: 15, productIndex: '2', product: '王一博同款抗菌短袖', productId: '3829847837299048729', cover: '../assets/models/host-xiaoqing-half.png', detail: '正面站姿展示版型' },
-    { id: 'v3', name: '福袋互动视频', type: '上传视频', modelId: '', model: '', trigger: '主播口令', triggerCount: 42, productIndex: '', product: '不关联商品', productId: '', cover: '../assets/models/qiaohu/front.png', detail: '口令关键词：福袋来了、参与福袋', triggerContent: '“<mark>福袋</mark>来了”' },
-    { id: 'v5', name: '关注直播间提醒', type: '上传视频', modelId: 'ruoxia', model: '林若夏', trigger: '商品讲解>弹幕评论', triggerCount: 29, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/lyocell-cardigan-half.png', detail: '评论关键词：怎么关注、怎么领券', triggerComment: '三杯鸡：看一下蓝色款', triggerContent: '“@三杯鸡：看一下<mark>蓝色</mark>款”' }
+    { id: 'v1', name: '速干短袖正面展示', duration: 5, type: '生成视频', modelId: 'qingyu', model: '乔青予', trigger: '商品讲解', triggerCount: 36, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/host-xiaoqing-half.png', detail: '正面展示（多款色）' },
+    { id: 'v2', name: '面料细节展示', duration: 5, type: '生成视频', modelId: 'ruoxia', model: '林若夏', trigger: '商品讲解>主播口令', triggerCount: 18, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/lyocell-cardigan-half.png', detail: '抬手展示面料、袖口和领口细节', triggerContent: '“看一下<mark>蓝色</mark>款”' },
+    { id: 'v6', name: '短袖多款色轮播', duration: 5, type: '生成视频', modelId: 'qiaohu', model: '巧虎', trigger: '商品讲解', triggerCount: 24, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/qiaohu/front.png', detail: '白色、黑色款色轮流展示' },
+    { id: 'v7', name: '明星同款上身展示', duration: 5, type: '生成视频', modelId: 'qingyu', model: '乔青予', trigger: '商品讲解', triggerCount: 15, productIndex: '2', product: '王一博同款抗菌短袖', productId: '3829847837299048729', cover: '../assets/models/host-xiaoqing-half.png', detail: '正面站姿展示版型' },
+    { id: 'v3', name: '福袋互动视频', duration: 5, type: '上传视频', modelId: '', model: '', trigger: '主播口令', triggerCount: 42, productIndex: '', product: '不关联商品', productId: '', cover: '../assets/models/qiaohu/front.png', detail: '口令关键词：福袋来了、参与福袋', triggerContent: '“<mark>福袋</mark>来了”' },
+    { id: 'v5', name: '关注直播间提醒', duration: 5, type: '上传视频', modelId: 'ruoxia', model: '林若夏', trigger: '商品讲解>弹幕评论', triggerCount: 29, productIndex: '1', product: '吸湿速干图案短袖', productId: '3829850811488403472', cover: '../assets/models/lyocell-cardigan-half.png', detail: '评论关键词：怎么关注、怎么领券', triggerComment: '三杯鸡：看一下蓝色款', triggerContent: '“@三杯鸡：看一下<mark>蓝色</mark>款”' }
   ];
 
   const products = [
@@ -59,13 +59,11 @@
             <div class="banbo-model-control"><div><label for="productPlaybackMode">商品讲解播放方式</label><span id="productPlaybackHint">同一商品的视频轮流循环播放，直至结束商品讲解</span></div><select id="productPlaybackMode"><option value="loop">循环播放</option><option value="once">单次播放</option></select></div>
           </section>
           <section class="banbo-card">
-            <div class="banbo-card-head"><h3>当前播放</h3><span class="banbo-tag green" id="playingState">播放中</span></div>
+            <div class="banbo-card-head"><h3>播放队列</h3></div>
             <div class="banbo-playing">
               <img class="banbo-video-cover" id="currentVideoCover" src="${currentVideo.cover}" alt="正在播放视频" />
-              <div><h4 id="currentVideoName">${currentVideo.name}</h4><div class="banbo-playing-meta"><span id="currentVideoModel">${currentVideo.model}</span> · <span id="currentVideoTrigger">${currentVideo.trigger}</span><span id="currentTriggerContent"></span></div><div class="banbo-progress"><span id="playingProgress"></span></div><div class="banbo-controls"><button class="banbo-btn primary" id="stopVideo">停止</button><button class="banbo-btn danger" id="nextVideo">播放下一个</button></div></div>
+              <div><div class="banbo-playing-title"><h4 id="currentVideoName">${videoTitle(currentVideo)}</h4><span class="banbo-tag green" id="playingState">播放中</span></div><div class="banbo-playing-meta"><span id="currentVideoModel">${currentVideo.model}</span> · <span id="currentVideoTrigger">${currentVideo.trigger}</span><span id="currentTriggerContent"></span></div></div>
             </div>
-            <div class="banbo-section-divider"></div>
-            <div class="banbo-card-head"><h3>播放队列</h3><span id="playQueueCount"></span></div>
             <div class="banbo-queue-list" id="playQueue"></div>
           </section>
         </div>
@@ -111,13 +109,16 @@
     return videoData.filter(video => video.productIndex === productIndex && video.trigger === '商品讲解' && (!autoModelId || !video.modelId || video.modelId === autoModelId));
   }
 
-  function videoActionButton(action, videoId) {
+  function videoActionButton(action, videoId, options = {}) {
     const config = {
-      play: { label: '立即播放', className: 'primary', icon: '<polygon points="6 3 20 12 6 21 6 3"></polygon>' },
-      next: { label: '下一条播放', className: '', icon: '<path d="M3 6h8"></path><path d="M3 12h8"></path><path d="M3 18h5"></path><path d="M17 5v8"></path><path d="M13 9h8"></path>' },
-      remove: { label: '移除', className: 'danger', icon: '<circle cx="12" cy="12" r="9"></circle><path d="M8 12h8"></path>' }
+      front: { label: '挪到队列前端', className: 'primary', icon: '<path d="M6 8h12"></path><path d="M6 12h12"></path><path d="M6 16h12"></path><path d="M3 5h2"></path><path d="M3 19h2"></path>' },
+      queueFront: { label: '加入队列前端', className: 'primary', icon: '<path d="M6 8h12"></path><path d="M6 12h12"></path><path d="M6 16h12"></path><path d="M3 5h2"></path><path d="M3 19h2"></path>' },
+      queueEnd: { label: '加入队列尾端', className: '', icon: '<path d="M6 8h12"></path><path d="M6 12h12"></path><path d="M6 16h12"></path><path d="M19 5h2"></path><path d="M19 19h2"></path>' },
+      remove: { label: '移出播放队列', className: 'danger', icon: '<circle cx="12" cy="12" r="9"></circle><path d="M8 12h8"></path>' }
     }[action];
-    return `<button class="banbo-icon-btn ${config.className}" data-video-action="${action}" data-video-id="${videoId}" aria-label="${config.label}" title="${config.label}"><svg viewBox="0 0 24 24" aria-hidden="true">${config.icon}</svg></button>`;
+    const disabled = options.disabled ? ' disabled aria-disabled="true"' : '';
+    const label = options.disabled ? (options.disabledLabel || config.label) : config.label;
+    return `<button class="banbo-icon-btn ${config.className}${options.disabled ? ' is-disabled' : ''}" data-video-action="${action}" data-video-id="${videoId}" aria-label="${label}" title="${label}"${disabled}><svg viewBox="0 0 24 24" aria-hidden="true">${config.icon}</svg></button>`;
   }
 
   function showToast(message) {
@@ -129,6 +130,10 @@
 
   function triggerMeta(video) {
     return `${video.model || '未关联数字模特'} · ${video.trigger}${video.triggerContent ? ` · <span class="banbo-trigger-context">${video.triggerContent}</span>` : ''}`;
+  }
+
+  function videoTitle(video) {
+    return `${video.name} · ${video.duration || 5}s`;
   }
 
   function openConfirm(title, message, action) {
@@ -150,23 +155,23 @@
 
   function renderCurrentVideo() {
     document.getElementById('currentVideoCover').src = currentVideo.cover;
-    document.getElementById('currentVideoName').textContent = currentVideo.name;
+    document.getElementById('currentVideoName').textContent = videoTitle(currentVideo);
     document.getElementById('currentVideoModel').textContent = currentVideo.model;
     document.getElementById('currentVideoTrigger').textContent = currentVideo.trigger;
     document.getElementById('currentTriggerContent').innerHTML = currentVideo.triggerContent ? ` · <span class="banbo-trigger-context">${currentVideo.triggerContent}</span>` : '';
     document.getElementById('playingState').textContent = isPlaying ? '播放中' : (companionEnabled ? '已停止' : '已暂停');
     document.getElementById('playingState').className = `banbo-tag ${isPlaying ? 'green' : 'gray'}`;
-    document.getElementById('playingProgress').style.width = isPlaying ? '38%' : '0';
-    document.getElementById('stopVideo').textContent = isPlaying ? '停止' : '播放';
     document.getElementById('companionStatusText').textContent = companionEnabled ? 'AI伴播已开启' : 'AI伴播已关闭';
     renderPlayQueue();
   }
 
   function renderPlayQueue() {
     const list = queueIds.map(id => videoData.find(video => video.id === id)).filter(Boolean);
-    document.getElementById('playQueueCount').textContent = `${list.length} 条`;
-    document.getElementById('playQueue').innerHTML = list.length ? list.map((video, index) => `
-      <article class="banbo-queue-row" draggable="true" data-queue-video="${video.id}"><span class="banbo-drag" title="拖动排序">⋮⋮</span><span class="banbo-index">${String(index + 1).padStart(2, '0')}</span><img class="banbo-mini-cover" src="${video.cover}" alt="${video.name}" /><div><div class="banbo-row-title">${video.name}${index === 0 && video.id === 'v3' ? ' <span class="banbo-insert-tag">触发排队</span>' : ''}</div><div class="banbo-row-meta">${triggerMeta(video)}</div></div><div class="banbo-queue-actions">${videoActionButton('play', video.id)}${videoActionButton('remove', video.id)}</div></article>`).join('') : '<div class="banbo-empty compact">暂无待播放视频</div>';
+    document.getElementById('playQueue').innerHTML = list.length ? list.map((video, index) => {
+      const locked = index === 0 || video.id === currentVideo.id;
+      const lockedLabel = video.id === currentVideo.id ? '正在播放的视频不可修改' : '队列第一条不可修改';
+      return `<article class="banbo-queue-row${locked ? ' is-locked' : ''}" draggable="${locked ? 'false' : 'true'}" data-queue-video="${video.id}" data-queue-index="${index}"><span class="banbo-drag" title="${locked ? lockedLabel : '拖动排序'}">⋮⋮</span><span class="banbo-index">${String(index + 1).padStart(2, '0')}</span><img class="banbo-mini-cover" src="${video.cover}" alt="${video.name}" /><div><div class="banbo-row-title">${videoTitle(video)}${index === 0 && video.id === 'v3' ? ' <span class="banbo-insert-tag">触发排队</span>' : ''}</div><div class="banbo-row-meta">${triggerMeta(video)}</div></div><div class="banbo-queue-actions">${videoActionButton('front', video.id, {disabled: locked, disabledLabel: lockedLabel})}${videoActionButton('remove', video.id, {disabled: locked, disabledLabel: lockedLabel})}</div></article>`;
+    }).join('') : '<div class="banbo-empty compact">暂无待播放视频</div>';
   }
 
   function playVideo(video) {
@@ -196,6 +201,10 @@
   }
 
   function addNextVideo(video) {
+    if (video.id === currentVideo.id || video.id === queueIds[0]) {
+      showToast('正在播放或队列第一条视频不可修改');
+      return;
+    }
     queueIds = [video.id, ...queueIds.filter(id => id !== video.id && id !== currentVideo.id)];
     renderPlayQueue();
     showToast(`已加入下一条：${video.name}`);
@@ -208,7 +217,7 @@
       .filter(video => (!modelId || video.modelId === modelId) && (keyword ? `${video.name} ${video.product} ${video.productId} ${video.detail}`.toLowerCase().includes(keyword) : !video.productIndex))
       .sort((a, b) => b.triggerCount - a.triggerCount);
     document.getElementById('videoList').innerHTML = list.length ? list.map(video => `
-      <article class="banbo-video-row"><img class="banbo-mini-cover" src="${video.cover}" alt="${video.name}" /><div><div class="banbo-row-title">${video.name}</div><div class="banbo-row-meta">${video.model || '未关联数字模特'} · ${video.trigger} · 已触发 ${video.triggerCount} 次${video.productIndex ? `<br>${video.product}` : ''}</div></div><div class="banbo-row-actions">${videoActionButton('play', video.id)}${videoActionButton('next', video.id)}</div></article>`).join('') : '<div class="banbo-empty">没有匹配的视频</div>';
+      <article class="banbo-video-row"><img class="banbo-mini-cover" src="${video.cover}" alt="${video.name}" /><div><div class="banbo-row-title">${videoTitle(video)}</div><div class="banbo-row-meta">${video.model || '未关联数字模特'} · ${video.trigger} · 已触发 ${video.triggerCount} 次${video.productIndex ? `<br>${video.product}` : ''}</div></div><div class="banbo-row-actions">${videoActionButton('queueFront', video.id)}${videoActionButton('queueEnd', video.id)}</div></article>`).join('') : '<div class="banbo-empty">没有匹配的视频</div>';
   }
 
   function injectProductVideoCounts() {
@@ -219,17 +228,27 @@
       if (!actions || actions.querySelector('.banbo-product-video-entry') || !videos.length) return;
       const entry = document.createElement('span');
       entry.className = 'banbo-product-video-entry';
-      entry.innerHTML = `<span>1 个伴播视频</span><div class="banbo-product-video-popover"><b>可用伴播视频</b>${videos.map(video => `<div class="banbo-popover-video"><img src="${video.cover}" alt="${video.name}" /><span><strong>${video.name}</strong><small>${video.model || '未关联数字模特'} · ${video.trigger} · 已触发 ${video.triggerCount} 次</small></span><div class="banbo-popover-actions">${videoActionButton('play', video.id)}${videoActionButton('next', video.id)}</div></div>`).join('')}</div>`;
+      entry.innerHTML = `<span>1 个伴播视频</span><div class="banbo-product-video-popover"><b>可用伴播视频</b>${videos.map(video => `<div class="banbo-popover-video"><img src="${video.cover}" alt="${video.name}" /><span><strong>${video.name}</strong><small>${video.model || '未关联数字模特'} · ${video.trigger} · 已触发 ${video.triggerCount} 次</small></span><div class="banbo-popover-actions">${videoActionButton('queueFront', video.id)}${videoActionButton('queueEnd', video.id)}</div></div>`).join('')}</div>`;
       actions.insertBefore(entry, actions.querySelector('button'));
       if (product) row.dataset.banboProductId = product.id;
     });
   }
 
   function setCurrentProduct(product) {
+    const previousProductIndex = currentProduct?.index;
     currentProduct = product;
     const videos = automaticProductVideos(product.index);
+    // 商品讲解切换时，只清理上一个商品的商品讲解队列，其他触发方式继续保留。
+    if (previousProductIndex && previousProductIndex !== product.index) {
+      queueIds = queueIds.filter(id => {
+        const video = videoData.find(item => item.id === id);
+        return !(video && video.productIndex === previousProductIndex && video.trigger === '商品讲解');
+      });
+    }
     if (videos.length) {
-      queueIds = videos.slice(1).map(video => video.id);
+      const fixedQueueId = queueIds[0];
+      const newQueueVideos = videos.slice(1).map(video => video.id);
+      queueIds = fixedQueueId ? [fixedQueueId, ...queueIds.slice(1), ...newQueueVideos] : newQueueVideos;
       playVideo(videos[0]);
       showToast(productPlaybackMode === 'loop' ? '已开始循环播放当前商品视频' : `将依次播放 ${videos.length} 条视频各一次`);
     }
@@ -273,13 +292,23 @@
     if (!actionButton) return;
     const video = videoData.find(item => item.id === actionButton.dataset.videoId);
     if (!video) return;
-    if (actionButton.dataset.videoAction === 'play') {
-      queueIds = queueIds.filter(id => id !== video.id);
-      playVideo(video);
-    } else if (actionButton.dataset.videoAction === 'next') {
-      addNextVideo(video);
+    if (actionButton.disabled || video.id === currentVideo.id) {
+      showToast('正在播放或队列第一条视频不可修改');
+      return;
+    }
+    const queueRow = actionButton.closest('[data-queue-index]');
+    const queueIndex = queueRow ? Number(queueRow.dataset.queueIndex) : -1;
+    if (actionButton.dataset.videoAction === 'front' || actionButton.dataset.videoAction === 'queueFront') {
+      if (queueIndex > 0) queueIds.splice(queueIndex, 1);
+      queueIds = [queueIds[0], video.id, ...queueIds.slice(1)];
+      renderPlayQueue();
+      showToast(`已${actionButton.dataset.videoAction === 'front' ? '挪到' : '加入'}队列前端：${video.name}`);
+    } else if (actionButton.dataset.videoAction === 'queueEnd') {
+      queueIds.push(video.id);
+      renderPlayQueue();
+      showToast(`已加入队列尾端：${video.name}`);
     } else {
-      queueIds = queueIds.filter(id => id !== video.id);
+      if (queueIndex > 0) queueIds.splice(queueIndex, 1);
       renderPlayQueue();
       showToast('已移出播放队列');
     }
@@ -304,18 +333,17 @@
     showToast(loop ? '商品讲解：循环播放' : '商品讲解：单次播放');
   });
   document.getElementById('voiceBoardButton').addEventListener('click', () => setVoiceBoard(true));
-  document.getElementById('stopVideo').addEventListener('click', () => {
-    isPlaying = !isPlaying;
-    renderCurrentVideo();
-    showToast(isPlaying ? '当前视频已继续播放' : '当前视频已停止，AI伴播仍保持开启');
-  });
-  document.getElementById('nextVideo').addEventListener('click', playNextVideo);
   document.getElementById('videoModelFilter').addEventListener('change', renderVideos);
   document.getElementById('videoSearch').addEventListener('input', renderVideos);
 
   document.getElementById('playQueue').addEventListener('dragstart', event => {
     const row = event.target.closest('[data-queue-video]');
     if (!row) return;
+    if (row.dataset.queueVideo === queueIds[0] || row.dataset.queueVideo === currentVideo.id) {
+      event.preventDefault();
+      showToast('队列第一条视频不可修改');
+      return;
+    }
     draggedQueueId = row.dataset.queueVideo;
     row.classList.add('dragging');
   });
@@ -323,13 +351,19 @@
     event.preventDefault();
     const row = event.target.closest('[data-queue-video]');
     document.querySelectorAll('.banbo-queue-row.drag-target').forEach(item => item.classList.remove('drag-target'));
-    if (!row || row.dataset.queueVideo === draggedQueueId) return;
+    if (!row || row.dataset.queueVideo === draggedQueueId || row.dataset.queueVideo === queueIds[0] || row.dataset.queueVideo === currentVideo.id) return;
     row.classList.add('drag-target');
   });
   document.getElementById('playQueue').addEventListener('drop', event => {
     event.preventDefault();
     const row = event.target.closest('[data-queue-video]');
     if (!row || row.dataset.queueVideo === draggedQueueId) return;
+    if (draggedQueueId === queueIds[0] || draggedQueueId === currentVideo.id || row.dataset.queueVideo === queueIds[0] || row.dataset.queueVideo === currentVideo.id) {
+      draggedQueueId = '';
+      renderPlayQueue();
+      showToast('队列第一条视频不可修改');
+      return;
+    }
     const from = queueIds.indexOf(draggedQueueId);
     const to = queueIds.indexOf(row.dataset.queueVideo);
     if (from < 0 || to < 0) return;

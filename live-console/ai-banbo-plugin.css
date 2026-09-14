@@ -171,9 +171,13 @@
   grid-template-columns: 126px minmax(0, 1fr);
   gap: 14px;
   align-items: center;
+  margin-bottom: 18px;
 }
 .banbo-video-cover { width: 126px; height: 126px; border-radius: 7px; object-position: top center; }
 .banbo-playing h4 { margin: 0; font-size: 18px; line-height: 1.35; }
+.banbo-playing-title { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.banbo-playing-title h4 { min-width: 0; overflow-wrap: anywhere; }
+.banbo-playing-title .banbo-tag { flex-shrink: 0; }
 .banbo-playing-product { max-width: 100%; margin-top: 7px; overflow: hidden; color: var(--banbo-text); font-size: 13px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
 .banbo-playing-meta { margin: 8px 0 12px; color: var(--banbo-muted); font-size: 13px; line-height: 1.55; }
 .banbo-trigger-context { color: var(--banbo-muted); }
@@ -283,7 +287,12 @@
 .banbo-drag { color: #aaa0a6; font-size: 16px; cursor: grab; user-select: none; }
 .banbo-queue-row.dragging { border-color: var(--banbo); opacity: .68; }
 .banbo-queue-row.drag-target { border-color: var(--banbo); box-shadow: 0 0 0 2px rgba(182,79,107,.08); }
+.banbo-queue-row.is-locked { background: #fafafa; }
+.banbo-queue-row.is-locked .banbo-drag { color: #d2cbd0; cursor: not-allowed; }
+.banbo-icon-btn.is-disabled { border-color: #eee9eb; background: #f7f5f6; color: #c6bec3; cursor: not-allowed; }
+.banbo-icon-btn.is-disabled:hover { border-color: #eee9eb; background: #f7f5f6; color: #c6bec3; }
 .banbo-insert-tag { display: inline-flex; margin-left: 6px; border-radius: 3px; background: #e8f5ef; color: var(--banbo-green); padding: 1px 5px; }
+.banbo-lock-tag { display: inline-flex; margin-left: 6px; border-radius: 3px; background: #f0edef; color: #8b8188; padding: 1px 5px; font-size: 11px; font-weight: 700; }
 .banbo-empty { padding: 42px 12px; color: var(--banbo-muted); text-align: center; }
 .banbo-empty.compact { padding: 18px 10px; }
 

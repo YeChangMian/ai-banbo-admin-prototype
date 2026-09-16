@@ -27,6 +27,15 @@
   if ($('#pageNote')) $('#pageNote').textContent = '先选择展示模版，再配置商品、数字模特和使用背景';
 
   const isAnimation = model => model?.type === '动画形象';
+  const needsBackImage = template => template?.type==='服饰展示' && (template.requiresBackImage ?? (template.referencePositions ? template.referencePositions.includes(2) : true));
+  window.isTemplateProductSkuAllowed = (product,sku) => {
+    const template=data('templates.find(item=>item.id===state.template)');
+    if(!needsBackImage(template))return true;
+    const clothing=product.compositionSlots?.some(slot=>/上衣|下装/.test(slot)) || ['上衣','上衣（内搭）','上衣（外套）','下装','裤子','半身裙','连衣裙','套装'].includes(product.category);
+    if(!clothing)return true;
+    if(product.source==='custom')return Boolean(product.customSkus?.find(item=>item.name===sku.color)?.images?.back?.src || product.customImages?.back?.src);
+    return (sku.views||product.views||[]).some(view=>['反','反面','背面'].includes(view));
+  };
   const acceptsModel = (template,model) => !template || !model || (template.type === 'IP形象互动' ? isAnimation(model) : !isAnimation(model));
   window.__decorateTemplateFlowChoices = () => {
     const template = data('templates.find(item=>item.id===state.template)');
@@ -35,6 +44,21 @@
       card.querySelector('.choice-tags')?.remove();
       card.querySelector('.template-type-badge')?.remove();
       card.insertAdjacentHTML('afterbegin',`<span class="template-type-badge">${item?.type||'服饰展示'}</span>`);
+      card.querySelector('.template-back-tag')?.remove();
+      const detailButton = card.querySelector('.choice-detail');
+      let foot = card.querySelector('.choice-card-foot');
+      if(needsBackImage(item)){
+        if (detailButton && !foot) { foot = document.createElement('div'); foot.className = 'choice-card-foot'; detailButton.parentNode.insertBefore(foot, detailButton); foot.appendChild(detailButton); }
+        card.classList.add('has-foot');
+        (foot || card).insertAdjacentHTML(foot ? 'afterbegin' : 'beforeend', '<span class="tag rose template-back-tag">需要服饰反面图</span>');
+      } else if (foot) {
+        const button = foot.querySelector('.choice-detail');
+        if (button) card.appendChild(button);
+        foot.remove();
+        card.classList.remove('has-foot');
+      } else {
+        card.classList.remove('has-foot');
+      }
     });
     $$('#createModelGrid .choice-card').forEach(card => {
       const model = data(`models.find(item=>item.id===${JSON.stringify(card.dataset.choiceId)})`);
@@ -43,6 +67,8 @@
       card.setAttribute('aria-disabled',String(disabled));
       card.title = disabled ? (template?.type === 'IP形象互动' ? 'IP形象互动模版仅可选择IP动画形象' : '服饰展示模版仅可选择真人模特') : '';
     });
+    // 装饰完成后立即重排，确保“可用在前、置灰在后”与界面状态永远一致
+    window.sortResourceCards?.();
   };
   data('window.__templateFlowRenderBase=renderCreateChoices;renderCreateChoices=function(){window.__templateFlowRenderBase();window.__decorateTemplateFlowChoices()}');
   const decorateAssetTemplates = () => $$('#templateGrid .asset-card').forEach(card => {
@@ -57,6 +83,7 @@
   document.addEventListener('click',event => {
     const modelCard = event.target.closest('#createModelGrid [data-choice-type="model"]');
     if (modelCard?.classList.contains('template-incompatible')) {
+      if (event.target.closest('[data-detail-type="model"]')) return;
       event.preventDefault();event.stopImmediatePropagation();data(`toast(${JSON.stringify(modelCard.title)})`);return;
     }
     const templateCard = event.target.closest('#createTemplateGrid [data-choice-type="template"]');
@@ -71,6 +98,14 @@
     const step = data('state.step');
     if (step === 1 && !data('state.template')) return data("toast('请选择展示模版')");
     if (step === 2) window.finalizeSingleGroups?.();
+    if (step === 2) {
+      const products=data('products'),selected=data('state.selectedSkus');
+      const invalidKeys=products.flatMap(product=>product.whiteImages.filter(sku=>selected.has(`${product.id}::${sku.color}`)&&!window.isTemplateProductSkuAllowed(product,sku)).map(sku=>`${product.id}::${sku.color}`));
+      if (invalidKeys.length) {
+        invalidKeys.forEach(key=>selected.delete(key));
+        data("toast('缺少服饰反面图的商品已自动移除')");
+      }
+    }
     if (step === 3 && !data('state.model')) return data("toast('请选择数字模特')");
     if (step === 4) {
       if (!data('state.background.mode')) return data("toast('请选择使用背景')");
@@ -83,8 +118,8 @@
   const panel1 = $('#templateModal [data-action-panel="1"]');
   const panel2 = $('#templateModal [data-action-panel="2"]');
   panel1.innerHTML = `<div class="field"><label>模版名称</label><input id="actionNameInput" placeholder="请输入展示模版名称"/></div><div class="field"><label>模版类型</label><select id="actionTypeSelect"><option value="服饰展示">服饰展示</option><option value="IP形象互动">IP形象互动</option></select></div><div class="field" id="templateCreateModeField"><label>创建方式</label><div class="template-create-mode"><label><input type="radio" name="templateCreateMode" value="existing" checked/><span><b>已有模版修改</b><small>复用已有模版的生成参数</small></span></label><label><input type="radio" name="templateCreateMode" value="blank"/><span><b>空白创建</b><small>从零配置生成方式</small></span></label></div></div><div class="field template-source-field" id="templateSourceField"><label>选择已有展示模版</label><input id="templateSourceSearch" list="templateSourceOptions" placeholder="搜索并选择展示模版"/><datalist id="templateSourceOptions"></datalist></div>`;
-  const ratios = ['自动匹配','1:1','4:3','3:4','16:9','9:16'];
-  panel2.innerHTML = `<div class="template-generation-layout"><button type="button" class="method-option active" data-action-method="image" hidden></button><div class="method-panel active" data-action-method-panel="image"><div class="field"><label>参考图（最多 9 张）</label><div class="template-reference-grid" id="templateReferenceGrid"></div><p class="reference-image-note" id="templateReferenceNote"></p></div></div><div class="template-optional-media"><div class="field"><label>参考视频（选填）</label><button type="button" class="template-media-upload" data-template-upload data-demo-upload="参考视频" data-default-text="上传参考视频"><i data-lucide="video"></i><span>上传参考视频</span></button></div><div class="field"><label>参考音频（选填）</label><button type="button" class="template-media-upload" data-template-upload data-demo-upload="动作音频" data-default-text="上传参考音频"><i data-lucide="music"></i><span>上传参考音频</span></button></div></div><div class="field"><label>提示词</label><textarea id="actionPrompt" placeholder="描述角色动作、镜头、节奏和需要保持一致的视觉特征"></textarea></div><div class="field"><label>生成尺寸</label><div class="template-ratio-grid" id="templateRatioGrid">${ratios.map((ratio,index)=>`<button type="button" class="template-ratio-option ${index===0?'active':''}" data-template-ratio="${ratio}"><i class="template-ratio-shape">${ratio==='自动匹配'?'自动':''}</i><span>${ratio}</span></button>`).join('')}</div></div><div class="field"><label>生成时长</label><div class="template-duration-row"><input type="range" id="templateDuration" min="1" max="15" value="5"/><span class="template-duration-value"><b id="templateDurationValue">5</b>秒</span></div></div><div id="colorModeField" hidden><label><input type="radio" name="actionColorMode" value="单搭配" checked/></label></div></div>`;
+  const ratios = ['1:1','4:3','3:4','16:9','9:16'];
+  panel2.innerHTML = `<div class="template-generation-layout"><button type="button" class="method-option active" data-action-method="image" hidden></button><div class="method-panel active" data-action-method-panel="image"><div class="field"><label>参考图（最多 9 张）</label><div class="template-reference-grid" id="templateReferenceGrid"></div><p class="reference-image-note" id="templateReferenceNote"></p></div></div><div class="template-optional-media"><div class="field"><label>参考视频（选填）</label><button type="button" class="template-media-upload" data-template-upload data-demo-upload="参考视频" data-default-text="上传参考视频"><i data-lucide="video"></i><span>上传参考视频</span></button></div><div class="field"><label>参考音频（选填）</label><button type="button" class="template-media-upload" data-template-upload data-demo-upload="动作音频" data-default-text="上传参考音频"><i data-lucide="music"></i><span>上传参考音频</span></button></div></div><div class="field"><label>提示词</label><textarea id="actionPrompt" placeholder="描述角色动作、镜头、节奏和需要保持一致的视觉特征"></textarea></div><div class="field"><label>生成尺寸</label><div class="template-ratio-grid" id="templateRatioGrid">${ratios.map((ratio,index)=>`<button type="button" class="template-ratio-option ${index===0?'active':''}" data-template-ratio="${ratio}"><i class="template-ratio-shape"></i><span>${ratio}</span></button>`).join('')}</div></div><div class="field"><label>生成时长</label><div class="template-duration-row"><input type="range" id="templateDuration" min="1" max="15" value="5"/><span class="template-duration-value"><b id="templateDurationValue">5</b>秒</span></div></div><div id="colorModeField" hidden><label><input type="radio" name="actionColorMode" value="单搭配" checked/></label></div></div>`;
   $('#analysisResultComposition')?.closest('div')?.setAttribute('hidden','');
   const analysisCopy = $('#actionAnalysisResult p');
   if (analysisCopy) analysisCopy.textContent = '模版已生成，请检查生成效果和触发方式。';
@@ -96,8 +131,15 @@
     $('#templateSourceOptions').innerHTML = items.map(item=>`<option value="${item.name}"></option>`).join('');
     if (!items.some(item=>item.name===$('#templateSourceSearch').value)) $('#templateSourceSearch').value = items[0]?.name || '';
   };
-  const referenceLabels = () => currentType() === '服饰展示' ? ['模特图','服饰搭配正面图','服饰搭配反面图'] : ['IP形象图'];
-  const referenceCardMarkup = ({position,label='',required=false,uploaded=false,token=''}) => `<div class="template-reference-slot ${required?'required':''} ${required?'':'reference-sortable'} ${uploaded?'uploaded':''}" data-reference-image="${position}" data-reference-token="${uploaded?token:''}" data-uploaded="${uploaded}" draggable="${!required&&uploaded}" ${!required&&uploaded?'title="拖动调整参考图顺序"':''}><button type="button" class="template-reference-upload" data-template-upload data-demo-upload="参考图" data-uploaded="${uploaded}" data-default-text="参考图${position}${label?` · ${label}`:''}"><i data-lucide="${uploaded?'check':'image-plus'}"></i><b>参考图${position}${label?` · ${label}`:''}</b><small>${required?'必填':'选填'}</small></button>${uploaded?'<button type="button" class="template-reference-remove" data-remove-reference title="删除参考图" aria-label="删除参考图"><i data-lucide="x"></i></button>':''}</div>`;
+  const referenceLabels = () => currentType() === '服饰展示' ? ['模特上身正面图','服饰搭配反面图'] : ['IP形象图'];
+  const fashionPresetSources = {1:'assets/templates/model-front-preset.png',2:'assets/templates/outfit-back-preset.png'};
+  const presetSourceFor = position => currentType() === '服饰展示' ? (fashionPresetSources[position]||'') : '';
+  const demoReferenceSource = position => currentType() === '服饰展示' ? (fashionPresetSources[position]||'assets/products/butterfly-set-white-01.webp') : (['assets/models/qiaohu/face.png','assets/models/qiaohu/front.png','assets/models/qiaohu/action.png'][position-1]||'assets/models/qiaohu/face.png');
+  const referenceCardMarkup = ({position,label='',required=false,uploaded=false,token='',src='',note=''}) => {
+    const preview=uploaded&&src?src:'';
+    const noteText=note||(required?'必填':'选填');
+    return `<div class="template-reference-slot ${required?'required':''} ${required?'':'reference-sortable'} ${uploaded?'uploaded':''}${preview?' has-preview':''}" data-reference-image="${position}" data-reference-token="${uploaded?token:''}" data-reference-src="${preview}" data-note="${noteText}" data-uploaded="${uploaded}" draggable="${!required&&uploaded}" ${!required&&uploaded?'title="拖动调整参考图顺序"':''}>${preview?`<img class="template-reference-preview" src="${preview}" alt=""/>`:''}<button type="button" class="template-reference-upload" data-template-upload data-demo-upload="参考图" data-uploaded="${uploaded}" data-default-text="参考图${position}${label?` · ${label}`:''}" ${preview?'hidden':''}><i data-lucide="${uploaded?'check':'image-plus'}"></i><b>参考图${position}${label?` · ${label}`:''}</b><small>${noteText}</small></button>${uploaded?'<button type="button" class="template-reference-remove" data-remove-reference title="删除参考图" aria-label="删除参考图"><i data-lucide="x"></i></button>':''}</div>`;
+  };
   const renumberOptionalReferences = () => {
     const required = referenceLabels().length;
     $$('#templateReferenceGrid .reference-sortable').forEach((slot,index)=>{const position=required+index+1;slot.dataset.referenceImage=String(position);const upload=slot.querySelector('.template-reference-upload');if(upload){upload.dataset.defaultText=`参考图${position}`;upload.querySelector('b').textContent=`参考图${position}`}});
@@ -112,19 +154,25 @@
     const labels = referenceLabels();
     const required = labels.length;
     const uploadedSet = uploadedPositions.length ? new Set(uploadedPositions.map(Number)) : null;
-    const requiredMarkup=labels.map((label,index)=>{const position=index+1,uploaded=uploadedSet?uploadedSet.has(position):position<=uploadedCount;return referenceCardMarkup({position,label,required:true,uploaded,token:uploaded?(referenceOrder[index]||`reference-${position}`):''})}).join('');
+    const requiredMarkup=labels.map((label,index)=>{const position=index+1,uploaded=uploadedSet?uploadedSet.has(position):(fashion&&position<=2)||position<=uploadedCount;return referenceCardMarkup({position,label,required:true,uploaded,token:uploaded?(referenceOrder[index]||`reference-${position}`):'',src:uploaded?presetSourceFor(position):'',note:fashion&&position===2?'选填':'必填'})}).join('');
     const optionalPositions=uploadedSet?[...uploadedSet].filter(position=>position>required).sort((a,b)=>a-b):Array.from({length:Math.max(0,uploadedCount-required)},(_,index)=>required+index+1);
     const optionalMarkup=optionalPositions.slice(0,9-required).map((position,index)=>referenceCardMarkup({position:required+index+1,uploaded:true,token:referenceOrder[position-1]||`reference-${position}`})).join('');
     $('#templateReferenceGrid').innerHTML=requiredMarkup+optionalMarkup;
     syncReferenceAddTile();
-    $('#templateReferenceNote').textContent = '请勿上传场景图，展示模版的生成示例统一使用室内白色场景';
+    $('#templateReferenceNote').textContent = fashion ? '参考图 1、2 已预置系统参考图，可直接套用，也可删除后上传自己的图片；请勿上传场景图，生成示例统一使用室内白色场景' : '请勿上传场景图，展示模版的生成示例统一使用室内白色场景';
     window.lucide?.createIcons();
   };
-  const setReferenceSlotState = (slot,uploaded,token='') => {
+  const setReferenceSlotState = (slot,uploaded,token='',src='') => {
     slot.dataset.uploaded=String(uploaded);slot.dataset.referenceToken=uploaded?(token||slot.dataset.referenceToken||`reference-${Date.now()}`):'';
-    slot.classList.toggle('uploaded',uploaded);slot.draggable=slot.classList.contains('reference-sortable')&&uploaded;
+    const preview=uploaded?(src||slot.dataset.referenceSrc||''):'';
+    if(src||!uploaded)slot.dataset.referenceSrc=preview;
+    slot.classList.toggle('uploaded',uploaded);slot.classList.toggle('has-preview',Boolean(preview));
+    slot.draggable=slot.classList.contains('reference-sortable')&&uploaded;
     if(slot.draggable)slot.title='拖动调整参考图顺序';else slot.removeAttribute('title');
-    const upload=slot.querySelector('.template-reference-upload');if(upload)upload.dataset.uploaded=String(uploaded);
+    const existingPreview=slot.querySelector('.template-reference-preview');
+    if(preview){if(existingPreview)existingPreview.src=preview;else slot.insertAdjacentHTML('afterbegin',`<img class="template-reference-preview" src="${preview}" alt=""/>`)}
+    else existingPreview?.remove();
+    const upload=slot.querySelector('.template-reference-upload');if(upload){upload.dataset.uploaded=String(uploaded);upload.hidden=Boolean(preview);const note=upload.querySelector('small');if(note)note.textContent=slot.dataset.note||(slot.classList.contains('required')?'必填':'选填');}
     const icon=upload?.querySelector('svg,[data-lucide]');if(icon)icon.outerHTML=`<i data-lucide="${uploaded?'check':'image-plus'}"></i>`;
     slot.querySelector('[data-remove-reference]')?.remove();
     if(uploaded)slot.insertAdjacentHTML('beforeend','<button type="button" class="template-reference-remove" data-remove-reference title="删除参考图" aria-label="删除参考图"><i data-lucide="x"></i></button>');
@@ -140,22 +188,22 @@
   const clearGeneration = () => {renderReferences(0);resetMedia();$('#actionPrompt').value='';$$('.template-ratio-option').forEach((item,index)=>item.classList.toggle('active',index===0));$('#templateDuration').value='5';$('#templateDurationValue').textContent='5';window.lucide?.createIcons()};
   const prefill = template => {
     clearGeneration();
-    const minimum = currentType()==='服饰展示'?3:1;renderReferences(Math.max(minimum,template?.referenceCount||minimum),template?.referencePositions||[],template?.referenceOrder||[]);
+    const minimum = currentType()==='服饰展示'?2:1;renderReferences(Math.max(minimum,template?.referenceCount||minimum),template?.referencePositions||[],template?.referenceOrder||[]);
     $('#actionPrompt').value=template?.prompt||'';
     const videoButton=$('[data-template-upload][data-demo-upload="参考视频"]');
     const audioButton=$('[data-template-upload][data-demo-upload="动作音频"]');
     if(videoButton&&(template?.referenceVideo||template?.referenceVideoUrl)){videoButton.dataset.uploaded='true';videoButton.classList.add('uploaded');videoButton.innerHTML='<i data-lucide="check"></i><span>参考视频已上传</span>'}
     if(audioButton&&(template?.referenceAudioUrl||(template?.audio&&template.audio!=='无音频'))){audioButton.dataset.uploaded='true';audioButton.classList.add('uploaded');audioButton.innerHTML='<i data-lucide="check"></i><span>参考音频已上传</span>'}
-    const ratio=ratios.includes(template?.generationSize)?template.generationSize:'自动匹配';$$('.template-ratio-option').forEach(item=>item.classList.toggle('active',item.dataset.templateRatio===ratio));
+    const ratio=ratios.includes(template?.generationSize)?template.generationSize:ratios[0];$$('.template-ratio-option').forEach(item=>item.classList.toggle('active',item.dataset.templateRatio===ratio));
     $('#templateDuration').value=template?.duration||5;$('#templateDurationValue').textContent=$('#templateDuration').value;
   };
   $('#actionTypeSelect').addEventListener('change',()=>{renderSources();renderReferences(0);setCreateMode()});
   $$('[name="templateCreateMode"]').forEach(input=>input.addEventListener('change',setCreateMode));
   $('#templateDuration').addEventListener('input',event=>$('#templateDurationValue').textContent=event.target.value);
   $('#templateRatioGrid').addEventListener('click',event=>{const button=event.target.closest('[data-template-ratio]');if(button)$$('.template-ratio-option').forEach(item=>item.classList.toggle('active',item===button))});
-  $('#templateModal').addEventListener('click',event=>{const upload=event.target.closest('[data-template-upload]');if(!upload)return;event.preventDefault();event.stopPropagation();const referenceSlot=upload.closest('[data-reference-image]');if(referenceSlot){setReferenceSlotState(referenceSlot,true);window.lucide?.createIcons();return}upload.dataset.uploaded='true';upload.classList.add('uploaded');const icon=upload.querySelector('[data-lucide],svg');if(icon)icon.outerHTML='<i data-lucide="check"></i>';window.lucide?.createIcons()},true);
+  $('#templateModal').addEventListener('click',event=>{const upload=event.target.closest('[data-template-upload]');if(!upload)return;event.preventDefault();event.stopPropagation();const referenceSlot=upload.closest('[data-reference-image]');if(referenceSlot){setReferenceSlotState(referenceSlot,true,'',demoReferenceSource(Number(referenceSlot.dataset.referenceImage)));window.lucide?.createIcons();return}upload.dataset.uploaded='true';upload.classList.add('uploaded');const icon=upload.querySelector('[data-lucide],svg');if(icon)icon.outerHTML='<i data-lucide="check"></i>';window.lucide?.createIcons()},true);
   $('#actionNext').addEventListener('click',()=>{if (!panel1.classList.contains('active')) return;if($('[name="templateCreateMode"]:checked').value==='existing'){const source=data(`templates.find(item=>item.name===${JSON.stringify($('#templateSourceSearch').value)})`);prefill(source)}else clearGeneration()},true);
-  $('#actionCreate').addEventListener('click',()=>{const required=currentType()==='服饰展示'?3:1;$$('[data-reference-image]').slice(0,required).forEach(slot=>setReferenceSlotState(slot,true));if(!$('#actionPrompt').value.trim())$('#actionPrompt').value=currentType()==='IP形象互动'?'保持IP形象、配色和画风一致，面向镜头完成自然连贯的直播互动动作。':'真人模特自然站立并完整展示服饰搭配，动作自然，镜头稳定。';window.lucide?.createIcons()},true);
+  $('#actionCreate').addEventListener('click',()=>{$$('[data-reference-image]').slice(0,1).forEach(slot=>setReferenceSlotState(slot,true));if(!$('#actionPrompt').value.trim())$('#actionPrompt').value=currentType()==='IP形象互动'?'保持IP形象、配色和画风一致，面向镜头完成自然连贯的直播互动动作。':'真人模特自然站立并完整展示服饰搭配，动作自然，镜头稳定。';window.lucide?.createIcons()},true);
   let demoAudioUrl = '';
   const createDemoAudioUrl = () => {
     if (demoAudioUrl) return demoAudioUrl;
@@ -165,16 +213,32 @@
     for(let index=0;index<samples;index++){const fade=Math.min(1,index/240,(samples-index)/240),value=Math.sin(2*Math.PI*440*index/sampleRate)*.2*fade;view.setInt16(44+index*2,value*32767,true)}
     demoAudioUrl=URL.createObjectURL(new Blob([buffer],{type:'audio/wav'}));return demoAudioUrl;
   };
-  $('#actionCreate').addEventListener('click',()=>{const type=currentType(),referenceSlots=$$('[data-reference-image]'),uploadedSlots=referenceSlots.filter(slot=>slot.dataset.uploaded==='true'),count=uploadedSlots.length,referencePositions=uploadedSlots.map(slot=>Number(slot.dataset.referenceImage)),referenceOrder=referenceSlots.map(slot=>slot.dataset.referenceToken||''),size=$('.template-ratio-option.active')?.dataset.templateRatio||'自动匹配',duration=Number($('#templateDuration').value),hasVideo=$('[data-template-upload][data-demo-upload="参考视频"]')?.dataset.uploaded==='true',hasAudio=$('[data-template-upload][data-demo-upload="动作音频"]')?.dataset.uploaded==='true',image=type==='IP形象互动'?'assets/models/qiaohu/action.png':'assets/models/host-xiaoqing-half.png',referencePool=type==='IP形象互动'?['assets/models/qiaohu/face.png','assets/models/qiaohu/front.png','assets/models/qiaohu/action.png','assets/models/qiaohu/flower.png']:['assets/models/host-xiaoqing-half.png','assets/products/butterfly-set-white-01.webp','assets/products/butterfly-set-detail-01.jpeg','assets/products/butterfly-set-model-02.webp'],referenceImages=Array.from({length:count},(_,index)=>referencePool[index%referencePool.length]),referenceVideoUrl=hasVideo?(type==='IP形象互动'?'assets/models/qiaohu/character-reference.mp4':'assets/templates/template-example.mp4'):'',referenceAudioUrl=hasAudio?createDemoAudioUrl():'';setTimeout(()=>data(`if(pendingTemplate){pendingTemplate.type=${JSON.stringify(type)};pendingTemplate.method='多素材生成';pendingTemplate.referenceCount=${count};pendingTemplate.referencePositions=${JSON.stringify(referencePositions)};pendingTemplate.referenceOrder=${JSON.stringify(referenceOrder)};pendingTemplate.referenceImages=${JSON.stringify(referenceImages)};pendingTemplate.referenceVideo=${hasVideo};pendingTemplate.referenceVideoUrl=${JSON.stringify(referenceVideoUrl)};pendingTemplate.referenceAudioUrl=${JSON.stringify(referenceAudioUrl)};pendingTemplate.source=${JSON.stringify('参考图：已上传 '+count+' 张')};pendingTemplate.generationSize=${JSON.stringify(size)};pendingTemplate.duration=${duration};pendingTemplate.colorMode='';pendingTemplate.image=${JSON.stringify(image)}}`),0)});
+  $('#actionCreate').addEventListener('click',()=>{const type=currentType(),referenceSlots=$$('[data-reference-image]'),uploadedSlots=referenceSlots.filter(slot=>slot.dataset.uploaded==='true'),count=uploadedSlots.length,referencePositions=uploadedSlots.map(slot=>Number(slot.dataset.referenceImage)),referenceOrder=referenceSlots.map(slot=>slot.dataset.referenceToken||''),size=$('.template-ratio-option.active')?.dataset.templateRatio||ratios[0],duration=Number($('#templateDuration').value),hasVideo=$('[data-template-upload][data-demo-upload="参考视频"]')?.dataset.uploaded==='true',hasAudio=$('[data-template-upload][data-demo-upload="动作音频"]')?.dataset.uploaded==='true',image=type==='IP形象互动'?'assets/models/qiaohu/action.png':'assets/models/host-xiaoqing-half.png',referencePool=type==='IP形象互动'?['assets/models/qiaohu/face.png','assets/models/qiaohu/front.png','assets/models/qiaohu/action.png','assets/models/qiaohu/flower.png']:['assets/templates/model-front-preset.png','assets/templates/outfit-back-preset.png','assets/products/butterfly-set-white-01.webp','assets/products/butterfly-set-model-02.webp'],referenceImages=Array.from({length:count},(_,index)=>referencePool[index%referencePool.length]),referenceVideoUrl=hasVideo?(type==='IP形象互动'?'assets/models/qiaohu/character-reference.mp4':'assets/templates/template-example.mp4'):'',referenceAudioUrl=hasAudio?createDemoAudioUrl():'';setTimeout(()=>data(`if(pendingTemplate){pendingTemplate.type=${JSON.stringify(type)};pendingTemplate.method='多素材生成';pendingTemplate.referenceCount=${count};pendingTemplate.referencePositions=${JSON.stringify(referencePositions)};pendingTemplate.referenceOrder=${JSON.stringify(referenceOrder)};pendingTemplate.referenceImages=${JSON.stringify(referenceImages)};pendingTemplate.referenceVideo=${hasVideo};pendingTemplate.referenceVideoUrl=${JSON.stringify(referenceVideoUrl)};pendingTemplate.referenceAudioUrl=${JSON.stringify(referenceAudioUrl)};pendingTemplate.source=${JSON.stringify('参考图：已上传 '+count+' 张')};pendingTemplate.generationSize=${JSON.stringify(size)};pendingTemplate.duration=${duration};pendingTemplate.colorMode='';pendingTemplate.image=${JSON.stringify(image)};pendingTemplate.exampleVideo=${JSON.stringify(type==='IP形象互动'?'assets/models/qiaohu/character-reference.mp4':'assets/templates/template-example.mp4')}}`),0)});
   document.addEventListener('click',event=>{if(!event.target.closest('[data-modal="templateModal"]'))return;setTimeout(()=>{$('#templateCreateModeField').hidden=false;$('[name="templateCreateMode"][value="existing"]').checked=true;$('[name="templateCreateMode"][value="blank"]').checked=false;renderSources();renderReferences(0);setCreateMode();resetMedia();window.lucide?.createIcons()},0)});
-  document.addEventListener('click',event=>{const edit=event.target.closest('[data-edit-asset="template"]');if(!edit)return;const template=data(`templates.find(item=>item.id===${JSON.stringify(edit.dataset.editId)})`);if(!template)return;setTimeout(()=>{$('#templateCreateModeField').hidden=true;$('#actionTypeSelect').value=template.type||'服饰展示';renderSources();prefill(template);setCreateMode();data('toggleTemplateGenerationEditLock(true)');window.lucide?.createIcons()},0)});
-  const templateReferenceImages = template => template.referenceImages?.length ? template.referenceImages : (template.type==='IP形象互动'?['assets/models/qiaohu/face.png']:['assets/models/host-xiaoqing-half.png','assets/products/butterfly-set-white-01.webp','assets/products/butterfly-set-detail-01.jpeg']).slice(0,template.referenceCount||0);
+  document.addEventListener('click',event=>{const edit=event.target.closest('[data-edit-asset="template"]');if(!edit)return;const template=data(`templates.find(item=>item.id===${JSON.stringify(edit.dataset.editId)})`);if(!template)return;setTimeout(()=>{$('#actionTypeSelect').value=template.type||'服饰展示';renderSources();prefill(template);setCreateMode();data('toggleTemplateGenerationEditLock(true)');enterTemplateEditMode();window.lucide?.createIcons()},0)});
+  const templateReferenceImages = template => template.referenceImages?.length ? template.referenceImages : (template.type==='IP形象互动'?['assets/models/qiaohu/face.png']:['assets/templates/model-front-preset.png','assets/templates/outfit-back-preset.png','assets/products/butterfly-set-white-01.webp']).slice(0,template.referenceCount||0);
   const templateMediaMarkup = template => {
     const images=templateReferenceImages(template),videoUrl=template.referenceVideoUrl||'',audioUrl=template.referenceAudioUrl||'';
     if(!images.length&&!videoUrl&&!audioUrl)return'';
-    return `<section class="detail-section template-reference-section"><h3>参考素材</h3>${images.length?`<div class="template-detail-images">${images.map((src,index)=>`<button type="button" data-preview="${src}" data-preview-title="${template.name} · 参考图${index+1}"><img src="${src}" alt="参考图${index+1}"/><span>参考图${index+1}</span></button>`).join('')}</div>`:''}${videoUrl?`<div class="template-detail-media"><div class="template-detail-media-head"><b>参考视频</b><a class="btn" href="${videoUrl}" download><i data-lucide="download"></i>下载</a></div><video src="${videoUrl}" controls preload="metadata" playsinline></video></div>`:''}${audioUrl?`<div class="template-detail-media audio"><div class="template-detail-media-head"><b>参考音频</b><a class="btn" href="${audioUrl}" download="${template.name}-参考音频.wav"><i data-lucide="download"></i>下载</a></div><audio src="${audioUrl}" controls preload="metadata"></audio></div>`:''}</section>`;
+    return `${images.length?`<section class="detail-section"><h3>参考图</h3><div class="template-detail-images">${images.map((src,index)=>`<button type="button" data-preview="${src}" data-preview-title="${template.name} · 参考图${index+1}"><img src="${src}" alt="参考图${index+1}"/><span>参考图${index+1}</span></button>`).join('')}</div></section>`:''}${videoUrl?`<section class="detail-section"><div class="detail-section-head"><h3>参考视频</h3><a class="btn" href="${videoUrl}" download><i data-lucide="download"></i>下载</a></div><div class="template-detail-media"><video src="${videoUrl}" controls preload="metadata" playsinline></video></div></section>`:''}${audioUrl?`<section class="detail-section"><div class="detail-section-head"><h3>参考音频</h3><a class="btn" href="${audioUrl}" download="${template.name}-参考音频.wav"><i data-lucide="download"></i>下载</a></div><div class="template-detail-media audio"><audio src="${audioUrl}" controls preload="metadata"></audio></div></section>`:''}`;
   };
-  document.addEventListener('click',event=>{const detail=event.target.closest('[data-detail-type="template"]');if(!detail)return;setTimeout(()=>{const template=data(`templates.find(item=>item.id===${JSON.stringify(detail.dataset.detailId)})`);if(!template)return;$('#drawerBody').innerHTML=`<img class="preview-media" src="${template.image}" alt="${template.name}"/><section class="detail-section" style="margin-top:18px"><h3>模版信息</h3><div class="detail-info"><div><span>模版名称</span><b>${template.name}</b></div><div><span>模版类型</span><b>${template.type||'服饰展示'}</b></div><div><span>创建信息</span><b>${template.creator} · ${template.created}</b></div></div></section>${templateMediaMarkup(template)}<section class="detail-section"><h3>生成参数</h3><div class="detail-info"><div><span>提示词</span><b>${template.prompt||'-'}</b></div><div><span>生成尺寸</span><b>${template.generationSize||'自动匹配'}</b></div><div><span>生成时长</span><b>${template.duration||5} 秒</b></div></div></section><section class="detail-section"><h3>触发方式</h3><div class="detail-info"><div><span>触发方式</span><b>${template.trigger}</b></div><div><span>触发配置</span><b>${template.triggerDetail||'-'}</b></div></div></section>`;window.lucide?.createIcons()},0)},true);
+  document.addEventListener('click',event=>{const detail=event.target.closest('[data-detail-type="template"]');if(!detail)return;setTimeout(()=>{const template=data(`templates.find(item=>item.id===${JSON.stringify(detail.dataset.detailId)})`);if(!template)return;$('#drawerTitle').textContent='模版详情';const exampleVideo=template.exampleVideo||template.referenceVideoUrl||'';const hero=exampleVideo?`<video class="template-detail-video" src="${exampleVideo}" poster="${template.image}" controls preload="metadata" playsinline></video>`:`<img src="${template.image}" alt="${template.name}"/>`;$('#drawerBody').innerHTML=`<section class="detail-section template-detail-hero">${hero}<h2 class="template-detail-name">${template.name}</h2><p class="template-detail-meta">${template.type||'服饰展示'} · ${template.creator||'系统预设'} · ${template.created||''}</p></section><section class="detail-section"><h3>生成参数</h3><div class="detail-info"><div><span>提示词</span><b>${template.prompt||'-'}</b></div><div><span>生成尺寸</span><b>${template.generationSize||ratios[0]}</b></div><div><span>生成时长</span><b>${template.duration||5} 秒</b></div></div></section><section class="detail-section"><h3>触发方式</h3><div class="detail-info"><div><span>触发方式</span><b>${template.trigger}</b></div><div><span>触发配置</span><b>${template.triggerDetail||'-'}</b></div></div></section>${templateMediaMarkup(template)}`;window.lucide?.createIcons()},0)},true);
+
+  const mergeDetailTriggers = () => {
+    const drawer = $('#drawerBody');
+    const rows = [...drawer.querySelectorAll('.detail-info > div')];
+    const config = rows.find(row => ['触发配置','触发设置'].includes(row.querySelector('span')?.textContent));
+    const trigger = rows.find(row => row.querySelector('span')?.textContent === '触发方式');
+    if (!config || !trigger) return;
+    const details = config.querySelector('b').textContent.split('；');
+    const names = trigger.querySelector('b').textContent.split('、');
+    trigger.querySelector('b').textContent = names.map((name,index) => {
+      const keyword = details[index]?.match(/[：:]\s*(.+)$/)?.[1] || '';
+      return !name || name==='未设置' ? '未设置' : `${name.replaceAll('>',' > ')}${keyword ? `“${keyword}”` : ''}触发`;
+    }).join('；');
+    config.remove();
+  };
+  new MutationObserver(mergeDetailTriggers).observe($('#drawerBody'), {childList:true});
 
   const backgroundRatioField = $('.background-ratio-grid')?.closest('.field');
   if (backgroundRatioField) backgroundRatioField.hidden = true;
@@ -182,14 +246,169 @@
   if (backgroundAreaLabel && !$('#backgroundTemplateRatio')) backgroundAreaLabel.insertAdjacentHTML('beforeend','<span class="background-template-ratio" id="backgroundTemplateRatio"></span>');
   const syncBackgroundRatio = () => {
     const template = data('templates.find(item=>item.id===state.template)');
-    const ratio = template?.generationSize || '自动匹配';
+    const ratio = template?.generationSize || ratios[0];
     const ratioLabel = $('#backgroundTemplateRatio');
     if (ratioLabel) ratioLabel.textContent = `视频比例 ${ratio}`;
-    const control = $(`[data-background-ratio="${ratio==='自动匹配'?'9:16':ratio}"]`);
+    const control = $(`[data-background-ratio="${ratio}"]`);
     control?.click();
   };
   document.addEventListener('click',event=>{if(event.target.closest('#nextStep')&&data('state.step')===3)setTimeout(syncBackgroundRatio,0);if(event.target.closest('#createBackgroundButton,#editBackgroundButton'))setTimeout(syncBackgroundRatio,0)},true);
   data("plannedVideoCount=function(){return state.template?generationSources().length:0};window.__templateFlowSummaryBase=renderSummary;renderSummary=function(){window.__templateFlowSummaryBase();const hasProducts=(window.compositionSkuInstances?window.compositionSkuInstances():selectedSkuSources()).length>0;$('#summaryGroupCount').textContent=state.step===2?'搭配中':hasProducts?generationSources().length+' 个':'未选择'}");
 
+  // Keep the original trigger controls and their independent keyword handlers.
+  const modal = $('#templateModal');
+  const triggerPanel = modal.querySelector('[data-action-panel="3"]');
+  const stepper = modal.querySelector('.action-stepper');
+  modal.querySelector('.modal-body').prepend(stepper);
+  stepper.insertAdjacentHTML('beforeend','<div class="action-step" data-creation-confirm-step><i>3</i>制作与确认</div>');
+  const creationStep = stepper.querySelector('[data-creation-confirm-step]');
+  stepper.querySelector('[data-action-step="3"]').before(creationStep);
+  let videoTimer = null;
+  function showCreationStep(number) {
+    stepper.hidden=false;
+    [...stepper.children].forEach((item,index)=>{item.classList.toggle('active',index+1===number);item.classList.toggle('done',index+1<number)});
+  }
+  function startVideoOnlyGeneration() {
+    $('#analysisResultVideo')?.pause();
+    $('#actionForm').hidden=true; $('#actionAnalysis').classList.add('active'); $('#actionAnalysisResult').classList.remove('active');
+    ['actionNext','actionPrev','actionCreate','actionFinish','actionEditGeneration','actionRegenerate'].forEach(id=>$('#'+id).hidden=true);
+    $('#actionCancel').hidden=true; showCreationStep(3);
+    $('#analysisProgressView').hidden=false; $('#actionAnalysisText').textContent='请稍后，预计等待 3 分钟'; $('#actionAnalysisBar').style.width='0%'; $('#actionAnalysisValue').textContent='0%';
+    clearInterval(videoTimer); let progress=0;
+    videoTimer=setInterval(()=>{progress+=20;$('#actionAnalysisBar').style.width=`${progress}%`;$('#actionAnalysisValue').textContent=`${progress}%`;if(progress<100)return;clearInterval(videoTimer);$('#analysisProgressView').hidden=true;$('#actionAnalysisResult').classList.add('active');$('#actionFinish').hidden=false;$('#actionCancel').hidden=false;$('#actionCancel').textContent='废弃';},300);
+  }
+  modal.addEventListener('click',event=>{
+    if(event.target.closest('#actionRegenerate')){event.preventDefault();event.stopImmediatePropagation();startVideoOnlyGeneration();return;}
+  },true);
+  $('#actionCreate').addEventListener('click',()=>{
+    showCreationStep(3);
+    const needsBack=currentType()==='服饰展示'&&$('[data-reference-image="2"]')?.dataset.uploaded==='true';
+    data(`if(pendingTemplate)pendingTemplate.requiresBackImage=${needsBack}`);
+    $('#analysisProgressView h3').textContent='生成模版示例视频';
+    $('#actionAnalysisText').textContent='请稍后，预计等待 3 分钟';
+  });
+  new MutationObserver(()=>{
+    if($('#actionAnalysisResult').classList.contains('active'))$('#actionCancel').textContent='废弃';
+  }).observe($('#actionAnalysisResult'),{attributes:true,attributeFilter:['class']});
+  triggerPanel.querySelector(':scope > p')?.remove();
+  const saveTriggers = document.createElement('button');
+  saveTriggers.className = 'btn primary';
+  saveTriggers.id = 'saveTemplateTriggers';
+  saveTriggers.textContent = '保存并完成';
+  saveTriggers.hidden = true;
+  $('#actionFinish').after(saveTriggers);
+  // 编辑展示模版：单弹窗，仅可修改模版名称与触发方式，其余内容只读不展示。
+  const enterTemplateEditMode = () => {
+    modal.classList.add('template-edit-single');
+    stepper.hidden = true;
+    const typeField = $('#actionTypeSelect')?.closest('.field'); if (typeField) typeField.hidden = true;
+    $('#templateCreateModeField').hidden = true;
+    const sourceField = $('#templateSourceField'); if (sourceField) sourceField.hidden = true;
+    $('#actionForm').hidden = false;
+    $('#actionAnalysis').classList.remove('active');
+    $('#actionAnalysisResult').classList.remove('active');
+    $$('#templateModal [data-action-panel]').forEach(panel => panel.classList.toggle('active', panel.dataset.actionPanel === '1' || panel.dataset.actionPanel === '3'));
+    $('#templateModal .modal-head h2').textContent = '编辑展示模版';
+    ['actionPrev','actionNext','actionCreate','actionFinish','actionEditGeneration','actionRegenerate'].forEach(id => $('#'+id).hidden = true);
+    const cancel = $('#actionCancel'); cancel.hidden = false; cancel.textContent = '取消'; cancel.setAttribute('data-close-modal','');
+    saveTriggers.hidden = false;
+    saveTriggers.textContent = '保存';
+    modal.querySelector('.modal-body').scrollTop = 0;
+    window.lucide?.createIcons();
+  };
+  const exitTemplateEditMode = () => {
+    if (!modal.classList.contains('template-edit-single')) return;
+    modal.classList.remove('template-edit-single');
+    const typeField = $('#actionTypeSelect')?.closest('.field'); if (typeField) typeField.hidden = false;
+    saveTriggers.textContent = '保存并完成';
+    setCreateMode();
+  };
+  let savingTriggers = false;
+  const baseSetActionStep = window.setActionStep;
+  window.setActionStep = function(step) {
+    if (modal.classList.contains('template-edit-single')) return;
+    const editing = Boolean(data('editingTemplateId'));
+    modal.classList.toggle('template-four-step', !editing);
+    modal.classList.remove('template-two-step');
+    modal.classList.toggle('template-edit-two-step', editing);
+    stepper.querySelector('[data-action-step="3"] i').textContent = editing ? '2' : '4';
+    creationStep.hidden=editing;
+    clearInterval(videoTimer);
+    stepper.hidden = false;
+    saveTriggers.hidden = true;
+    const targetStep = editing && step === 2 ? (data('actionStep') === 3 ? 1 : 3) : editing ? step : Math.min(step,2);
+    baseSetActionStep(targetStep);
+    saveTriggers.textContent = editing ? '保存修改' : '保存并完成';
+    if (editing) {
+      $('#actionCreate').hidden = true;
+      saveTriggers.hidden = targetStep !== 3;
+    }
+    if (!editing) {
+      $('#actionNext').hidden = data('actionStep') === 2;
+      $('#actionCreate').hidden = data('actionStep') !== 2;
+    }
+  };
+  $('#actionFinish').addEventListener('click', event => {
+    if (savingTriggers) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    if (!data('pendingTemplate')) return;
+    // Confirming the example makes the template usable before trigger configuration.
+    data(`(() => {
+      const confirmed = {...pendingTemplate, trigger:'未设置', triggerDetail:''};
+      const index = templates.findIndex(item=>item.id===confirmed.id);
+      if(index>=0) templates[index]=confirmed;
+      else {templates.unshift(confirmed);createdTemplateCount+=1;}
+      pendingTemplate={...confirmed};
+      $('#templateTotalCount').textContent='共 '+templates.length+' 个展示模版';
+      renderAssets();renderCreateChoices();renderSummary();
+    })()`);
+    $('#analysisResultVideo')?.pause();
+    $('#actionAnalysisResult').classList.remove('active');
+    $('#actionAnalysis').classList.remove('active');
+    $('#actionForm').hidden = false;
+    showCreationStep(4);
+    $$('#templateModal [data-action-panel]').forEach(panel=>panel.classList.toggle('active',panel===triggerPanel));
+    $('#templateModal .modal-head h2').textContent = '设置触发方式';
+    ['actionPrev','actionNext','actionCreate','actionFinish','actionEditGeneration','actionRegenerate'].forEach(id=>$('#'+id).hidden=true);
+    $('#actionCancel').textContent = '取消';
+    $('#actionCancel').setAttribute('data-close-modal','');
+    saveTriggers.hidden = false;
+    modal.querySelector('.modal-body').scrollTop = 0;
+  },true);
+  saveTriggers.addEventListener('click',()=>{
+    const selected = [...triggerPanel.querySelectorAll('[data-action-trigger]:checked')];
+    if (!selected.length) return data("toast('请至少选择一种触发方式')");
+    const fields = {
+      'product-command':['productCommandKeywords','关联商品的商品讲解期间口令触发：'],
+      'product-comment':['productCommentKeywords','关联商品的商品讲解期间弹幕评论触发：'],
+      command:['commandKeywords','口令关键词：'],
+      comment:['commentKeywords','评论关键词：']
+    };
+    const details = [];
+    for (const input of selected) {
+      const config = fields[input.dataset.actionTrigger];
+      if (!config) { details.push('关联商品的商品讲解期间自动衔接播放'); continue; }
+      const field = $('#'+config[0]);
+      if (!field.value.trim()) { field.focus(); return data("toast('请填写所选触发方式的关键词')"); }
+      details.push(config[1]+field.value.trim());
+    }
+    if (data('editingTemplateId')) {
+      const name = $('#actionNameInput').value.trim();
+      if (!name) return data("toast('请输入模版名称')");
+      data(`pendingTemplate={...templates.find(item=>item.id===editingTemplateId),name:${JSON.stringify(name)},type:${JSON.stringify(currentType())}}`);
+    }
+    data(`if(pendingTemplate){pendingTemplate.trigger=${JSON.stringify(selected.map(input=>input.value).join('、'))};pendingTemplate.triggerDetail=${JSON.stringify(details.join('；'))}}`);
+    savingTriggers = true;
+    try { $('#actionFinish').click(); } finally { savingTriggers = false; }
+    saveTriggers.hidden = true;
+  });
+  document.addEventListener('click',event=>{
+    if(event.target.closest('[data-modal="templateModal"]')){
+      exitTemplateEditMode();
+      data("editingTemplateId='';setActionStep(1)");
+      $('#templateModal .modal-head h2').textContent='创建展示模版';
+    }
+  });
   window.__decorateTemplateFlowChoices();decorateAssetTemplates();renderSources();renderReferences(0);setCreateMode();data('renderCreateChoices();renderAssets();renderSummary();setStep(1)');
 })();
